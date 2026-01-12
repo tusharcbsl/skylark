@@ -1,0 +1,206 @@
+<?php
+
+// Enable error reporting for debugging
+ini_set('max_execution_time', 18000);
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+require_once './classes/ftp.php';
+require_once './application/config/database.php';
+
+
+// Define log file path
+$logFilePath = __DIR__ . '/ocr_log.txt';
+
+// Function to log messages to the log file
+function logMessage($message) {
+    global $logFilePath;
+    $logMessage = date('Y-m-d H:i:s') . " - " . $message . PHP_EOL;
+    file_put_contents($logFilePath, $logMessage, FILE_APPEND);
+}
+
+require_once './ocr_dms/vendor/autoload.php';
+require_once './application/pages/function.php';
+use thiagoalessio\TesseractOCR\TesseractOCR;
+
+class OCR {
+    private $currentDir, $outputDir;
+
+    public function __construct($sl_name) {
+        $this->currentDir = __DIR__;
+        $this->outputDir = $sl_name . "TXT";
+    }
+
+    public function ocrDone($inputFile, $output, $doc_id, $ftppath) {
+        $outDIr = $this->currentDir . "/" . $this->outputDir;
+        if (!is_dir($outDIr)) {
+            mkdir($this->outputDir, 0777, true);
+        }
+if (FTP_ENABLED) {
+
+                        $ftp = new ftp();
+
+                        $ftp->conn(FTP_HOST, FTP_PORT, FTP_USER, FTP_PASSWORD);
+
+                        if ($ftp->get($inputFile, 'DMS/' . ROOT_FTP_FOLDER . '/' . $ftppath)) {
+                            //print_r("success");
+                            //die('ss');
+                        } else {
+                            //print_r("failed");
+                            //die('sst');
+                        }
+                    }
+        $ftype = strtolower(pathinfo($inputFile, PATHINFO_EXTENSION));
+        $img_array = array('jpg', 'jpeg', 'png', 'bmp', 'pnm', 'jfif', 'jpeg', 'tiff');
+        if (in_array($ftype, $img_array)) {
+            $execCMD = $this->generateImageOcr($inputFile, $output, $outDIr, $doc_id);
+        } else {
+            $execCMD = $this->generatePathImagemagick($inputFile, $output, $outDIr, $doc_id);
+        }
+
+        return $execCMD ? TRUE : FALSE;
+    }
+
+    public function generatePathImagemagick($inputFile, $output, $outDIr, $docId) {
+        global $logFilePath;
+        if (!is_dir($outDIr . "/" . $docId)) {
+            mkdir($outDIr . "/" . $docId, 0777, true);
+        }
+        $inputDir = $this->currentDir . "/" . $inputFile;
+        $outputDir = $this->currentDir . "/" . $this->outputDir . "/" . $docId . "/" . $output;
+
+        $pdfPage = $this->count_pages($inputDir);
+        $im = new Imagick();
+        for ($j = 0; $j < $pdfPage; $j++) {
+            $im->setResolution(300, 300);
+            $im->readimage($inputDir . "[$j]");
+            $im->setImageFormat('jpg');
+            $im->setImageBackgroundColor('#ffffff');
+            $im = $im->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+            $jpgPath = $outputDir . 'ocr-' . $j . '.jpg';
+            if ($im->writeImage($jpgPath)) {
+                $strOutss = $this->outputDir . "/" . $docId . ".txt";
+                $strIn = $jpgPath;
+                try {
+                    $tesseract = new TesseractOCR($strIn);
+                    $tesseract->executable('C:/Tesseract-OCR\tesseract.exe');
+                    $tesseract->lang('eng', 'hin');
+                    
+                    // Log Tesseract command before running
+                    logMessage("Tesseract command: " . $tesseract->command);
+
+                    $textImage = $tesseract->run();
+                    
+                    // Log Tesseract output
+                    logMessage("Tesseract output for $strIn: " . $textImage);
+
+                    if (!empty($textImage)) {
+                        // Write an empty line at the beginning if the file does not exist or is empty
+                        if (!file_exists($strOutss) || filesize($strOutss) === 0) {
+                            file_put_contents($strOutss, PHP_EOL, FILE_APPEND);
+                        }
+                        if (file_put_contents($strOutss, $textImage, FILE_APPEND) === false) {
+                            throw new Exception("Failed to write text to file: $strOutss");
+                        }
+                        unlink($strIn);
+                    } else {
+                        throw new Exception("Tesseract OCR returned empty text for image: $strIn");
+                    }
+                } catch (Exception $e) {
+                    logMessage("OCR processing failed: " . $e->getMessage());
+                }
+            } else {
+                logMessage("Failed to write image: $jpgPath");
+            }
+            $im->clear();
+            $im->destroy();
+        }
+        rmdir($this->outputDir . "/" . $docId);
+        return TRUE;
+    }
+
+    public function generateImageOcr($inputFile, $output, $outDIr, $docId) {
+        global $logFilePath;
+        $inputDir = $this->currentDir . "/" . $inputFile;
+        $strOutss = $this->outputDir . "/" . $docId . ".txt";
+        try {
+            $tesseract = new TesseractOCR($inputDir);
+            $tesseract->executable('C:\Program Files (x86)\Tesseract-OCR\tesseract.exe');
+            $tesseract->lang('eng');
+            
+            // Log Tesseract command before running
+            logMessage("Tesseract command: " . $tesseract->command);
+
+            $textImage = $tesseract->run();
+
+            // Log Tesseract output
+            logMessage("Tesseract output for $inputDir: " . $textImage);
+
+            if (!empty($textImage)) {
+                // Write an empty line at the beginning if the file does not exist or is empty
+                if (!file_exists($strOutss) || filesize($strOutss) === 0) {
+                    file_put_contents($strOutss, PHP_EOL, FILE_APPEND);
+                }
+                if (file_put_contents($strOutss, $textImage, FILE_APPEND) === false) {
+                    throw new Exception("Failed to write text to file: $strOutss");
+                }
+            } else {
+                throw new Exception("Tesseract OCR returned empty text for image: $inputDir");
+            }
+        } catch (Exception $e) {
+            logMessage("OCR processing failed: " . $e->getMessage());
+        }
+        return TRUE;
+    }
+
+    function count_pages($pdfname) {
+        $cmd = "pdfinfo \"$pdfname\"";
+        exec($cmd, $output);
+        foreach ($output as $op) {
+            if (preg_match("/Pages:\s*(\d+)/i", $op, $matches) === 1) {
+                return intval($matches[1]);
+            }
+        }
+        return 0;
+    }
+}
+
+require_once './application/config/database.php';
+
+$outdir = explode(",", $_POST['outputDir']);
+$inputdir = explode(",", $_POST['inputDir']);
+$docId = explode(",", $_POST['docId']);
+$ftppath = $_POST['ftppath'];
+$ftppath2 = explode(",", $_POST['ftppath2']);
+
+// die('hello');
+$k = 0;
+
+while ($k < count($docId)) {
+    decrypt_my_file($inputdir[$k]);
+    $ocr = new OCR($outdir[$k]);
+    if ($ocr->ocrDone($inputdir[$k], "", $docId[$k], $ftppath2[$k])) {
+        mysqli_query($db_con, "UPDATE tbl_document_master SET ocr=1 WHERE doc_id='$docId[$k]'") or die('Error: ' . mysqli_error($db_con));
+        
+        $parts = explode('/', $outdir[$k]);
+        $ftpdir = implode('/', array_slice($parts, 1));
+        if (FTP_ENABLED) {
+
+            $ftp = new ftp();
+                $ftp->conn(FTP_HOST, FTP_PORT, FTP_USER, FTP_PASSWORD);
+                
+
+            // $ftp->conn("192.168.3.7", "21", "crcdms", "Crc&%ezeef!l3");
+
+            if ($ftp->put('DMS/' . ROOT_FTP_FOLDER . '/' . $ftpdir . 'TXT/' . $docId[$k] . '.txt'  , $outdir[$k] . 'TXT/' . $docId[$k] . '.txt')) {
+            // if ($ftp->fput($outdir[$k] . 'TXT/' . $docId[$k] . '.txt'  , $ftppath . '/TXT/')) {
+            //unlink($outdir[$k] . 'TXT/' . $docId[$k] . '.txt');
+                echo "success";
+            } 
+            }
+                    unlink($inputdir[$k]);
+
+        $k++;
+    }
+}
+?>

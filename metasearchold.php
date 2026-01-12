@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html>
+    <?php
+    set_time_limit(0);
+    require_once './loginvalidate.php';
+    require_once './application/pages/head.php';
+    require_once './classes/ftp.php';
+    require_once './application/pages/function.php';
+	require_once './classes/fileManager.php';
+	$fileManager = new fileManager();
+    
+    if ($rwgetRole['metadata_search'] != '1' || empty($slpermIdes)) {
+        header('Location: ./index');
+        exit();
+    }
+
+    ?>
+    <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <!-- Plugin Css-->
+    <link rel="stylesheet" href="assets/plugins/magnific-popup/css/magnific-popup.css" />
+    <link href="assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />  
+   
+    <body class="fixed-left">
+        <!-- Begin page -->
+        <div id="wrapper">
+            <!-- Top Bar Start -->
+            <?php require_once './application/pages/topBar.php'; ?>
+            <!-- Top Bar End -->
+            <!-- ========== Left Sidebar Start ========== -->
+            <?php require_once './application/pages/sidebar.php'; ?>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <a href="metasearch"><?php echo $lang['Search']; ?></a>
+                                    </li>
+                                    <li class="active">
+                                        <?php echo $lang['MetaData_Search']; ?>
+                                    </li>
+                                     <li> <a href="#" data-toggle="modal" data-target="#help-modal" id="helpview" data="17" title="<?= $lang['help']; ?>"><i class="fa fa-question-circle"></i> </a></li>
+                                    <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light pull-right btn-sm margin-t-9" onclick="goPrevious();" title="<?php echo $lang['Go_to_previous_page']; ?>"><i class="fa fa-arrow-circle-left"></i></a>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="box box-primary m-b-50">
+                            <div class="box-header with-border">
+                                <div class="col-sm-7">
+                                    <h4 class="header-title"><?php echo $lang['Required_fields_are_marked_with_a']; ?>(<span style="color:red;">*</span>)</h4>
+                                </div>
+                                <div class="col-sm-5">
+                                    <?php if ($rwgetRole['save_query'] == '1' && !empty($_GET['id'])) { ?>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#savequery" id="svequery"><i class="fa fa-save" aria-hidden="true" title="<?php echo $lang['Sve_Qry']; ?>"></i> <?php echo $lang['Sve_Qry']; ?></button>
+                                    <?php } ?>
+                                    <a href="Frequently_queries" class="btn btn-primary"><i class="fa fa-eye"></i> <?php echo $lang['save_queries']; ?></a>
+                                    <a href="metasearch" class="btn btn-warning"><?php echo $lang['Reset']; ?></a>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <form method="get">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <select class="form-control select2 parent" id="parent" name="id" required>
+                                                        <option disabled selected><?php echo $lang['Select_Storage']; ?></option>
+                                                        <?php
+                                                        if (isset($_GET['id']) && !empty($_GET['id'])) {
+                                                            $parentId = preg_replace("/[^0-9 ]/", "", $_GET['id']);
+                                                        }
+                                                        if (!empty($slpermIdes)) {
+															
+                                                            mysqli_set_charset($db_con, "utf8");
+                                                            $sllevel = mysqli_query($db_con, "select * from tbl_storage_level where sl_id in($slpermIdes) and delete_status=0 order by sl_name asc");
+                                                            while ($rwSllevel = mysqli_fetch_assoc($sllevel)) {
+																
+                                                                $level = $rwSllevel['sl_depth_level'];
+                                                                $slId = $rwSllevel['sl_id'];
+                                                                $slperm = $rwSllevel['sl_id'];
+                                                                findChilds($slId, $level, $slperm, $parentId);
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select> 
+                                                    <?php
+
+                                                    function findChilds($sl_id, $level, $slperm, $parentId) {
+
+                                                        global $db_con;
+
+                                                        if ($sl_id == $parentId) {
+                                                            echo '<option value="' . $sl_id . '"  selected>';
+                                                            parentLevels($sl_id, $db_con, $slperm, $level, '');
+                                                            echo '</option>';
+                                                        } else {
+                                                            echo '<option value="' . $sl_id . '" >';
+                                                            parentLevels($sl_id, $db_con, $slperm, $level, '');
+                                                            echo '</option>';
+                                                        }
+
+                                                        $sql_child = "select * FROM tbl_storage_level WHERE sl_parent_id = '$sl_id' and delete_status=0 order by sl_name asc";
+
+                                                        $sql_child_run = mysqli_query($db_con, $sql_child) or die('Error:' . mysqli_error($db_con));
+
+                                                        if (mysqli_num_rows($sql_child_run) > 0) {
+
+                                                            while ($rwchild = mysqli_fetch_assoc($sql_child_run)) {
+
+                                                                $child = $rwchild['sl_id'];
+                                                                findChilds($child, $level, $slperm, $parentId);
+                                                            }
+                                                        }
+                                                    }
+
+                                                    
+                                                    ?>
+
+                                                </div>
+
+                                            </div>
+                                            <?php if (isset($_GET['searchText'])) { ?>
+                                                <div id="metadata_div">
+                                                    <?php for ($j = 0; $j < count($_GET['searchText']); $j++) { ?>
+                                                        <div class="form-group row numid-<?php echo $j; ?> " id="multiselect">
+                                                            <div class="col-md-3" id="metajax">
+
+                                                                <select  class="form-control select2" id="kk" name="metadata[]" required>
+                                                                    <option selected disabled value=""><?php echo $lang['Select_Metadata']; ?></option>
+                                                                    <option value="old_doc_name" <?php
+                                                                    if ($_GET['metadata'][$j] == "old_doc_name") {
+                                                                        echo'selected';
+                                                                    }
+                                                                    ?>><?php echo $lang['FileName']; ?></option>
+                                                                    <option value="noofpages"<?php
+                                                                    if ($_GET['metadata'][$j] == "noofpages") {
+                                                                        echo'selected';
+                                                                    }
+                                                                    ?>><?php echo $lang['No_Of_Pages']; ?></option>
+                                                                            <?php
+                                                                            $metadatacount = 3;
+                                                                            $arrarMeta = array();
+                                                                            $metas = mysqli_query($db_con, "select * from tbl_metadata_to_storagelevel where sl_id='$parentId'");
+                                                                            while ($metaval = mysqli_fetch_assoc($metas)) {
+
+                                                                                $meta = mysqli_query($db_con, "select * from tbl_metadata_master WHERE id='$metaval[metadata_id]' order by field_name asc");
+                                                                                $rwMeta = mysqli_fetch_assoc($meta);
+
+                                                                                if ($rwMeta['field_name'] != 'filename') {
+                                                                                    if ($_GET['metadata'][$j] == $rwMeta['field_name']) {
+                                                                                        echo '<option value="' . $rwMeta['field_name'] . '" selected>' . str_replace("_", " ", $rwMeta['field_name']) . '</option>';
+                                                                                    } else {
+                                                                                        echo '<option value="' . $rwMeta['field_name'] . '">' . str_replace("_", " ", $rwMeta['field_name']) . '</option>';
+                                                                                    }
+                                                                                    $metadatacount++;
+                                                                                }
+                                                                            }
+                                                                            $metadatacount = $metadatacount - count($_GET['metadata']);
+                                                                            ?>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <select class="form-control select2" name="cond[]" required>
+                                                                    <option disabled selected style="background: #808080; color: #121213;"><?php echo $lang['Slt_Condition']; ?></option>
+                                                                    <option <?php
+                                                                    if (isset($_GET['cond'][$j]) && !empty($_GET['cond'][$j]) && $_GET['cond'][$j] == 'Equal') {
+                                                                        echo'selected';
+                                                                    }
+                                                                    ?> value="Equal"><?php echo $lang['Equal'] ?></option>
+                                                                    <option <?php
+                                                                    if (isset($_GET['cond'][$j]) && !empty($_GET['cond'][$j]) && $_GET['cond'][$j] == 'Contains') {
+                                                                        echo'selected';
+                                                                    }
+                                                                    ?> value="Contains"><?php echo $lang['Contains'] ?></option>
+                                                                    <option <?php
+                                                                    if (isset($_GET['cond'][$j]) && !empty($_GET['cond'][$j]) && $_GET['cond'][$j] == 'Like') {
+                                                                        echo'selected';
+                                                                    }
+                                                                    ?> value="Like"><?php echo $lang['Like'] ?></option>
+                                                                    <option <?php
+                                                                    if (isset($_GET['cond'][$j]) && !empty($_GET['cond'][$j]) && $_GET['cond'][$j] == 'Not Like') {
+                                                                        echo'selected';
+                                                                    }
+                                                                    ?> value="Not Like"><?php echo $lang['Not_Like']; ?></option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <input type="text" class="form-control translatetext" name="searchText[]" required value="<?php echo xss_clean($_GET['searchText'][$j]); ?>" placeholder="<?php echo $lang['entr_srch_txt_hr']; ?>" title="<?= $lang['Search'] ?>">
+                                                            </div>
+                                                            <?php
+                                                            if ($j == 0) {
+                                                                ?>  
+
+                                                                <button type="submit" class="btn btn-primary" id="search" onclick="functionHide();"><i class="fa fa-search" title="<?= $lang['Search'] ?>"></i></button>
+                                                                <a href="javascript:void(0)" class="btn btn-primary" id="addfields"><i class="fa fa-plus" title="<?= $lang['Add_more'] ?>"></i></a>
+                                                            <?php } else { ?>
+
+                                                                <div onclick="incrementCount()"> <a href="javascript:void(0)" class="btn btn-primary " id="<?= $j; ?>" onclick="invisible(this.id)" title="<?= $lang['Remove'] ?>"><i class='fa fa-minus-circle' aria-hidden='true'></i></a></div>
+
+                                                            <?php } ?>
+                                                        </div>
+                                                    <?php }
+                                                    ?>
+                                                </div>
+                                                <div class="contents col-lg-12"></div>
+                                            <?php } else { ?>
+                                                <div id="metadata_div">
+                                                    <div class="form-group row" id="multiselect">
+
+                                                        <div class="col-md-3">
+                                                            <div id="metajax">
+                                                                <select  class="select2 form-control" data-style="btn-white" id="kk" name="metadata[]" required>
+                                                                    <option selected disabled value=""><?php echo $lang['Select_Metadata']; ?> </option>
+                                                                    <option value="old_doc_name"><?php echo $lang['FileName']; ?></option>
+                                                                    <option value="noofpages"><?php echo $lang['No_Of_Pages']; ?></option>
+                                                                    <?php
+                                                                    if (isset($_GET['metadata']) && !empty($_GET['metadata'])) {
+
+                                                                        echo '<option value="' . $rwMeta['field_name'] . '" selected>' . xss_clean($_GET['metadata']) . '</option>';
+                                                                    }
+                                                                    $metadatacount = 3;
+//                                                            
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <select class="form-control select2" name="cond[]" required>
+                                                                <option disabled selected style="background: #808080; color: #121213;"><?php echo $lang['Slt_Condition']; ?></option>
+                                                                <option <?php
+                                                                if (isset($_GET['cond']) && !empty($_GET['cond']) && $_GET['cond'] == 'Equal') {
+                                                                    echo'selected';
+                                                                }
+                                                                ?> value="Equal"><?php echo $lang['Equal']; ?></option>
+                                                                <option <?php
+                                                                if (isset($_GET['cond']) && !empty($_GET['cond']) && $_GET['cond'] == 'Contains') {
+                                                                    echo'selected';
+                                                                }
+                                                                ?> value="Contains"><?php echo $lang['Contains']; ?></option>
+                                                                <option <?php
+                                                                if (isset($_GET['cond']) && !empty($_GET['cond']) && $_GET['cond'] == 'Like') {
+                                                                    echo'selected';
+                                                                }
+                                                                ?> value="Like"><?php echo $lang['Like']; ?></option>
+                                                                <option <?php
+                                                                if (isset($_GET['cond']) && !empty($_GET['cond']) && $_GET['cond'] == 'Not Like') {
+                                                                    echo'selected';
+                                                                }
+                                                                ?> value="Not Like"><?php echo $lang['Not_Like']; ?></option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input type="text" id = "metaser" class="form-control translatetext" name="searchText[]" required value="<?php echo $_GET['searchText'][$i] ?>" placeholder="<?php echo $lang['entr_srch_txt_hr'] ?> ">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a href="javascript:void(0)" class="btn btn-primary" id="addfields" title="<?= $lang['Add_more'] ?>"><i class="fa fa-plus"></i></a>
+                                                        </div>
+                                                        <div class="col-md-12">
+
+                                                            <div class="contents col-lg-12"></div>
+                                                            <div class="col-md-2 pull-right msearch">
+                                                                <button type="submit" class="btn btn-primary" id="search" title="<?= $lang['Search'] ?>"><i class="fa fa-search"></i></button>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <?php
+                                if ($_GET['searchText']) {
+                                    $query = basename($_SERVER['REQUEST_URI']);
+                                    ?>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                            <?php
+                            if (isset($_GET['searchText'])) {
+                                $metadata = xss_clean($_GET['metadata']);
+                                $cond = xss_clean($_GET['cond']);
+                                $searchText = xss_clean($_GET['searchText']);
+                                $idID = xss_clean($_GET['id']);
+                                $limit = xss_clean($_GET['limit']);
+                                $start = xss_clean($_GET['start']);
+                                $queryString = $_SERVER["QUERY_STRING"];
+                                $slid = $idID;
+                                $searchText = mysqli_real_escape_string($db_con, $searchText);
+                                $res = searchAllDB($searchText, $cond, $metadata, $idID, $db_con, $rwgetRole, $limit, $start, $queryString, $lang);
+                            }
+                            ?>
+
+                        </div>
+                    </div>
+                    <!-- end: page -->
+
+                </div> <!-- end Panel -->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+        <div id="savequery" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog "> 
+                <div class="panel panel-color panel-danger"> 
+                    <div class="panel-heading"> 
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                        <h2 class="panel-title"><?php echo $lang['r_u_wnt_to_sv_qry']; ?></h2> 
+                    </div>
+                    <form method="post">
+                        <div class="panel-body" >
+                            <?php
+                            for ($i = 0; $i < count($_GET['searchText']); $i++) {
+                                $text = mysqli_real_escape_string($db_con, $_GET['searchText'][$i]);
+                                $cond = mysqli_real_escape_string($db_con, $_GET['cond'][$i]);
+                                $metadata = mysqli_real_escape_string($db_con, $_GET['metadata'][$i]);
+                                ?>
+                                <input type="hidden" name="metadata[]" id="metadata" value="<?php echo $metadata; ?>">
+                                <input type="hidden" name="cond[]" id="cond" value="<?php echo $cond; ?>">
+                                <input type="hidden" name="query[]" id="query" value="<?php echo $text; ?>">
+                                <?php
+                            }
+                            ?>
+                            <input type="text" id="qry_name" name="qry_name" class="form-control specialchaecterlock" value="" placeholder="<?= $lang['eyqh'] ?>" required>
+                            <input type="hidden" name="url" id="url" value="<?php echo $query; ?>">
+                        </div> 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><?php echo $lang['Close']; ?></button>
+                            <input type="submit" class="btn btn-primary " name="savqry" value="<?php echo $lang['Sve_Qry']; ?>">
+
+                        </div>
+                    </form>
+
+                </div> 
+            </div>
+        </div>
+
+
+
+        <?php require_once './application/pages/footer.php'; ?>
+
+        <?php require_once './application/pages/footerForjs.php'; ?>
+        <script src="assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="assets/plugins/parsleyjs/parsley.min.js"></script>
+
+        <?php require_once 'file-action-js.php'; ?>
+        <?php require_once 'file-action-html.php'; ?>
+        <script>
+                                                        function invisible(myid)
+                                                        {
+                                                            $(".numid-" + myid).remove();
+                                                            $("#addfields").show();
+                                                            x--;
+
+                                                        }
+
+
+                                                        function incrementCount()
+                                                        {
+                                                            var max_fields = $('#kk').find("option").length;
+                                                            //alert(max_fields);
+                                                            max_fields = max_fields + 1;
+                                                            //alert(max_fields);
+                                                        }
+                                                        ;
+                                                        var x = <?php echo (isset($_GET['searchText']) && !empty($_GET['searchText']) ? count($_GET['searchText']) : 1) ?>; //initlal text box count
+                                                        $(document).ready(function () {
+
+                                                            var wrapper = $(".contents"); //Fields wrapper
+                                                            var add_button = $("#addfields"); //Add button ID
+
+
+                                                            $(add_button).click(function (e) { //on add input button click
+                                                                //var max_fields = $('#kk option').length;
+                                                                var max_fields = $('#kk').find("option").length;
+                                                                //alert($('#kk').find("option").length);  
+                                                                max_fields = parseInt(max_fields) - 1;
+                                                                //alert(max_fields);
+                                                                var id = $("#parent").val();
+                                                                e.preventDefault();
+                                                                var arr = $('input[name="searchText[]"]').map(function () {
+                                                                    return $(this).val()
+                                                                }).get();
+                                                                var hasAnyEmptyElement = arr.includes("");
+                                                                //alert(id);
+
+                                                                if (id) {
+                                                                    if (!hasAnyEmptyElement) {
+                                                                        //alert(max_fields);
+                                                                        //alert(x);
+                                                                        if (x < max_fields) { //max input box allowed
+                                                                            x++;
+                                                                            //text box increment
+
+                                                                            $.ajax({url: "application/ajax/addMultipleMeataDtaSearch?id=" + id, success: function (result) {
+                                                                                    $(wrapper).append("<div class='col-md-12' style='margin-bottom:17px'>" + result + "<button class='remove_field btn btn-primary'><i class='fa fa-minus-circle' aria-hidden='true'></i></a>" + "</div>"); //add input box
+
+                                                                                }});
+
+                                                                        } else
+                                                                        {
+                                                                            alert("No more metadata available.");
+                                                                            $("#addfields").hide();
+                                                                        }
+                                                                    } else {
+                                                                        alert("Please fill all empty fields.");
+                                                                    }
+                                                                } else {
+                                                                    alert("Please select storage.");
+                                                                }
+
+                                                            });
+
+                                                            $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+                                                                e.preventDefault();
+                                                                $(this).parent('div').remove();
+                                                                x--;
+                                                                $("#addfields").show();
+                                                            });
+                                                        });
+
+
+        </script>
+
+        <script type="text/javascript">
+            $("#parent").change(function () {
+                var slId = $(this).val();
+                // alert(slId);
+                $.post("application/ajax/childListWithMetaData.php", {sl_id: slId}, function (result, status) {
+                    if (status == 'success') {
+                        //$("#multiselect").html(result);
+                        x = 1;
+                        //alert(x);
+                        $("#metajax").html(result);
+                        $("#metadata_div .form-group:nth-child(1)").nextAll(".form-group").remove();
+                        $(".contents ").html('');
+                        $("#addfields").show();
+
+                    }
+                });
+            });
+            $(".select2").select2();
+
+            //for delete version document
+            $("#con-close-modal-history").delegate("a#deleteVersionDocument", "click", function () {
+                var id = $(this).attr("data");
+                //alert(id);
+                $("#docidversion").val(id);
+            });
+
+        </script>
+        <script type="text/javascript">
+            $('#downloadcheckedfile').on('click', function (e) {
+
+                var file = [];
+                $(".emp_checkbox:checked").each(function () {
+                    file.push($(this).data('doc-id'));
+                });
+                if (file.length <= 0) {
+                    $("#unselectfile").show();
+                    $("#filedownload").hide();
+                    $("#download1").show();
+                    $("#download2").hide();
+                } else {
+                    $("#unselectfile").hide();
+                    $("#filedownload").show();
+                    $("#download1").hide();
+                    $("#download2").show();
+
+                    var selected_values = file.join(",");
+                    $('#totaldocId').val(selected_values);
+
+
+                }
+            });
+        </script>
+        <?php
+
+        function searchAllDB($search, $cond, $metadata, $idID, $db_con, $rwgetRole, $limit, $start, $queryString, $lang) {
+            $folder = mysqli_query($db_con, "select * from tbl_storage_level where sl_id='$idID'");  
+            $rwFolder = mysqli_fetch_assoc($folder);
+            
+            $table = "tbl_document_master";
+            mysqli_set_charset($db_con, 'utf8');
+            $sql_search = "select * from " . $table . " where flag_multidelete=1 and doc_name='$idID'";
+            $sql_search_fields = Array();
+            /* for ($i = 0; $i < count($_GET['searchText']); $i++) {
+              if (preg_replace("/[^A-Za-z0-9_ ]/", "", $_GET['cond'][$i]) == 'Like') {
+              $sql_search_fields[] = 'CONVERT(`' . preg_replace("/[^A-Za-z0-9_ ]/", "", $_GET['metadata'][$i]) . "` USING utf8) like('%" . preg_replace("/[^A-Za-z0-9-_. ]/", "", $_GET['searchText'][$i]) . "%')";
+              } else if (preg_replace("/[^A-Za-z0-9_ ]/", "", $_GET['cond'][$i]) == 'Not Like') {
+              $sql_search_fields[] = 'CONVERT(`' . preg_replace("/[^A-Za-z0-9_ ]/", "", $_GET['metadata'][$i]) . "` USING utf8) not like('%" . preg_replace("/[^A-Za-z0-9-_. ]/", "", $_GET['searchText'][$i]) . "%')";
+              } else if (preg_replace("/[^A-Za-z0-9_ ]/", "", $_GET['cond'][$i]) == 'Contains') {
+              $sql_search_fields[] = 'CONVERT(`' . preg_replace("/[^A-Za-z0-9_ ]/", "", $_GET['metadata'][$i]) . "` USING utf8) like('%" . preg_replace("/[^A-Za-z0-9-_. ]/", "", $_GET['searchText'][$i]) . "%')";
+              } else if (preg_replace("/[^A-Za-z0-9_ ]/", "", $_GET['cond'][$i]) == 'Equal') {
+              $sql_search_fields[] = "`" . preg_replace("/[^A-Za-z0-9_ ]/", "", $_GET['metadata'][$i]) . "` ='" . preg_replace("/[^A-Za-z0-9-_. ]/", "", $_GET['searchText'][$i]) . "'";
+              }
+              } */
+            for ($i = 0; $i < count($_GET['searchText']); $i++) {
+                if ($_GET['cond'][$i] == 'Like') {
+                    $sql_search_fields[] = 'CONVERT(`' . xss_clean(trim($_GET['metadata'][$i])) . "` USING utf8) like('%" . xss_clean(trim($_GET['searchText'][$i])) . "%')";
+                } else if ($_GET['cond'][$i] == 'Not Like') {
+                    $sql_search_fields[] = 'CONVERT(`' . xss_clean(trim($_GET['metadata'][$i])) . "` USING utf8) not like('%" . xss_clean(trim($_GET['searchText'][$i])) . "%')";
+                } else if ($_GET['cond'][$i] == 'Contains') {
+                    $sql_search_fields[] = 'CONVERT(`' . xss_clean(trim($_GET['metadata'][$i])) . "` USING utf8) like('%" . xss_clean(trim($_GET['searchText'][$i])) . "%')";
+                } else if ($_GET['cond'][$i] == 'Equal') {
+                    $sql_search_fields[] = "`" . xss_clean(trim($_GET['metadata'][$i])) . "` ='" . xss_clean(trim($_GET['searchText'][$i])) . "'";
+                }
+            }
+            $sql_search .= ' and (';
+            $sql_search .= implode(" and ", $sql_search_fields);
+            $sql_search .= ')';
+            $totalrowSql = $sql_search;
+            $foundnumQuery = mysqli_query($db_con, $totalrowSql);
+            $foundnum = mysqli_num_rows($foundnumQuery);
+            if ($foundnum > 0) {
+                if (is_numeric($limit)) {
+                    $per_page = $limit;
+                } else {
+                    $per_page = 10;
+                    $limit = 10;
+                }
+                $start = isset($start) ? ($start > 0) ? $start : 0 : 0;
+                $max_pages = ceil($foundnum / $per_page);
+                if (!$start) {
+                    $start = 0;
+                }
+                //$sql_search .="limit 10,10";
+                //echo  $sql_search;
+                
+                $sql_search .= " limit $start,$per_page";
+                $rs3 = mysqli_query($db_con, $sql_search);
+                ?>
+
+                <div class="container">
+                    <div class="pull-right record">
+                        <label><?php echo $start + 1 ?> <?php echo $lang['To'] ?> <?php
+                            if (($start + $per_page) > $foundnum) {
+                                echo $foundnum;
+                            } else {
+                                echo ($start + $per_page);
+                            }
+                            ?> <span><?php echo $lang['ttl_recrds']; ?> : <?php echo $foundnum; ?></span></label>
+                    </div>
+                    <div class="box-body limit">
+
+                        <?php echo $lang['Show']; ?>
+                        <select id="limit" class="input-sm">
+                            <option value="10" <?php
+                            if ($_GET['limit'] == 10) {
+                                echo 'selected';
+                            }
+                            ?>>10</option>
+                            <option value="25" <?php
+                            if ($_GET['limit'] == 25) {
+                                echo 'selected';
+                            }
+                            ?>>25</option>
+                            <option value="50" <?php
+                            if ($_GET['limit'] == 50) {
+                                echo 'selected';
+                            }
+                            ?>>50</option>
+                            <option value="250" <?php
+                            if ($_GET['limit'] == 250) {
+                                echo 'selected';
+                            }
+                            ?>>250</option>
+                            <option value="500" <?php
+                            if ($_GET['limit'] == 500) {
+                                echo 'selected';
+                            }
+                            ?>>500</option>
+                        </select> <?php echo $lang['Documents']; ?>
+                    </div>
+                    <table class="table table-striped table-bordered m-b-50 js-sort-table">
+                        <thead>
+                            <tr>
+                                <th class="sort-js-none" ><div class="checkbox checkbox-primary"><input  type="checkbox" class="checkbox-primary" id="select_all"> <label for="checkbox6"> <strong><?php echo $lang['All']; ?></strong></label></div>  </th>
+                                <th><?php echo $lang['File_Name']; ?></th>
+                                <th class="sort-js-number" ><?php echo $lang['File_Size']; ?></th>
+                                <th class="sort-js-number" ><?php echo $lang['No_of_Pages']; ?></th>
+                                <th class="sort-js-none" ><?php echo $lang['Actions']; ?></th>
+                            </tr></thead>
+                        <?php
+                        $rs3 = mysqli_query($db_con, $sql_search);
+                        if (mysqli_num_rows($rs3) > 0) {
+                            echo'<tbody>';
+                            $j = $start + 1;
+                            while ($rw = mysqli_fetch_assoc($rs3)) {
+								
+								
+                                
+                                if ($rwgetRole['doc_weeding_out'] == '1' && $rwgetInfo['retention_feature_enable'] == '1') {
+									if (isset($rw['retention_period']) && !empty($rw['retention_period'])) {
+										$wedDate = $rw['retention_period'];
+										$weedDate = strtotime($wedDate);
+										$todate = strtotime(date("Y-m-d H:i:s"));
+										if ($todate >= ($weedDate - 30 * 24 * 60 * 60)) {
+											//if ($weedDate <= ($todate)) {
+										 
+										   $weed = '#FFAAAA';
+											$weedTile = $lang['retention_time_msg'] . ' : ' . date('d-m-Y H:i:s', $weedDate);
+										}
+									} else {
+										 // echo 'deve';
+										$weed = '';
+										$weedTile = '';
+									}
+								}
+								if ($rwgetRole['doc_expiry_time'] == '1' && $rwgetexpInfo['exp_feature_enable'] == '1') {
+									if (isset($rw['doc_expiry_period']) && !empty($rw['doc_expiry_period'])) {
+										$docexpDate = $rw['doc_expiry_period'];
+										$docexpDate = strtotime($docexpDate);
+										$todaydate = strtotime(date("Y-m-d H:i:s"));
+										if ($todaydate >= ($docexpDate - 30 * 24 * 60 * 60)) {
+											//if ($weedDate <= ($todate)) {
+											$docexpcolor = '#f5ca7f';
+											$expiryTitle = $lang['expiry_time_msg'] . ' : ' . date('d-m-Y H:i:s', $docexpDate);
+										}
+									} else {
+										$docexpcolor = '';
+										$expiryTitle = '';
+									}
+								}
+								
+								$checkoutcolor = ($rw['checkin_checkout'] == 0)?'#b7f1a3':'';
+								$checkoutTitle = ($rw['checkin_checkout'] == 0)?'File is checkout!':'';
+							  
+								
+								$docExpRetentionPeriod = "#a6ecf7";
+								$docExpRetentionPrdtitle = $expiryTitle . ' ' . $lang['and'] . $weedTile;
+								$shareDid = mysqli_query($db_con, "select doc_ids from tbl_document_share where doc_ids= '$rw[doc_id]'") or die("Error: " . mysqli_error($db_con));
+								$shreCount = mysqli_num_rows($shareDid);
+								
+								$subscribeid = mysqli_query($db_con, "select * from tbl_document_subscriber where subscribe_docid= '$rw[doc_id]' and subscriber_userid='" . $_SESSION['cdes_user_id'] . "'") or die("Error: " . mysqli_error($db_con));
+								$subsCountId = mysqli_num_rows($subscribeid);
+								
+								?>
+								<?php if ((!empty($weed) && !empty($weedTile)) && (!empty($docexpcolor) && !empty($expiryTitle))) { ?>
+									<tr class="gradeX" style="background-color: <?php echo $docExpRetentionPeriod; ?> !important" data-toggle="tooltip" title="<?php echo $docExpRetentionPrdtitle; ?>">
+									<?php } else if (!empty($docexpcolor) && !empty($expiryTitle)) { ?>
+									<tr class="gradeX" style="background-color: <?php echo $docexpcolor; ?> !important" data-toggle="tooltip" title="<?php echo $expiryTitle; ?>">         
+									<?php } else if (!empty($weed) && !empty($weedTile)) { ?>
+									<tr class="gradeX" style="background-color: <?php echo $weed; ?> !important" data-toggle="tooltip" title="<?php echo $weedTile; ?>">         
+								   <?php } else if (!empty($checkoutcolor) && !empty($checkoutTitle)) { ?>
+									<tr class="gradeX" style="background-color: <?php echo $checkoutcolor; ?> !important; color:#000;" data-toggle="tooltip" title="<?php echo $checkoutTitle; ?>">         
+									<?php } else { ?>
+										
+									<tr class="gradeX">           
+									<?php } ?>
+                                    <td>  
+                                        
+                                        <div class="checkbox checkbox-primary m-r-15"> <input  type="checkbox" class="checkbox-primary emp_checkbox" data-doc-id="<?php echo $rw['doc_id']; ?>" id="shreId"> <label for="checkbox6"> <?= $j . '.'; ?> </label></div>
+                                        <?php
+                                        if ($shreCount > 0) {
+                                            ?>
+                                            <span class="md md-share" style="font-size: 15px; color: #193860;" title="Shared document"></span>
+                                        <?php } ?>
+                                        <?php
+                                        if ($subsCountId > 0) {
+                                            ?>
+                                            <span class="fa fa-bell-o" style="font-size: 15px; color: #193860;" title="Subscribe document"></span>
+                                        <?php } ?>
+                                    </td>
+                                    <td> 
+                                        <?php if(file_exists('thumbnail/'.base64_encode($rw['doc_id']).'.jpg')){ ?>
+                                            <div> <img class="thumb-image" src="thumbnail/<?=base64_encode($rw['doc_id'])?>.jpg"> </div>
+                                        <?php } echo $rw['old_doc_name']; ?>
+
+                                    </td>
+
+                                     <td><?php echo formatSizeUnits($rw['doc_size']); ?></td>
+                                    <td><?= $rw['noofpages']; ?></td>
+
+                                    <td>
+                                <li class="dropdown top-menu-item-xs">
+                                    <?php
+                                    $checkfileLockqry = mysqli_query($db_con, "SELECT * FROM `tbl_locked_file_master` WHERE doc_id='$rw[doc_id]' and is_active='1'");
+                                    if (mysqli_num_rows($checkfileLockqry) > 0) {
+                                        $checkfileLock = mysqli_query($db_con, "SELECT * FROM `tbl_locked_file_master` WHERE doc_id='$rw[doc_id]' and is_active='1' and user_id='$_SESSION[cdes_user_id]'");
+                                        if (mysqli_num_rows($checkfileLock) > 0) {
+                                            ?>
+                                            <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-gear"></i></a>
+                                            <ul class="dropdown-menu pdf gearbody">
+                                                <li> 
+                                                    <?php
+                                                    if ($rw['checkin_checkout'] == 1) {
+                                                        //@sk(221118): include view handler to handle different file formats
+                                                        $file_row = $rw;
+                                                        require 'view-handler.php';
+                                                        ?>
+                                                    </li>
+                                                    <?php if(($rwFolder['is_protected']==0 || $_SESSION['pass'] == $rwFolder['password']) && (isFolderReadable($db_con, $idID))){ ?>
+                                                        <li>
+                                                            <?php
+                                                            /* ------Lock file code----- */
+                                                            if ($rwgetRole['lock_file'] == '1') {
+                                                                $checkfileLock = mysqli_query($db_con, "SELECT * FROM `tbl_locked_file_master` WHERE doc_id='$file_row[doc_id]' and user_id='$_SESSION[cdes_user_id]' and is_active='1'");
+                                                                if (mysqli_num_rows($checkfileLock) > 0) {
+                                                                    $fetchdatalock = mysqli_fetch_assoc($checkfileLock);
+                                                                    if ($fetchdatalock['is_locked'] == "1") {
+                                                                        ?>
+                                                                        <a href="javascript:void(0)" class ="unlock_file" data="<?php echo $file_row['doc_id']; ?>"> <i class="fa fa-unlock"  title="<?php echo $lang['unlock_file']; ?>"></i> <?php echo $lang['unlock_file']; ?></a>   
+                                                                        <?php
+                                                                    }
+                                                                } else {
+                                                                    ?>
+                                                                    <a href="javascript:void(0)" class ="lock_file" data="<?php echo $file_row['doc_id'] ?>"> <i class="fa fa-lock"  title="<?php echo $lang['lock_file']; ?>"></i> <?php echo $lang['lock_file']; ?></a>   
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </li>
+                                                        <?php if ($rwgetRole['view_metadata'] == '1') { ?>
+                                                            <li> <a href="javascript:void(0)" data-toggle="modal" data-target="#filemeta-modal"  onclick="getFileMetaData(<?php echo $file_row['doc_id'] ?>,<?php echo $file_row['doc_name'] ?>);" data="metaData<?php echo $j; ?>" id="viewMeta"><i class="fa fa-eye"></i> <?php echo $lang['View_MetaData']; ?></a></li>
+                                                            <li> <a href="javascript:void(0)"  data-toggle="modal" data-target="#con-close-modal-history" onclick="return getFileHistory(<?php echo $file_row['doc_id'] ?>,<?php echo $_GET['id']; ?>)"><i class="fa fa-history"></i> <?php echo $lang['history']; ?></a></li>
+
+                                                        <?php } if ($rwgetRole['file_review'] == '1') { ?>
+                                                            <?php if ((strtolower($file_row['doc_extn']) == 'pdf' || strtolower($file_row['doc_extn']) == 'doc' || strtolower($file_row['doc_extn']) == 'docx')) { ?>
+                                                                <li> <a href="reviewers?i=<?php echo urlencode(base64_encode($_SESSION['cdes_user_id'])) ?>&doc_Id=<?php echo urlencode(base64_encode($file_row['doc_id'])); ?>" id="moveTorw" data="<?php echo $file_row['doc_id']; ?>"> <i class="fa fa fa-send"></i> <?php echo $lang['Review']; ?></a></li><?php } ?>
+
+                                                        <?php } if ($rwgetRole['workflow_initiate_file'] == '1' || $rwgetRole['initiate_file'] == '1') { ?>
+                                                            <li> <a href="javascript:void(0)" data-toggle="modal" data-target="#assign-workflow" id="moveToWf" data="<?php echo $file_row['doc_id']; ?>"> <i class="fa fa-plus"></i> <?php echo $lang['Workflow']; ?></a></li>
+
+                                                             <?php } ?>
+
+                                            <?php if (strtolower($file_row['doc_extn']) == 'pdf' && $rwgetRole['splitpdf'] == '1') { ?>
+                                                <li><a href="viewer?id=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($file_row['doc_id'])); ?>&sp=<?php echo urlencode(base64_encode('1')); ?>" id="fancybox-inner" class="pdfview" target="_blank"><i class="fa fa-sign-out"></i> <?php echo $lang['splitpdf']; ?></a></li>
+                                                <?php
+                                            } ?>
+                                                        <?php if (strtolower($file_row['doc_extn']) == 'pdf' && $rwgetRole['pdf_annotation']) { ?>
+                                                                <li class="isprotected"> <a href="anott/add-delete-page?id1=<?php echo urlencode(base64_encode($file_row['doc_id'])); ?>&pn=1" target="_blank" > <i class="fa fa-plus"></i> <?php echo $lang['add_delete_pages']; ?></a></li>
+                                                            <?php } ?> 
+                                                        <?php if ($rwgetRole['checkin_checkout'] == '1') { ?>
+                                                            <li><a href="javascript:void(0)" id="checkout" data="<?php echo $file_row['doc_id']; ?>"><i class="fa fa-sign-out"></i> <?php echo $lang['Chk_Out']; ?></a></li>
+                                                            <?php } if ($rwgetRole['subscribe_document'] == '1') {
+                                                                ?>
+                                                                <li class="isprotected"><a href="javascript:void(0)"  id="singlesubscribe" data-toggle="modal" data-target="#subscribe" data="<?php echo $file_row['doc_id']; ?>"><i class="fa fa-bell-o"></i> <?php echo $lang['subscribe']; ?></a></li>
+                                                            <?php
+                                                        }if ($rwgetRole['file_delete'] == '1') {
+                                                            ?>
+                                                            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#con-close-modal2" id="removeRow" data="<?php echo $file_row['doc_id']; ?>"><i class="fa fa-trash"></i> <?php echo $lang['Delete']; ?> </a></li>
+                                                            <?php
+                                                        }
+                                                    
+                                                    }
+                                                } else {
+                                                    $file_row = $rw;
+                                                    require 'checkout-action.php';
+                                                }
+                                                ?>
+                                            </ul>
+                                        <?php } else {
+                                            ?>
+                                            <a href="javascript:void(0)" id="" data="<?php echo $rw['doc_id'] ?>" class="dropdown-toggle profile waves-effect waves-light send_lock_request" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-lock" title="<?php echo $lang['lock_file']; ?>"></i></a>
+
+                                            <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-gear"></i></a>
+                                        <ul class="dropdown-menu pdf gearbody">
+                                            <li> 
+                                                <?php
+                                                if ($rw['checkin_checkout'] == 1) {
+                                                    //@sk(221118): include view handler to handle different file formats
+                                                    $file_row = $rw;
+                                                    require 'view-handler.php';
+                                                    ?>
+                                                </li>
+                                                <?php if(($rwFolder['is_protected']==0 || $_SESSION['pass'] == $rwFolder['password']) && (isFolderReadable($db_con, $idID))){ ?>
+                                                    <li>
+                                                        <?php
+                                                        /* ------Lock file code----- */
+                                                        if ($rwgetRole['lock_file'] == '1') {
+                                                            $checkfileLock = mysqli_query($db_con, "SELECT * FROM `tbl_locked_file_master` WHERE doc_id='$file_row[doc_id]' and user_id='$_SESSION[cdes_user_id]' and is_active='1'");
+                                                            if (mysqli_num_rows($checkfileLock) > 0) {
+                                                                $fetchdatalock = mysqli_fetch_assoc($checkfileLock);
+                                                                if ($fetchdatalock['is_locked'] == "1") {
+                                                                    ?>
+                                                                    <a href="javascript:void(0)" class ="unlock_file" data="<?php echo $file_row['doc_id']; ?>"> <i class="fa fa-unlock"  title="<?php echo $lang['unlock_file']; ?>"></i> <?php echo $lang['unlock_file']; ?></a>   
+                                                                    <?php
+                                                                }
+                                                            } else {
+                                                                ?>
+                                                                <a href="javascript:void(0)" class ="lock_file" data="<?php echo $file_row['doc_id'] ?>"> <i class="fa fa-lock"  title="<?php echo $lang['lock_file']; ?>"></i> <?php echo $lang['lock_file']; ?></a>   
+                                                                <?php
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </li>
+                                                    <?php if ($rwgetRole['view_metadata'] == '1') { ?>
+                                                        <li> <a href="javascript:void(0)" data-toggle="modal" data-target="#filemeta-modal"  onclick="getFileMetaData(<?php echo $file_row['doc_id'] ?>,<?php echo $file_row['doc_name'] ?>);" data="metaData<?php echo $j; ?>" id="viewMeta"><i class="fa fa-eye"></i> <?php echo $lang['View_MetaData']; ?></a></li>
+                                                        <li> <a href="javascript:void(0)"  data-toggle="modal" data-target="#con-close-modal-history" onclick="return getFileHistory(<?php echo $file_row['doc_id'] ?>,<?php echo $_GET['id']; ?>)"><i class="fa fa-history"></i> <?php echo $lang['history']; ?></a></li>
+
+                                                    <?php } if ($rwgetRole['file_review'] == '1') { ?>
+                                                        <?php if ((strtolower($file_row['doc_extn']) == 'pdf' || strtolower($file_row['doc_extn']) == 'doc' || strtolower($file_row['doc_extn']) == 'docx')) { ?>
+                                                            <li> <a href="reviewers?i=<?php echo urlencode(base64_encode($_SESSION['cdes_user_id'])) ?>&doc_Id=<?php echo urlencode(base64_encode($file_row['doc_id'])); ?>" id="moveTorw" data="<?php echo $file_row['doc_id']; ?>"> <i class="fa fa fa-send"></i> <?php echo $lang['Review']; ?></a></li><?php } ?>
+
+                                                    <?php } if ($rwgetRole['workflow_initiate_file'] == '1' || $rwgetRole['initiate_file'] == '1') { ?>
+                                                        <li> <a href="javascript:void(0)" data-toggle="modal" data-target="#assign-workflow" id="moveToWf" data="<?php echo $file_row['doc_id']; ?>"> <i class="fa fa-plus"></i> <?php echo $lang['Workflow']; ?></a></li>
+
+                                                         <?php } ?>
+
+                                                        <?php if (strtolower($file_row['doc_extn']) == 'pdf' && $rwgetRole['splitpdf'] == '1') { ?>
+                                                            <li><a href="viewer?id=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($file_row['doc_id'])); ?>&sp=<?php echo urlencode(base64_encode('1')); ?>" id="fancybox-inner" class="pdfview" target="_blank"><i class="fa fa-sign-out"></i> <?php echo $lang['splitpdf']; ?></a></li>
+                                                            <?php
+                                                        } ?>
+
+                                                    <?php if (strtolower($file_row['doc_extn']) == 'pdf' && $rwgetRole['pdf_annotation']) { ?>
+                                                            <li class="isprotected"> <a href="anott/add-delete-page?id1=<?php echo urlencode(base64_encode($file_row['doc_id'])); ?>&pn=1" target="_blank" > <i class="fa fa-plus"></i> <?php echo $lang['add_delete_pages']; ?></a></li>
+                                                        <?php } ?> 
+                                                    <?php if ($rwgetRole['checkin_checkout'] == '1') { ?>
+                                                        <li><a href="javascript:void(0)" id="checkout" data="<?php echo $file_row['doc_id']; ?>"><i class="fa fa-sign-out"></i> <?php echo $lang['Chk_Out']; ?></a></li>
+
+                                                        <?php } if ($rwgetRole['subscribe_document'] == '1') {
+                                                        ?>
+                                                        <li class="isprotected"><a href="javascript:void(0)"  id="singlesubscribe" data-toggle="modal" data-target="#subscribe" data="<?php echo $file_row['doc_id']; ?>"><i class="fa fa-bell-o"></i> <?php echo $lang['subscribe']; ?></a></li>
+                                                        <?php
+                                                    }if ($rwgetRole['file_delete'] == '1') {
+                                                        ?>
+                                                        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#con-close-modal2" id="removeRow" data="<?php echo $file_row['doc_id']; ?>"><i class="fa fa-trash"></i> <?php echo $lang['Delete']; ?> </a></li>
+                                                        <?php
+                                                    }
+                                                }
+                                            } else {
+                                                $file_row = $rw;
+                                                require 'checkout-action.php';
+                                            }
+                                            ?>
+                                        </ul>
+                                    <?php } ?>
+                                </li>
+                                </td>
+                                <!--tr>
+                                    <td colspan="20">
+                                        <div id="metaData<?php echo $j; ?>"  class="metadata">
+                                            <?php
+                                            $getMetaId = mysqli_query($db_con, "select * from tbl_metadata_to_storagelevel where sl_id = '$file_row[doc_name]'"); //or die('Error:gg' . mysqli_error($db_con));
+
+                                            while ($rwgetMetaId = mysqli_fetch_assoc($getMetaId)) {
+
+                                                $getMetaName = mysqli_query($db_con, "select * from tbl_metadata_master where id = '$rwgetMetaId[metadata_id]'"); //or die('Error:' . mysqli_error($db_con));
+
+                                                while ($rwgetMetaName = mysqli_fetch_assoc($getMetaName)) {
+                                                    $meta = mysqli_query($db_con, "select `$rwgetMetaName[field_name]` from tbl_document_master where doc_id='$file_row[doc_id]'");
+                                                    $rwMeta = mysqli_fetch_assoc($meta);
+
+                                                    if (!empty($rwMeta[$rwgetMetaName['field_name']])) {
+                                                        if ($rwgetMetaName['field_name'] == 'noofpages' || $rwgetMetaName['field_name'] == 'filename') {
+                                                            
+                                                        } else {
+                                                            echo "<label>" . str_replace("_", " ", $rwgetMetaName['field_name']) . "</label> : ";
+                                                            if ($rwMeta[$rwgetMetaName['field_name']] != '0000-00-00 00:00:00') {
+
+                                                                echo str_replace("_", " ", $rwMeta[$rwgetMetaName['field_name']]);
+                                                            }
+                                                            echo " | ";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                    </td>
+                                </tr-->
+                                <?php
+                                echo'</tr>';
+                                $j++;
+                            }
+                            echo '</tbody>';
+                            mysqli_close($rs3);
+                        }
+                        ?>
+                        <tr>
+
+                            <td colspan="5">
+                                <?php if(($rwFolder['is_protected']==0 || $_SESSION['pass'] == $rwFolder['password']) && (isFolderReadable($db_con, $idID))){ ?>
+								
+                                <ul class="delete_export">
+                                    <input type="hidden" name="slid" id="slid" value="<?php echo $slid; ?>">
+                                    <input type="hidden" name="sty" id="sty" value="<?php echo $_GET['id']; ?>">
+                                    <?php if ($rwgetRole['file_delete'] == '1') { ?>
+                                        <li><button id="del_file" class="rows_selected btn btn-danger btn-sm" data-toggle="modal"  data-target="#del_send_to_recycle"><i data-toggle="tooltip" title="<?php echo $lang['Delete_files'] ?>" class="fa fa-trash-o"></i></button></li>
+                                    <?php } if ($rwgetRole['export_csv'] == '1') { ?>
+                                        <li><button class="btn btn-primary btn-sm" id="export4"  data-toggle="modal"  data-target="#multi-csv-export-model"><i data-toggle="tooltip" title="<?php echo $lang['Export_Data'] ?>" class="fa fa-download"></i></button></li>
+                                     <?php } if ($rwgetRole['share_file'] == '1') { ?>
+                                        <li><button class="rows_selected btn btn-primary btn-sm" id="shareFiles" data-toggle="modal" data-target="#share-selected-files"><i data-toggle="tooltip" title="<?php echo $lang['Share_files']; ?>" class="fa fa-share-alt"></i></button></li>
+                                    <?php } if ($rwgetRole['mail_files'] == '1') { ?>
+                                        <li><button class="rows_selected btn btn-primary btn-sm" id="mailFiles" data-toggle="modal" data-target="#mail-selected-files"><i data-toggle="tooltip" title="<?php echo $lang['mail_files']; ?>" class="fa fa-envelope-o"></i></button></li>
+                                    <?php } if ($rwgetRole['pdf_download'] == '1') { ?>
+                                        <li><button class="rows_selected btn btn-primary btn-sm" id="downloadcheckedfile" data-toggle="modal" data-target="#downloadfile"><i class="ti-import" data-toggle="tooltip" title="<?php echo $lang['download_selected_file']; ?>"></i></button></li>
+                                    <?php } ?>
+                                </ul>
+                                <?php } ?>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <?php
+                    //echo $subString="&limit=$limit";
+
+                    if ($limit && $start) {
+                        $subString = "&start=$start&limit=$limit";
+                        $queryString = str_replace($subString, "", $queryString);
+                    } elseif ($limit) {
+                        $subString = "&limit=$limit";
+                        $queryString = str_replace($subString, "", $queryString);
+                    }
+                    echo "<center>";
+
+                    $prev = $start - $per_page;
+                    $next = $start + $per_page;
+
+                    $adjacents = 3;
+                    $last = $max_pages - 1;
+                    if ($max_pages > 1) {
+                        ?>
+                        <ul class='pagination'>
+                            <?php
+                            //previous button
+                            if (!($start <= 0))
+                                echo " <li><a href='?$queryString&start=$prev&limit=$limit'>$lang[Prev]</a> </li>";
+                            else
+                                echo " <li class='disabled'><a href='javascript:(0)'>$lang[Prev]</a> </li>";
+                            //pages 
+                            if ($max_pages < 7 + ($adjacents * 2)) {   //not enough pages to bother breaking it up
+                                $i = 0;
+                                for ($counter = 1; $counter <= $max_pages; $counter++) {
+                                    if ($i == $start) {
+                                        echo " <li class='active'><a href='?$queryString&start=$i&limit=$limit'><b>$counter</b></a> </li>";
+                                    } else {
+                                        echo "<li><a href='?$queryString&start=$i&limit=$limit'>$counter</a></li> ";
+                                    }
+                                    $i = $i + $per_page;
+                                }
+                            } elseif ($max_pages > 5 + ($adjacents * 2)) {    //enough pages to hide some
+                                //close to beginning; only hide later pages
+                                if (($start / $per_page) < 1 + ($adjacents * 2)) {
+                                    $i = 0;
+                                    for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++) {
+                                        if ($i == $start) {
+                                            echo " <li class='active'><a href='?$queryString&start=$i&limit=$limit'><b>$counter</b></a></li> ";
+                                        } else {
+                                            echo "<li> <a href='?$queryString&start=$i&limit=$limit'>$counter</a> </li>";
+                                        }
+                                        $i = $i + $per_page;
+                                    }
+                                }
+                                //in middle; hide some front and some back
+                                elseif ($max_pages - ($adjacents * 2) > ($start / $per_page) && ($start / $per_page) > ($adjacents * 2)) {
+                                    echo " <li><a href='?$queryString&start=0&limit=$limit'>1</a></li> ";
+                                    echo "<li><a href='?$queryString&start=$per_page&limit=$limit'>2</a></li>";
+                                    echo "<li><a href='javascript:(0)'>...</a></li>";
+
+                                    $i = $start;
+                                    for ($counter = ($start / $per_page) + 1; $counter < ($start / $per_page) + $adjacents + 2; $counter++) {
+                                        if ($i == $start) {
+                                            echo " <li class='active'><a href='?$queryString&start=$i&limit=$limit'><b>$counter</b></a></li> ";
+                                        } else {
+                                            echo " <li><a href='?$queryString&start=$i&limit=$limit'>$counter</a> </li>";
+                                        }
+                                        $i = $i + $per_page;
+                                    }
+                                }
+                                //close to end; only hide early pages
+                                else {
+                                    echo "<li> <a href='?$queryString&start=0&limit=$limit'>1</a> </li>";
+                                    echo "<li><a href='?$queryString&start=$per_page'>2</a></li>";
+                                    echo "<li><a href='javascript:(0)'>...</a></li>";
+
+                                    $i = $start;
+                                    for ($counter = ($start / $per_page) + 1; $counter <= $max_pages; $counter++) {
+                                        if ($i == $start) {
+                                            echo " <li class='active'><a href='?$queryString&start=$i&limit=$limit'><b>$counter</b></a></li> ";
+                                        } else {
+                                            echo "<li> <a href='?$queryString&start=$i&limit=$limit'>$counter</a></li> ";
+                                        }
+                                        $i = $i + $per_page;
+                                    }
+                                }
+                            }
+                            //next button
+                            if (!($start >= $foundnum - $per_page))
+                                echo "<li><a href='?$queryString&start=$next&limit=$limit'>$lang[Next]</a></li>";
+                            else
+                                echo "<li class='disabled'><a href='javascript:(0)'>$lang[Next]</a></li>";
+                            ?>
+                        </ul>
+                        <?php
+                    }
+                    echo "</center>";
+                    ?>
+                </div>
+
+            <?php } else {
+                ?>
+                <div class="container">
+                    <table class="table table-striped table-bordered m-b-50">
+                        <thead>
+                            <tr>
+                                <th><?php echo $lang['Sr_No']; ?></th>
+                                <th><?php echo $lang['File_Name']; ?></th>
+                                <th><?php echo $lang['File_Size']; ?></th>
+                                <th><?php echo $lang['No_of_Pages']; ?></th>
+                                <th><?php echo $lang['Actions']; ?></th>
+                            </tr></thead>
+                        <tr>
+                            <td class="text-center" colspan="5">
+                                <strong class="text-danger"><i class="ti-face-sad text-pink"></i> <?php echo $lang['Who0ps!_No_Records_Found']; ?></strong>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+            </div>
+            <?php
+        }
+        ?>
+          
+       
+</html>
+
+<script type="text/javascript" src="assets/multi_function_script.js"></script>
+ <script>
+    $(document).ready(function(){
+        $("#downloadselectedfile").click(function () {
+            setTimeout(function(){ location.reload(); }, 2000);
+        });
+    });
+    
+</script>
+<?php require 'file-action-html.php'; ?>
+<?php require 'file-movement.php'; ?>
+<?php require 'file-action-php.php'; ?>
+
+
+<?php
+if (isset($_POST['savqry'], $_POST['token'])) {
+
+    $url = mysqli_real_escape_string($db_con, $_POST['url']);
+    // $query_name = mysqli_real_escape_string($db_con, $_POST['qry_name']);
+    $query_name = trim($_POST['qry_name']);
+    $cond = implode(',', $_POST['cond']);
+    $metadata = implode(',', $_POST['metadata']);
+    $text = implode(',', $_POST['query']);
+    mysqli_set_charset($db_con, "utf8");
+    $chkquery = mysqli_query($db_con, "SELECT * FROM query WHERE url='$url'");
+    if (mysqli_num_rows($chkquery) < 1) {
+        mysqli_set_charset($db_con, "utf8");
+        //print_r("INSERT INTO query SET url='$url',query='$text',metadata='$metadata',cond='$cond',query_name='$query_name', sl_id='".$_GET['id']."', user_id='".$_SESSION['cdes_user_id']."'");die;		
+        $uri_query = mysqli_query($db_con, "INSERT INTO query SET url='$url',query='$text',metadata='$metadata',cond='$cond',query_name='$query_name', sl_id='" . $_GET['id'] . "', user_id='" . $_SESSION['cdes_user_id'] . "'"); //or die(mysqli_error($db_con));
+
+        if ($uri_query) {
+            echo'<script>taskSuccess("' .basename($_SERVER['REQUEST_URI'])  . '","' . $lang['Query_Successfully_Saved'] . '");</script>';
+        }
+    } else {
+        echo'<script>taskFailed("' . basename($_SERVER['REQUEST_URI'])  . '","' . $lang['query_exist'] . '");</script>';
+    }
+}
+?>

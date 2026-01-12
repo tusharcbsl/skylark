@@ -1,0 +1,121 @@
+ABOUT EzeeFile:
+
+The main objective of the project is to reduce the use of paper based document management System by introducing Ezee DMS (Document Management System) that stores, manages and track the documents digitally making the retrieval of documents easy and hassle free.
+
+
+FEATURE LIST OF Ezeefile 1.0.0
+
+
+1.USER  MANAGEMENT:
+
+Create/Modify/Delete
+Log In with OTP/Without OTP
+User Authentication
+Password Management
+Change Password: 
+   Automatic Password log out(after no of days)
+   Password Pattern:
+   Length should be of minimum 8 characters
+   The characters should be alphanumeric.
+   Use of special character is recommended. 
+Group Management
+
+2.STORAGE METADATA MANAGEMENT:
+
+Storage 
+   Create Storage
+   Modify Storage
+   Create new child
+   Upload files
+   Move Storage
+   Copy Storage
+   Export CSV of Meta Data.
+   Delete Storage
+Meta Data
+   Meta data creation 
+   Assign Meta Data
+
+3.USER  ACTIVITIES:
+
+Import/Export
+   Single File Upload
+   Bulk Upload
+Email Configuration
+Multi Lingual Support
+Download
+Recycle Bin
+Shared with me
+Shared Files
+   Content Search
+   Meta data Search
+   Quick Search
+    
+File Sharing
+Bulk Download Files
+Check in/ Check out
+Move/Copy Files
+
+4.ANNOTATION:
+
+Text Box
+Highlight 
+Signing with scanned signature
+Green sheet or PDF
+
+5.DOCUMENT VIEWER:
+
+PDF Viewer
+PDF Searchable 
+Tiff Searchable
+JPEG
+GIF
+JFIF
+MS Office/Excel
+Audio
+Video
+?Watermark
+
+6.AUDIT TRIAL:
+
+User Audit
+Storage Audit
+Work Flow Audit
+
+7.WORKFLOW MANAGEMENT:
+
+Create/Update/Delete Work Flow
+Create/Update/Delete steps/Tasks
+Initiate Work Flow
+Initiate File
+Track the status of any task
+
+8. DOCUMENT SHARING
+9. BULK DOWNLOAD FILES
+10.EMAIL CONFIGURATION
+11.TRIAL VERSION
+12.USER ROLE WISE LOGIN
+13.LDAP LOGIN
+14.SAS BASED PROJECT
+15.READY FOR POSTGRE SQL & ORACLE DB
+16.S3 AMAZON CLOUD SUPPORTS
+17.SUPPORT STANDARDS DC, OAI- PMH, SWORD, WEBDAV, OPEN SEARCH, OPEN  URL,RSS, ATOM
+18.WORD/POWERPOINT/EXCEL INTEGRATION WITH DMS APPLICATION.
+19.MAC OS/MOBILE COMPATIBILITY
+20.INTEGRATION ON LINUX/WINDOWS
+21.BACK UP OF STORAGE (AUTOMATION)
+22.FOLDER WISE BACK UP OF STORAGE(DR)
+23.RESTORATION OF STORAGE ON EACH FOLDER AND FILE LEVEL.
+24.CODE SECURITY
+25.LICENSE APPROVAL ON UPLOADING DOCS.
+26.NEWS (USED AS A NOTICE BOARD)
+27.DATA ANALYTICS ON DMS
+28.SOFTWARE PROJECT MANAGEMENT
+
+
+
+
+
+ 
+
+   
+                          

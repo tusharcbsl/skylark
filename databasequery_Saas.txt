@@ -1,0 +1,7 @@
+
+
+ALTER TABLE `tbl_user_roles` ADD `export_ocr` TINYINT NULL DEFAULT '0';
+UPDATE `tbl_user_roles` SET `export_ocr` = '1' WHERE `tbl_user_roles`.`role_id` =1;
+ALTER TABLE `tbl_document_master` ADD `ftp_done` ENUM('0','1','2','3') NOT NULL DEFAULT '0' COMMENT '0-pending, 1-done, 2-initiated, 3-declined';
+
+ALTER TABLE `tbl_user_roles` ADD COLUMN `export_user_perm` TINYINT UNSIGNED NOT NULL DEFAULT 0 AFTER `upload_files`;

@@ -1,0 +1,874 @@
+ALTER TABLE events MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE events MODIFY  title varchar(255) NULL; -run
+ALTER TABLE events MODIFY  date date NOT NULL; -run
+ALTER TABLE events MODIFY  created datetime NOT NULL; -run
+ALTER TABLE events MODIFY  modified datetime NOT NULL; -run
+ALTER TABLE events MODIFY  status tinyint(1) DEFAULT 1 NOT NULL; -run
+
+ALTER TABLE notification_log MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE notification_log MODIFY  user_id int(11) NOT NULL; -run
+ALTER TABLE notification_log MODIFY  type varchar(255) NOT NULL; -run
+ALTER TABLE notification_log MODIFY  is_sent int(11) NOT NULL; -run
+ALTER TABLE notification_log MODIFY  tstp timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL; -run
+
+ALTER TABLE query MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE query MODIFY  url varchar(255) NOT NULL; -run
+ALTER TABLE query MODIFY  query varchar(255) NULL; -run
+ALTER TABLE query MODIFY  metadata varchar(255) NULL; -run
+ALTER TABLE query MODIFY  cond varchar(255) NULL; -run
+ALTER TABLE query MODIFY  query_name text NOT NULL; -run
+
+ALTER TABLE tbl_anotation MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_anotation MODIFY  doc_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_anotation MODIFY  anotation_type varchar(45) NOT NULL; -run
+ALTER TABLE tbl_anotation MODIFY  anotation_by varchar(100) NULL; -run
+ALTER TABLE tbl_anotation MODIFY  page_no int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_anotation MODIFY  co_ordinate varchar(45) NOT NULL; -run
+ALTER TABLE tbl_anotation MODIFY  date_time datetime NOT NULL; -run
+
+ALTER TABLE tbl_authority_master MODIFY  authority_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_authority_master MODIFY  authority_name varchar(50) NOT NULL; -run
+ALTER TABLE tbl_authority_master MODIFY  authority_mail varchar(100) NOT NULL; -run
+
+ALTER TABLE tbl_bridge_grp_to_report MODIFY  grpid int(11) NOT NULL; -run
+ALTER TABLE tbl_bridge_grp_to_report MODIFY  report_id int(11) NOT NULL; -run
+ALTER TABLE tbl_bridge_grp_to_report MODIFY  group_id varchar(255) NOT NULL; -run
+
+ALTER TABLE tbl_bridge_grp_to_sl MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_bridge_grp_to_sl MODIFY  group_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_bridge_grp_to_sl MODIFY  sl_id int(10) unsigned NULL; -run
+
+ALTER TABLE tbl_bridge_grp_to_um MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_bridge_grp_to_um MODIFY  group_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_bridge_grp_to_um MODIFY  user_ids text NULL; -run
+ALTER TABLE tbl_bridge_grp_to_um MODIFY  roleids text NULL; -run
+
+ALTER TABLE tbl_bridge_role_to_um MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE tbl_bridge_role_to_um MODIFY  role_id int(11) NULL; -run
+ALTER TABLE tbl_bridge_role_to_um MODIFY  user_ids text NULL; -run
+
+ALTER TABLE tbl_bridge_workflow_to_form MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE tbl_bridge_workflow_to_form MODIFY  workflow_id int(11) NOT NULL; -run
+ALTER TABLE tbl_bridge_workflow_to_form MODIFY  form_id int(11) NOT NULL; -run
+
+ALTER TABLE tbl_doc_assigned_wf MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  task_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  doc_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  start_date datetime NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  end_date datetime NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  task_deadline varchar(45) NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  task_status varchar(45) NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  task_remarks text NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  assign_by int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  action_by int(10) NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  action_time datetime NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  NextTask tinyint(1) unsigned NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  ticket_id varchar(100) NULL; -run
+
+ALTER TABLE tbl_doc_review MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  doc_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  start_date datetime NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  task_status varchar(45) NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  task_remarks text NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  assign_by int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  action_by int(10) NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  action_time datetime NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  next_task tinyint(1) unsigned NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  ticket_id varchar(100) NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  review_order int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  review_status tinyint(1) unsigned NULL; -run
+
+ALTER TABLE tbl_document_master MODIFY  doc_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_document_master MODIFY  doc_name varchar(45) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  old_doc_name text NULL; -run
+ALTER TABLE tbl_document_master MODIFY  doc_extn varchar(255) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  doc_path varchar(500) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  uploaded_by varchar(45) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  noofpages varchar(20) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  doc_size int(255) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  filename varchar(200) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  dateposted datetime NULL; -run
+ALTER TABLE tbl_document_master MODIFY  flag_multidelete tinyint(4) unsigned DEFAULT 1 NOT NULL; -run
+ALTER TABLE tbl_document_master MODIFY  doc_desc text NULL; -run
+ALTER TABLE tbl_document_master MODIFY  checkin_checkout tinyint(4) DEFAULT 1 NULL; -run
+ALTER TABLE tbl_document_master MODIFY  weeding_Out_Date varchar(255) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  File_Number varchar(255) NULL; -run
+
+ALTER TABLE tbl_document_reviewer MODIFY  doc_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  doc_name varchar(45) NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  old_doc_name text NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  doc_extn varchar(45) NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  doc_path text NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  uploaded_by varchar(45) NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  doc_size int(100) unsigned NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  noofpages varchar(45) NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  dateposted datetime NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  doc_desc longtext NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  File_Number varchar(255) NULL; -run
+
+ALTER TABLE tbl_document_share MODIFY  id int(10) NOT NULL; -run
+ALTER TABLE tbl_document_share MODIFY  from_id int(11) NOT NULL; -run
+ALTER TABLE tbl_document_share MODIFY  to_ids text NOT NULL; -run
+ALTER TABLE tbl_document_share MODIFY  doc_ids text NOT NULL; -run
+ALTER TABLE tbl_document_share MODIFY  share_date datetime NULL; -run
+
+ALTER TABLE tbl_email_config MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  user_id varchar(45) NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  user_email varchar(100) NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  password varchar(200) NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  mailServer varchar(100) NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  port varchar(45) NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  ssl tinyint(3) unsigned NOT NULL; -fail-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ssl tinyint(3) unsigned NOT NULL' at line 1
+ALTER TABLE tbl_email_config MODIFY  validate tinyint(3) unsigned NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  active tinyint(3) unsigned NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  filters text NULL; -run
+
+ALTER TABLE tbl_ezeefile_logs MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  user_id varchar(45) NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  user_name char(100) NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  group_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  sl_id int(11) NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  doc_id varchar(255) NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  action_name text NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  start_date datetime NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  end_date datetime NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  system_ip varchar(45) NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  remarks varchar(100) NULL; -run
+
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  user_id varchar(45) NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  user_name char(100) NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  group_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  sl_id int(11) NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  doc_id int(11) NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  action_name text NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  start_date datetime NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  end_date datetime NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  system_ip varchar(45) NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  remarks varchar(100) NULL; -run
+
+ALTER TABLE tbl_faq_master MODIFY  id int(10) NOT NULL; -run
+ALTER TABLE tbl_faq_master MODIFY  question text NOT NULL; -run
+ALTER TABLE tbl_faq_master MODIFY  answer text NOT NULL; -run
+ALTER TABLE tbl_faq_master MODIFY  user_id int(10) NOT NULL; -run
+ALTER TABLE tbl_faq_master MODIFY  dateposted datetime NOT NULL; -run
+ALTER TABLE tbl_faq_master MODIFY  product text NOT NULL; -run
+
+ALTER TABLE tbl_form_attribute MODIFY  aid int(11) NOT NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  fid int(11) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  label varchar(100) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  name varchar(100) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  type varchar(100) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  class varchar(255) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  multiple_files varchar(100) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  required varchar(20) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  placeholder varchar(100) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  value text NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  maxlength int(4) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  dependency_id int(11) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  inline int(4) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  selected varchar(15) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  subtype varchar(30) NULL; -run
+
+ALTER TABLE tbl_form_master MODIFY  fid int(11) NOT NULL; -run
+ALTER TABLE tbl_form_master MODIFY  form_name varchar(80) NOT NULL; -run
+
+ALTER TABLE tbl_group_master MODIFY  group_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_group_master MODIFY  group_name varchar(45) NULL; -run
+
+ALTER TABLE tbl_mail_list MODIFY  mail_id int(11) NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  send_by varchar(200) NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  send_to text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  send_cc text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  send_bcc text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  subject text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  mail_body text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  alt_body text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  mail_time datetime NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  ip varchar(20) NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  module_name varchar(100) NOT NULL; -run
+
+ALTER TABLE tbl_metadata_master MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE tbl_metadata_master MODIFY  field_name varchar(50) NULL; -run
+ALTER TABLE tbl_metadata_master MODIFY  data_type varchar(50) NULL; -run
+ALTER TABLE tbl_metadata_master MODIFY  length_data varchar(50) NULL; -run
+ALTER TABLE tbl_metadata_master MODIFY  mandatory varchar(50) NULL; -run
+
+ALTER TABLE tbl_metadata_to_storagelevel MODIFY  metadata_id int(255) NULL; -run
+ALTER TABLE tbl_metadata_to_storagelevel MODIFY  sl_id int(255) NULL; -run
+
+ALTER TABLE tbl_my_mails MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  user_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  from varchar(100) NULL; -fail-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from varchar(100) NULL' at line 1
+ALTER TABLE tbl_my_mails MODIFY  to text NULL; -fail-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to text NULL' at line 1
+ALTER TABLE tbl_my_mails MODIFY  cc text NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  bcc text NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  subject text NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  body_email longtext NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  message_id varchar(100) NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  email_date datetime NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  attachment tinyint(3) unsigned NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  uid bigint(20) unsigned NULL; -run
+
+ALTER TABLE tbl_reviews_log MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  user_id varchar(45) NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  doc_id int(11) NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  action_name text NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  start_date datetime NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  end_date datetime NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  system_ip varchar(45) NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  remarks varchar(100) NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  in_review tinyint(1) unsigned NULL; -run
+
+ALTER TABLE tbl_step_master MODIFY  step_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_step_master MODIFY  step_name varchar(100) NULL; -run
+ALTER TABLE tbl_step_master MODIFY  step_description varchar(500) NULL; -run
+ALTER TABLE tbl_step_master MODIFY  workflow_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_step_master MODIFY  step_order float unsigned NULL; -run
+
+ALTER TABLE tbl_storage_level MODIFY  sl_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_storage_level MODIFY  sl_name varchar(45) NULL; -run
+ALTER TABLE tbl_storage_level MODIFY  sl_parent_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_storage_level MODIFY  sl_depth_level varchar(45) NULL; -run
+
+ALTER TABLE tbl_storagelevel_to_permission MODIFY  user_id int(11) NOT NULL; -run
+ALTER TABLE tbl_storagelevel_to_permission MODIFY  sl_id int(11) NOT NULL; -run
+
+ALTER TABLE tbl_task_comment MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  task_id int(10) NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  tickt_id varchar(100) NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  user_id int(11) NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  comment text NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  task_status varchar(45) NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  comment_time datetime NULL; -run
+
+ALTER TABLE tbl_task_master MODIFY  task_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_name varchar(100) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_description varchar(500) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  assign_user varchar(100) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  alternate_user varchar(100) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  priority_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_task_master MODIFY  deadline varchar(45) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  deadline_type varchar(20) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_instructions text NULL; -run
+ALTER TABLE tbl_task_master MODIFY  supervisor varchar(45) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  authority_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_order float unsigned NULL; -run
+ALTER TABLE tbl_task_master MODIFY  step_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_task_master MODIFY  workflow_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_start_date datetime NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_end_date datetime NULL; -run
+ALTER TABLE tbl_task_master MODIFY  working_hour varchar(255) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_status varchar(45) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_created_date datetime NULL; -run
+ALTER TABLE tbl_task_master MODIFY  reminder varchar(45) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  actions varchar(100) DEFAULT Approved,Rejected,Aborted,Complete,Processed,Done NULL; -fail-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Approved,Rejected,Aborted,Complete,Processed,Done NULL' at line 1
+
+ALTER TABLE tbl_user_master MODIFY  user_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_user_master MODIFY  user_email_id varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  first_name char(50) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  last_name char(50) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  password text NULL; -run
+ALTER TABLE tbl_user_master MODIFY  designation varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  phone_no bigint(10) unsigned NULL; -run
+ALTER TABLE tbl_user_master MODIFY  profile_picture longblob NULL; -run
+ALTER TABLE tbl_user_master MODIFY  superior_name char(50) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  superior_email varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  user_created_date datetime NULL; -run
+ALTER TABLE tbl_user_master MODIFY  current_login_status tinyint(1) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  last_active_login varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  last_active_logout varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  system_ip varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  otp varchar(10) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  user_sign varchar(100) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  active_inactive_users tinyint(4) DEFAULT 1 NULL; -run
+ALTER TABLE tbl_user_master MODIFY  lang varchar(45) DEFAULT English NULL; -fail-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'English NULL' at line 1
+ALTER TABLE tbl_user_master MODIFY  emp_id varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  failed_login_attempts tinyint(3) unsigned NULL; -run
+ALTER TABLE tbl_user_master MODIFY  usr_acvt_dacvt tinyint(3) unsigned NULL; -run
+
+ALTER TABLE tbl_user_roles MODIFY  role_id int(10) NOT NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  user_role varchar(255) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  dashboard_mydms tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  dashboard_mytask tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  dashboard_edit_profile tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  dashboard_query tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  create_user tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  modify_userlist tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_userlist tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_userlist tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  storage_auth_plcy tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_group tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_group tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  modify_group tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_group_list tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  role_add tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  role_delete tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  role_modi tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  role_view tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  bulk_upload tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_metadata tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_metadata tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  assign_metadata tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  create_storage tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  create_child_storage tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  upload_doc_storage tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  modify_storage_level tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_storage_level tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  move_storage_level tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  copy_storage_level tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_user_audit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_storage_audit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  create_workflow tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_workflow_list tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  edit_workflow tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_workflow tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  workflow_step tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  workflow_initiate_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  workflow_task_track tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  metadata_search tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  metadata_quick_search tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_view tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_edit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_delete tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_anot tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_coment tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_anot_delete tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  initiate_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  num_of_folder tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  num_of_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  memory_used tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  pdf_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  doc_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  excel_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  image_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  audio_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  video_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  pdf_print tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  pdf_download tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  pdf_annotation tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_version tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_version tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  update_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  workflow_audit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  email_config tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  online_user tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  tif_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_faq tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_faq tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  edit_faq tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  del_faq tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_recycle_bin tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  restore_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  permanent_del tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  shared_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  share_with_me tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  export_csv tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  move_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  copy_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  share_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  checkin_checkout tinyint(4) DEFAULT 1 NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  bulk_download tinyint(4) DEFAULT 1 NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  involve_workflow tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  run_workflow tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  feedback_msg tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  mail_lists tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  xls_download tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  xls_print tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_report tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_report tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_report tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  update_report tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  holiday tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  user_graph tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  create_client tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  export_user tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  import_user tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  user_activate_deactivate tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  meta_modify tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  meta_delete tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_page tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_page_inbtwn tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_page_no tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  wf_log tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  review_log tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  review_intray tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  review_track tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  todo_add tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  todo_edit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  todo_archive tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  todo_view tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  appoint_add tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  appoint_edit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  appoint_archive tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  appoint_view tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  customize_label tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  word_edit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_metadata tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  edit_metadata tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_psd tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_cdr tinyint(4) NULL; -run
+
+ALTER TABLE tbl_wf_reports MODIFY  rp_id int(11) NOT NULL; -run
+ALTER TABLE tbl_wf_reports MODIFY  wf_id int(11) NOT NULL; -run
+ALTER TABLE tbl_wf_reports MODIFY  coloums varchar(255) NOT NULL; -run
+ALTER TABLE tbl_wf_reports MODIFY  report_name varchar(255) NOT NULL; -run
+
+ALTER TABLE tbl_workflow_master MODIFY  workflow_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_workflow_master MODIFY  workflow_name varchar(100) NULL; -run
+ALTER TABLE tbl_workflow_master MODIFY  workflow_description text NULL; -run
+ALTER TABLE tbl_workflow_master MODIFY  form_req tinyint(3) unsigned NULL; -run
+ALTER TABLE tbl_workflow_master MODIFY  form_tbl_name varchar(255) NULL; -run
+ALTER TABLE tbl_workflow_master MODIFY  pdf_req tinyint(3) NULL; -run
+
+ALTER TABLE tbl_workflow_to_group MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE tbl_workflow_to_group MODIFY  workflow_id int(10) NULL; -run
+ALTER TABLE tbl_workflow_to_group MODIFY  group_id text NULL; -run
+
+ALTER TABLE todo_list MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  emp_id varchar(250) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_name varchar(250) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_description text NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_date date NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_time varchar(250) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_notification_frequency int(11) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_notify_time varchar(250) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  is_archived tinyint(4) NOT NULL; -run
+
+ALTER TABLE events MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE events MODIFY  title varchar(255) NULL; -run
+ALTER TABLE events MODIFY  date date NOT NULL; -run
+ALTER TABLE events MODIFY  created datetime NOT NULL; -run
+ALTER TABLE events MODIFY  modified datetime NOT NULL; -run
+ALTER TABLE events MODIFY  status tinyint(1) DEFAULT 1 NOT NULL; -run
+
+ALTER TABLE notification_log MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE notification_log MODIFY  user_id int(11) NOT NULL; -run
+ALTER TABLE notification_log MODIFY  type varchar(255) NOT NULL; -run
+ALTER TABLE notification_log MODIFY  is_sent int(11) NOT NULL; -run
+ALTER TABLE notification_log MODIFY  tstp timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL; -run
+
+ALTER TABLE query MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE query MODIFY  url varchar(255) NOT NULL; -run
+ALTER TABLE query MODIFY  query varchar(255) NULL; -run
+ALTER TABLE query MODIFY  metadata varchar(255) NULL; -run
+ALTER TABLE query MODIFY  cond varchar(255) NULL; -run
+ALTER TABLE query MODIFY  query_name text NOT NULL; -run
+
+ALTER TABLE tbl_anotation MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_anotation MODIFY  doc_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_anotation MODIFY  anotation_type varchar(45) NOT NULL; -run
+ALTER TABLE tbl_anotation MODIFY  anotation_by varchar(100) NULL; -run
+ALTER TABLE tbl_anotation MODIFY  page_no int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_anotation MODIFY  co_ordinate varchar(45) NOT NULL; -run
+ALTER TABLE tbl_anotation MODIFY  date_time datetime NOT NULL; -run
+
+ALTER TABLE tbl_authority_master MODIFY  authority_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_authority_master MODIFY  authority_name varchar(50) NOT NULL; -run
+ALTER TABLE tbl_authority_master MODIFY  authority_mail varchar(100) NOT NULL; -run
+
+ALTER TABLE tbl_bridge_grp_to_report MODIFY  grpid int(11) NOT NULL; -run
+ALTER TABLE tbl_bridge_grp_to_report MODIFY  report_id int(11) NOT NULL; -run
+ALTER TABLE tbl_bridge_grp_to_report MODIFY  group_id varchar(255) NOT NULL; -run
+
+ALTER TABLE tbl_bridge_grp_to_sl MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_bridge_grp_to_sl MODIFY  group_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_bridge_grp_to_sl MODIFY  sl_id int(10) unsigned NULL; -run
+
+ALTER TABLE tbl_bridge_grp_to_um MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_bridge_grp_to_um MODIFY  group_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_bridge_grp_to_um MODIFY  user_ids text NULL; -run
+ALTER TABLE tbl_bridge_grp_to_um MODIFY  roleids text NULL; -run
+
+ALTER TABLE tbl_bridge_role_to_um MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE tbl_bridge_role_to_um MODIFY  role_id int(11) NULL; -run
+ALTER TABLE tbl_bridge_role_to_um MODIFY  user_ids text NULL; -run
+
+ALTER TABLE tbl_bridge_workflow_to_form MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE tbl_bridge_workflow_to_form MODIFY  workflow_id int(11) NOT NULL; -run
+ALTER TABLE tbl_bridge_workflow_to_form MODIFY  form_id int(11) NOT NULL; -run
+
+ALTER TABLE tbl_doc_assigned_wf MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  task_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  doc_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  start_date datetime NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  end_date datetime NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  task_deadline varchar(45) NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  task_status varchar(45) NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  task_remarks text NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  assign_by int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  action_by int(10) NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  action_time datetime NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  NextTask tinyint(1) unsigned NULL; -run
+ALTER TABLE tbl_doc_assigned_wf MODIFY  ticket_id varchar(100) NULL; -run
+
+ALTER TABLE tbl_doc_review MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  doc_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  start_date datetime NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  task_status varchar(45) NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  task_remarks text NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  assign_by int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  action_by int(10) NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  action_time datetime NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  next_task tinyint(1) unsigned NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  ticket_id varchar(100) NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  review_order int(10) unsigned NULL; -run
+ALTER TABLE tbl_doc_review MODIFY  review_status tinyint(1) unsigned NULL; -run
+
+ALTER TABLE tbl_document_master MODIFY  doc_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_document_master MODIFY  doc_name varchar(45) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  old_doc_name text NULL; -run
+ALTER TABLE tbl_document_master MODIFY  doc_extn varchar(255) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  doc_path varchar(500) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  uploaded_by varchar(45) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  noofpages varchar(20) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  doc_size int(255) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  filename varchar(200) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  dateposted datetime NULL; -run
+ALTER TABLE tbl_document_master MODIFY  flag_multidelete tinyint(4) unsigned DEFAULT 1 NOT NULL; -run
+ALTER TABLE tbl_document_master MODIFY  doc_desc text NULL; -run
+ALTER TABLE tbl_document_master MODIFY  checkin_checkout tinyint(4) DEFAULT 1 NULL; -run
+ALTER TABLE tbl_document_master MODIFY  weeding_Out_Date varchar(255) NULL; -run
+ALTER TABLE tbl_document_master MODIFY  File_Number varchar(255) NULL; -run
+
+ALTER TABLE tbl_document_reviewer MODIFY  doc_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  doc_name varchar(45) NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  old_doc_name text NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  doc_extn varchar(45) NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  doc_path text NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  uploaded_by varchar(45) NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  doc_size int(100) unsigned NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  noofpages varchar(45) NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  dateposted datetime NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  doc_desc longtext NULL; -run
+ALTER TABLE tbl_document_reviewer MODIFY  File_Number varchar(255) NULL; -run
+
+ALTER TABLE tbl_document_share MODIFY  id int(10) NOT NULL; -run
+ALTER TABLE tbl_document_share MODIFY  from_id int(11) NOT NULL; -run
+ALTER TABLE tbl_document_share MODIFY  to_ids text NOT NULL; -run
+ALTER TABLE tbl_document_share MODIFY  doc_ids text NOT NULL; -run
+ALTER TABLE tbl_document_share MODIFY  share_date datetime NULL; -run
+
+ALTER TABLE tbl_email_config MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  user_id varchar(45) NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  user_email varchar(100) NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  password varchar(200) NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  mailServer varchar(100) NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  port varchar(45) NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  ssl tinyint(3) unsigned NOT NULL; -fail-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ssl tinyint(3) unsigned NOT NULL' at line 1
+ALTER TABLE tbl_email_config MODIFY  validate tinyint(3) unsigned NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  active tinyint(3) unsigned NOT NULL; -run
+ALTER TABLE tbl_email_config MODIFY  filters text NULL; -run
+
+ALTER TABLE tbl_ezeefile_logs MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  user_id varchar(45) NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  user_name char(100) NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  group_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  sl_id int(11) NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  doc_id varchar(255) NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  action_name text NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  start_date datetime NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  end_date datetime NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  system_ip varchar(45) NULL; -run
+ALTER TABLE tbl_ezeefile_logs MODIFY  remarks varchar(100) NULL; -run
+
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  user_id varchar(45) NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  user_name char(100) NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  group_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  sl_id int(11) NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  doc_id int(11) NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  action_name text NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  start_date datetime NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  end_date datetime NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  system_ip varchar(45) NULL; -run
+ALTER TABLE tbl_ezeefile_logs_wf MODIFY  remarks varchar(100) NULL; -run
+
+ALTER TABLE tbl_faq_master MODIFY  id int(10) NOT NULL; -run
+ALTER TABLE tbl_faq_master MODIFY  question text NOT NULL; -run
+ALTER TABLE tbl_faq_master MODIFY  answer text NOT NULL; -run
+ALTER TABLE tbl_faq_master MODIFY  user_id int(10) NOT NULL; -run
+ALTER TABLE tbl_faq_master MODIFY  dateposted datetime NOT NULL; -run
+ALTER TABLE tbl_faq_master MODIFY  product text NOT NULL; -run
+
+ALTER TABLE tbl_form_attribute MODIFY  aid int(11) NOT NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  fid int(11) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  label varchar(100) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  name varchar(100) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  type varchar(100) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  class varchar(255) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  multiple_files varchar(100) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  required varchar(20) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  placeholder varchar(100) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  value text NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  maxlength int(4) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  dependency_id int(11) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  inline int(4) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  selected varchar(15) NULL; -run
+ALTER TABLE tbl_form_attribute MODIFY  subtype varchar(30) NULL; -run
+
+ALTER TABLE tbl_form_master MODIFY  fid int(11) NOT NULL; -run
+ALTER TABLE tbl_form_master MODIFY  form_name varchar(80) NOT NULL; -run
+
+ALTER TABLE tbl_group_master MODIFY  group_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_group_master MODIFY  group_name varchar(45) NULL; -run
+
+ALTER TABLE tbl_mail_list MODIFY  mail_id int(11) NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  send_by varchar(200) NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  send_to text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  send_cc text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  send_bcc text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  subject text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  mail_body text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  alt_body text NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  mail_time datetime NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  ip varchar(20) NOT NULL; -run
+ALTER TABLE tbl_mail_list MODIFY  module_name varchar(100) NOT NULL; -run
+
+ALTER TABLE tbl_metadata_master MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE tbl_metadata_master MODIFY  field_name varchar(50) NULL; -run
+ALTER TABLE tbl_metadata_master MODIFY  data_type varchar(50) NULL; -run
+ALTER TABLE tbl_metadata_master MODIFY  length_data varchar(50) NULL; -run
+ALTER TABLE tbl_metadata_master MODIFY  mandatory varchar(50) NULL; -run
+
+ALTER TABLE tbl_metadata_to_storagelevel MODIFY  metadata_id int(255) NULL; -run
+ALTER TABLE tbl_metadata_to_storagelevel MODIFY  sl_id int(255) NULL; -run
+
+ALTER TABLE tbl_my_mails MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  user_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  from varchar(100) NULL; -fail-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from varchar(100) NULL' at line 1
+ALTER TABLE tbl_my_mails MODIFY  to text NULL; -fail-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to text NULL' at line 1
+ALTER TABLE tbl_my_mails MODIFY  cc text NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  bcc text NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  subject text NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  body_email longtext NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  message_id varchar(100) NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  email_date datetime NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  attachment tinyint(3) unsigned NULL; -run
+ALTER TABLE tbl_my_mails MODIFY  uid bigint(20) unsigned NULL; -run
+
+ALTER TABLE tbl_reviews_log MODIFY  id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  user_id varchar(45) NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  doc_id int(11) NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  action_name text NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  start_date datetime NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  end_date datetime NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  system_ip varchar(45) NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  remarks varchar(100) NULL; -run
+ALTER TABLE tbl_reviews_log MODIFY  in_review tinyint(1) unsigned NULL; -run
+
+ALTER TABLE tbl_step_master MODIFY  step_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_step_master MODIFY  step_name varchar(100) NULL; -run
+ALTER TABLE tbl_step_master MODIFY  step_description varchar(500) NULL; -run
+ALTER TABLE tbl_step_master MODIFY  workflow_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_step_master MODIFY  step_order float unsigned NULL; -run
+
+ALTER TABLE tbl_storage_level MODIFY  sl_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_storage_level MODIFY  sl_name varchar(45) NULL; -run
+ALTER TABLE tbl_storage_level MODIFY  sl_parent_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_storage_level MODIFY  sl_depth_level varchar(45) NULL; -run
+
+ALTER TABLE tbl_storagelevel_to_permission MODIFY  user_id int(11) NOT NULL; -run
+ALTER TABLE tbl_storagelevel_to_permission MODIFY  sl_id int(11) NOT NULL; -run
+
+ALTER TABLE tbl_task_comment MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  task_id int(10) NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  tickt_id varchar(100) NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  user_id int(11) NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  comment text NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  task_status varchar(45) NULL; -run
+ALTER TABLE tbl_task_comment MODIFY  comment_time datetime NULL; -run
+
+ALTER TABLE tbl_task_master MODIFY  task_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_name varchar(100) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_description varchar(500) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  assign_user varchar(100) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  alternate_user varchar(100) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  priority_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_task_master MODIFY  deadline varchar(45) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  deadline_type varchar(20) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_instructions text NULL; -run
+ALTER TABLE tbl_task_master MODIFY  supervisor varchar(45) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  authority_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_order float unsigned NULL; -run
+ALTER TABLE tbl_task_master MODIFY  step_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_task_master MODIFY  workflow_id int(10) unsigned NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_start_date datetime NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_end_date datetime NULL; -run
+ALTER TABLE tbl_task_master MODIFY  working_hour varchar(255) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_status varchar(45) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  task_created_date datetime NULL; -run
+ALTER TABLE tbl_task_master MODIFY  reminder varchar(45) NULL; -run
+ALTER TABLE tbl_task_master MODIFY  actions varchar(100) DEFAULT Approved,Rejected,Aborted,Complete,Processed,Done NULL; -fail-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Approved,Rejected,Aborted,Complete,Processed,Done NULL' at line 1
+
+ALTER TABLE tbl_user_master MODIFY  user_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_user_master MODIFY  user_email_id varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  first_name char(50) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  last_name char(50) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  password text NULL; -run
+ALTER TABLE tbl_user_master MODIFY  designation varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  phone_no bigint(10) unsigned NULL; -run
+ALTER TABLE tbl_user_master MODIFY  profile_picture longblob NULL; -run
+ALTER TABLE tbl_user_master MODIFY  superior_name char(50) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  superior_email varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  user_created_date datetime NULL; -run
+ALTER TABLE tbl_user_master MODIFY  current_login_status tinyint(1) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  last_active_login varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  last_active_logout varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  system_ip varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  otp varchar(10) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  user_sign varchar(100) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  active_inactive_users tinyint(4) DEFAULT 1 NULL; -run
+ALTER TABLE tbl_user_master MODIFY  lang varchar(45) DEFAULT English NULL; -fail-You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'English NULL' at line 1
+ALTER TABLE tbl_user_master MODIFY  emp_id varchar(45) NULL; -run
+ALTER TABLE tbl_user_master MODIFY  failed_login_attempts tinyint(3) unsigned NULL; -run
+ALTER TABLE tbl_user_master MODIFY  usr_acvt_dacvt tinyint(3) unsigned NULL; -run
+
+ALTER TABLE tbl_user_roles MODIFY  role_id int(10) NOT NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  user_role varchar(255) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  dashboard_mydms tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  dashboard_mytask tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  dashboard_edit_profile tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  dashboard_query tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  create_user tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  modify_userlist tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_userlist tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_userlist tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  storage_auth_plcy tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_group tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_group tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  modify_group tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_group_list tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  role_add tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  role_delete tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  role_modi tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  role_view tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  bulk_upload tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_metadata tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_metadata tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  assign_metadata tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  create_storage tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  create_child_storage tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  upload_doc_storage tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  modify_storage_level tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_storage_level tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  move_storage_level tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  copy_storage_level tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_user_audit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_storage_audit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  create_workflow tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_workflow_list tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  edit_workflow tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_workflow tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  workflow_step tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  workflow_initiate_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  workflow_task_track tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  metadata_search tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  metadata_quick_search tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_view tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_edit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_delete tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_anot tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_coment tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_anot_delete tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  initiate_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  num_of_folder tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  num_of_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  memory_used tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  pdf_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  doc_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  excel_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  image_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  audio_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  video_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  pdf_print tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  pdf_download tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  pdf_annotation tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  file_version tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_version tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  update_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  workflow_audit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  email_config tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  online_user tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  tif_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_faq tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_faq tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  edit_faq tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  del_faq tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_recycle_bin tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  restore_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  permanent_del tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  shared_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  share_with_me tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  export_csv tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  move_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  copy_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  share_file tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  checkin_checkout tinyint(4) DEFAULT 1 NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  bulk_download tinyint(4) DEFAULT 1 NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  involve_workflow tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  run_workflow tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  feedback_msg tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  mail_lists tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  xls_download tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  xls_print tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_report tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_report tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_report tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  update_report tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  holiday tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  user_graph tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  create_client tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  export_user tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  import_user tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  user_activate_deactivate tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  meta_modify tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  meta_delete tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_page tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_page_inbtwn tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  add_page_no tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  wf_log tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  review_log tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  review_intray tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  review_track tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  todo_add tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  todo_edit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  todo_archive tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  todo_view tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  appoint_add tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  appoint_edit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  appoint_archive tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  appoint_view tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  customize_label tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  word_edit tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  delete_metadata tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  edit_metadata tinyint(4) unsigned NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_psd tinyint(4) NULL; -run
+ALTER TABLE tbl_user_roles MODIFY  view_cdr tinyint(4) NULL; -run
+
+ALTER TABLE tbl_wf_reports MODIFY  rp_id int(11) NOT NULL; -run
+ALTER TABLE tbl_wf_reports MODIFY  wf_id int(11) NOT NULL; -run
+ALTER TABLE tbl_wf_reports MODIFY  coloums varchar(255) NOT NULL; -run
+ALTER TABLE tbl_wf_reports MODIFY  report_name varchar(255) NOT NULL; -run
+
+ALTER TABLE tbl_workflow_master MODIFY  workflow_id int(10) unsigned NOT NULL; -run
+ALTER TABLE tbl_workflow_master MODIFY  workflow_name varchar(100) NULL; -run
+ALTER TABLE tbl_workflow_master MODIFY  workflow_description text NULL; -run
+ALTER TABLE tbl_workflow_master MODIFY  form_req tinyint(3) unsigned NULL; -run
+ALTER TABLE tbl_workflow_master MODIFY  form_tbl_name varchar(255) NULL; -run
+ALTER TABLE tbl_workflow_master MODIFY  pdf_req tinyint(3) NULL; -run
+
+ALTER TABLE tbl_workflow_to_group MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE tbl_workflow_to_group MODIFY  workflow_id int(10) NULL; -run
+ALTER TABLE tbl_workflow_to_group MODIFY  group_id text NULL; -run
+
+ALTER TABLE todo_list MODIFY  id int(11) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  emp_id varchar(250) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_name varchar(250) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_description text NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_date date NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_time varchar(250) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_notification_frequency int(11) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  task_notify_time varchar(250) NOT NULL; -run
+ALTER TABLE todo_list MODIFY  is_archived tinyint(4) NOT NULL; -run
+
