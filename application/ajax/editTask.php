@@ -354,24 +354,25 @@ if (intval($_POST['ID'])) {
                 </select>
             </div>
         </div>
-        
-        <div class="col-md-6">
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <label for="userName"><?php echo $lang['task_request_on']; ?></label>
-                </div>
-                <div class="col-md-8">
-                    <select class="form-control" id="" name="enable_edit_btn" required>
-                        <option><?php echo "Select Option" ?></option>
-                        <option value="1"
-                            <?= ($rwgetTask['enable_edit_btn'] == '1') ? 'selected' : '' ?>>
-                            <?php echo $lang['edit_form']; ?>
-                        </option>
+        <?php if($_SESSION['cdes_user_id'] ==1){ ?>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label for="userName"><?php echo $lang['task_request_on']; ?></label>
+                    </div>
+                    <div class="col-md-8">
+                        <select class="form-control" id="" name="enable_edit_btn" required>
+                            <option><?php echo "Select Option" ?></option>
+                            <option value="1"
+                                <?= ($rwgetTask['enable_edit_btn'] == '1') ? 'selected' : '' ?>>
+                                <?php echo $lang['edit_form']; ?>
+                            </option>
 
-                    </select>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
     </div>
     <script src="assets/plugins/moment/moment.js"></script>

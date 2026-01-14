@@ -681,7 +681,8 @@
             $wrkHur = $wfrm . ' To ' . $wto;
 
             $altrusr = $_POST['altrusr'];
-            $enable_edit_btn = $_POST['enable_edit_btn'];
+            $enable_edit_btn = (!empty($_POST['enable_edit_btn'])) ? $_POST['enable_edit_btn'] : 0;
+
 
 
             $deadlineType = $_POST['radio'];
@@ -753,7 +754,6 @@
             $wrkHur = $wfrm . ' To ' . $wto;
 
             $altrusr = $_POST['altrusr'];
-            $enable_edit_btn = $_POST['enable_edit_btn'];
 
             $deadlineType = $_POST['radio'];
             
@@ -782,8 +782,14 @@
             $taskIns = $_POST['taskIns'];
             $supvsr = $_POST['supvsr'];
             mysqli_set_charset($db_con, "utf8");
-            $tskName = mysqli_query($db_con, "select task_name from tbl_task_master where task_id = '$taskId'"); //or die('Error in getting task name:' . mysqli_error($db_con));
+            $tskName = mysqli_query($db_con, "select task_name, enable_edit_btn from tbl_task_master where task_id = '$taskId'"); //or die('Error in getting task name:' . mysqli_error($db_con));
             $rwTaskName = mysqli_fetch_assoc($tskName);
+            if($_SESSION['cdes_user_id'] == 1){
+                $enable_edit_btn = $_POST['enable_edit_btn'];
+            }else{
+                $enable_edit_btn = $rwTaskName['enable_edit_btn'];
+            }
+
             $getTskName = $rwTaskName['task_name'];
             mysqli_set_charset($db_con, "utf8");
             $wrkfNme = mysqli_query($db_con, "select workflow_name from tbl_workflow_master where workflow_id = '$wfid'"); // or die('Error in getting wrkfl name:' . mysqli_error($db_con));

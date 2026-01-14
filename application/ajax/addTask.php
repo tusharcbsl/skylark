@@ -3,16 +3,16 @@ require_once '../../sessionstart.php';
 if (!isset($_SESSION['cdes_user_id'])) {
     header("location:../../logout.php");
 }
-if (isset($_SESSION['lang'])){
-     $file = "../../".$_SESSION['lang'].".json";
- } else {
-     $file = "../../English.json";
- }
- $data = file_get_contents($file);
- $lang = json_decode($data, true);
+if (isset($_SESSION['lang'])) {
+    $file = "../../" . $_SESSION['lang'] . ".json";
+} else {
+    $file = "../../English.json";
+}
+$data = file_get_contents($file);
+$lang = json_decode($data, true);
 require './../config/database.php';
 //for user role
-$langDetail = mysqli_query($db_con, "select * from tbl_language where lang_name='".$_SESSION['lang']."'") or die('Error : ' . mysqli_error($db_con));
+$langDetail = mysqli_query($db_con, "select * from tbl_language where lang_name='" . $_SESSION['lang'] . "'") or die('Error : ' . mysqli_error($db_con));
 $langDetail = mysqli_fetch_assoc($langDetail);
 
 $sameGroupIDs = array();
@@ -45,9 +45,9 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
 
 <link href="assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
 <link href="assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-<link href="assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />      
+<link href="assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
 
-<div class="row">  
+<div class="row">
     <div class="col-md-6">
         <div class="form-group row">
             <div class="col-md-4">
@@ -56,7 +56,7 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
 
             <div class="col-md-8">
                 <input type="text" class="form-control" value="<?php echo $rwgetStep['step_order']; ?>" readonly>
-                <input type="hidden" value="<?php echo $id; ?>" name="stepid"/>
+                <input type="hidden" value="<?php echo $id; ?>" name="stepid" />
 
             </div>
         </div>
@@ -109,7 +109,8 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
                             <div class="radio radio-primary">
                                 <input type="radio" name="radio" id="radio" value="Date" checked>
                                 <label for="radio">
-                                    <?php //echo $lang['Date']; ?> &nbsp;&nbsp;&nbsp;
+                                    <?php //echo $lang['Date']; 
+                                    ?> &nbsp;&nbsp;&nbsp;
                                 </label>
                             </div>
                         </td-->
@@ -126,28 +127,28 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
                             <div class="radio radio-primary">
                                 <input type="radio" name="radio" id="radio2" value="Hrs">
                                 <label for="radio2">
-                                    <?php echo $lang['Hrs'];?> &nbsp;&nbsp;&nbsp;
+                                    <?php echo $lang['Hrs']; ?> &nbsp;&nbsp;&nbsp;
                                 </label>
                             </div>
                         </td>
                     </tr>
                 </table>
                 <!--input type="text" class="form-control input-daterange-timepicker" name="daterange" value="" id="dateRange" -->
-                <input type="text" class="form-control days" name="days" value="" data-parsley-type="digits"  id="days"  placeholder="<?php echo $lang['Days']; ?>"/>
-                <input type="text" class="form-control days" name="hrs" value="" id="hrs" style="display: none;" data-parsley-type="digits" placeholder="<?php echo $lang['Hrs'];?>"/>
+                <input type="text" class="form-control days" name="days" value="" data-parsley-type="digits" id="days" placeholder="<?php echo $lang['Days']; ?>" />
+                <input type="text" class="form-control days" name="hrs" value="" id="hrs" style="display: none;" data-parsley-type="digits" placeholder="<?php echo $lang['Hrs']; ?>" />
             </div>
         </div>
 
     </div>
-    
+
     <div class="col-md-6">
         <div class="form-group row" id="multiselect">
             <div class="col-md-4">
-                <label for="userName"><?php echo $lang['User_Assign'];?><span style="color: red;">*</span></label>
+                <label for="userName"><?php echo $lang['User_Assign']; ?><span style="color: red;">*</span></label>
             </div>
             <div class="col-md-8">
                 <select class="selectpicker" data-live-search="true" name="asiusr" data-style="btn-white" required>
-                    <option selected disabled><?php echo $lang['Select_User']?></option>
+                    <option selected disabled><?php echo $lang['Select_User'] ?></option>
                     <?php
                     mysqli_set_charset($db_con, "utf8");
                     $user = mysqli_query($db_con, "select * from tbl_user_master where user_id in($sameGroupIDs) order by first_name,last_name asc");
@@ -164,20 +165,20 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
     <div class="col-md-6">
         <div class="form-group row">
             <div class="col-md-4">
-                <label for="userName"><?php echo $lang['Alternate_User']?></label>
+                <label for="userName"><?php echo $lang['Alternate_User'] ?></label>
             </div>
             <div class="col-md-8">
                 <select class="selectpicker" data-live-search="true" name="altrusr" data-style="btn-white">
-                    <option selected disabled><?php echo $lang['Alternate_User']?></option>
+                    <option selected disabled><?php echo $lang['Alternate_User'] ?></option>
                     <?php
                     mysqli_set_charset($db_con, "utf8");
                     $user = mysqli_query($db_con, "select * from tbl_user_master where user_id in($sameGroupIDs) order by first_name,last_name asc");
                     while ($rwUser = mysqli_fetch_assoc($user)) {
                         if ($rwUser['user_id'] != 1 && $_SESSION['cdes_user_id'] != $rwUser['user_id']) {
-                            ?>
+                    ?>
                             <option value="<?php echo $rwUser['user_id']; ?>"><?php echo $rwUser['first_name'] . ' ' . $rwUser['last_name']; ?></option>
 
-                            <?php
+                    <?php
                         }
                     }
                     ?>
@@ -188,7 +189,7 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
     <div class="col-md-6">
         <div class="form-group row">
             <div class="col-md-4">
-                <label for="userName"><?php echo $lang['Supervisors']?><span style="color: red;">*</span></label>
+                <label for="userName"><?php echo $lang['Supervisors'] ?><span style="color: red;">*</span></label>
             </div>
             <div class="col-md-8">
                 <select class="selectpicker" data-live-search="true" name="supvsr" data-style="btn-white" required>
@@ -198,10 +199,10 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
                     $user = mysqli_query($db_con, "select * from tbl_user_master where user_id in($sameGroupIDs) order by first_name,last_name asc");
                     while ($rwUser = mysqli_fetch_assoc($user)) {
                         if ($rwUser['user_id'] != 1 && $_SESSION['cdes_user_id'] != $rwUser['user_id']) {
-                            ?>
+                    ?>
                             <option value="<?php echo $rwUser['user_id']; ?>"><?php echo $rwUser['first_name'] . ' ' . $rwUser['last_name']; ?></option>
 
-                            <?php
+                    <?php
                         }
                     }
                     ?>
@@ -209,34 +210,34 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
             </div>
         </div>
     </div>
-    
-<div class="col-md-6">
-    <div class="form-group row">
-        <div class="col-md-4">
-            <label for="userName"><?php echo $lang['Tsk_Instruct'];?></label>
-        </div>
-        <div class="col-md-8">
-            <textarea class="form-control translatetext" rows="2" name="taskIns"></textarea>
+
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label for="userName"><?php echo $lang['Tsk_Instruct']; ?></label>
+            </div>
+            <div class="col-md-8">
+                <textarea class="form-control translatetext" rows="2" name="taskIns"></textarea>
+            </div>
         </div>
     </div>
-</div>
     <div class="col-md-6">
         <div class="form-group row">
             <div class="col-md-6">
-                <label for="action"><?php echo $lang['Slt_Act'];?><span style="color:red;">*</span></label>
+                <label for="action"><?php echo $lang['Slt_Act']; ?><span style="color:red;">*</span></label>
             </div>
-            <select class="select31 select2-multiple" name="action[]" multiple="multiple" multiple data-placeholder="<?php echo $lang['Slt_Act']; ?>"  parsley-trigger="change" id="group" required>
-            <option value="Approved"><?php echo $lang['Approved'];?></option>
-            <option value="Rejected"><?php echo $lang['Rejected'];?></option>
-            <option value="Aborted"><?php echo $lang['Aborted'];?></option>
-             <option value="Processed"><?php echo $lang['Processed'];?></option>
-            <option value="Complete"><?php echo $lang['Complete'];?></option>
-            <option value="Done"><?php echo $lang['Done'];?></option>
+            <select class="select31 select2-multiple" name="action[]" multiple="multiple" multiple data-placeholder="<?php echo $lang['Slt_Act']; ?>" parsley-trigger="change" id="group" required>
+                <option value="Approved"><?php echo $lang['Approved']; ?></option>
+                <option value="Rejected"><?php echo $lang['Rejected']; ?></option>
+                <option value="Aborted"><?php echo $lang['Aborted']; ?></option>
+                <option value="Processed"><?php echo $lang['Processed']; ?></option>
+                <option value="Complete"><?php echo $lang['Complete']; ?></option>
+                <option value="Done"><?php echo $lang['Done']; ?></option>
             </select>
         </div>
     </div>
-    
-    <div class="col-md-6">
+    <?php if ($_SESSION['cdes_user_id'] == 1) { ?>
+        <div class="col-md-6">
             <div class="form-group row">
                 <div class="col-md-4">
                     <label for="userName"><?php echo $lang['task_request_on']; ?></label>
@@ -252,6 +253,7 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
                 </div>
             </div>
         </div>
+    <?php } ?>
 </div>
 
 <script src="assets/plugins/moment/moment.js"></script>
@@ -260,11 +262,11 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
 <script src="assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-    jQuery(document).ready(function () {
+    jQuery(document).ready(function() {
         $('.selectpicker').selectpicker();
         //number only in text
 
-        $("input.days").keypress(function (e) {
+        $("input.days").keypress(function(e) {
             //  alert();
             //if the letter is not digit then display error and don't type anything
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 46) {
@@ -280,14 +282,12 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
                 }
             }
         });
-        
-        $('input, textarea').keyup(function ()
-        {
+
+        $('input, textarea').keyup(function() {
             var groupName = $(this).val();
             re = /[`1234567890~!@#$%^&*()|+\=?;:'",.<>\{\}\[\]\\\/]/gi;
             var isSplChar = re.test(groupName);
-            if (isSplChar)
-            {
+            if (isSplChar) {
                 var no_spl_char = groupName.replace(/[`~!@#$%^&*()|+\=?;:'",.<>\{\}\[\]\\\/]/gi, '');
                 $(this).val(no_spl_char);
             }
@@ -303,7 +303,7 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
     jQuery('#timepicker3').timepicker({
         minuteStep: 15
     });
-//Date range picker
+    //Date range picker
     $('.input-daterange-datepicker').daterangepicker({
         buttonClasses: ['btn', 'btn-sm'],
         applyClass: 'btn-default',
@@ -371,16 +371,14 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
             monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             firstDay: 1
         }
-    }, function (start, end, label) {
+    }, function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
     });
-
-
 </script>
 <!-- jQuery  -->
 <script>
-    $("input:radio[name='radio']").click(function () {
+    $("input:radio[name='radio']").click(function() {
 
         var val = $(this).val();
 
@@ -402,13 +400,13 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
     });
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
-       // $('form').parsley();
+    $(document).ready(function() {
+        // $('form').parsley();
 
     });
     $(".select31").select2();
     //firstname last name 
-    $("input#taskName").keypress(function (e) {
+    $("input#taskName").keypress(function(e) {
         //if the letter is not digit then display error and don't type anything
         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 46) {
             //display error message
@@ -422,10 +420,9 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
             return false;
         }
     });
-
 </script>
 
- <script type="text/javascript">
+<script type="text/javascript">
     google.load("elements", "1", {
         packages: "transliteration"
     });
@@ -440,12 +437,12 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
         };
 
         var control =
-        new google.elements.transliteration.TransliterationControl(options);
+            new google.elements.transliteration.TransliterationControl(options);
         //var ids = ["groupName12"];
         var elements = document.getElementsByClassName('translatetext');
         control.makeTransliteratable(elements);
     }
-    $.getScript('assets/js/test.js', function () {
+    $.getScript('assets/js/test.js', function() {
         // Call custom function defined in script
         onLoad();
     });
