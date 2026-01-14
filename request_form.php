@@ -1,6 +1,5 @@
 <?php
-// print_r($railway_details);
-// die('ss');
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,7 +19,6 @@ require_once './loginvalidate.php';
 require_once './application/pages/head.php';
 require_once './application/pages/function.php';
 require_once './classes/fileManager.php';
-
 //error_reporting(E_ALL);
 $user_id = $_SESSION['cdes_user_id'];
 
@@ -127,10 +125,12 @@ if ($rwgetRole['metadata_quick_search'] != '1') {
                                                             <img src="assets/images/pra1.JPEG" class="south_railway" alt="Italian Trulli">
                                                         </th>
                                                     <?php } else {
-                                                        ?>
-                                                        
-                                                        <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                                            <img src="assets/images/raipur.jpg" class="south_railway" alt="Italian Trulli">
+                                                    ?>
+
+                                                        <th class="col-md-2 text-center align-middle" rowspan="2">
+                                                            <img src="assets/images/ecr.png"
+                                                                class="img-fluid south_railway"
+                                                                alt="ECR Logo">
                                                         </th>
                                                     <?php } ?>
                                                 </tr>
@@ -139,11 +139,11 @@ if ($rwgetRole['metadata_quick_search'] != '1') {
                                                         <th class="col-md-8" style="vertical-align:middle; text-align:center;">
                                                             Project Doubling of Railway Project comprising the section commencing from(--) Road station (End CH 967.055)
                                                             to Surajpur Road Station (End CH : 1006.44) (KM-39.385 KM) beside existing single 84 line in the state of chhattisgarh in the
-                                                            south East centeral Railway Zone Agt No: SECR/SECRC/CMI/2024/0008/ dt 14-Mar-2024.
+                                                            East centeral Railway Zone Agt No: SECR/SECRC/CMI/2024/0008/ dt 14-Mar-2024.
                                                         </th>
                                                     <?php } else { ?>
                                                         <th class="col-md-8" style="vertical-align:middle; text-align:center;">
-                                                            Major Up-Gradation of Raipur Railway Station of SECR on EPC Mode </th>
+                                                            Major Upgradation / Redevelopment of Darbhanga Junction Railway Station in Samastipur Division, East Central Railway </th>
                                                     <?php } ?>
                                                     <th></th>
                                                 </tr>
@@ -152,253 +152,244 @@ if ($rwgetRole['metadata_quick_search'] != '1') {
 
                                         <table class="table table-bordered upper">
                                             <thead>
-                                                <?php if ($form_type == 1) { ?>
+                                                <?php if ($rwgetWorkflwIdDs['form_type'] == 1) { ?>
                                                     <tr>
-                                                        <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : South East Central Railway</th>
-                                                        <th class="col-md-6" colspan="3" style="text-align:center; vertical-align:middle;">Contractor : Barbrik Project Limited</th>
+                                                        <th colspan="3" class="text-left">Client : East Central Railway</th>
+                                                        <th colspan="3" class="text-center">Contractor : SIEPL - ALTIS (JV)</th>
                                                     </tr>
                                                 <?php } else { ?>
                                                     <tr>
-                                                        <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : South East Central Railway</th>
-
-                                                        <th class="col-md-6" colspan="3" style="text-align:center; vertical-align:middle;">
-                                                            Contractor : RPP-SATHYAMOORTHY JV
-                                                        </th>
+                                                        <th colspan="3" class="text-left">Client : East Central Railway</th>
+                                                        <th colspan="3" class="text-center">Contractor : SIEPL - ALTIS (JV)</th>
                                                     </tr>
                                                 <?php } ?>
-                                                <tr>
-                                                    <th class="col-md-2 top-center" style="text-align:center; vertical-align:middle;">RFI No</th>
-                                                    <th class="col-md-2 top-center" style="text-align:center; vertical-align:middle;">RFI Date</th>
-                                                    <th class="col-md-2 top-center" style="text-align:center; vertical-align:middle;">Type <br> (Regular/Spot)</th>
-                                                    <th class="col-md-2 top-center" style="text-align:center; vertical-align:middle;">Name Of the Contractor's Engineer offering the work for inspection</th>
-                                                    <th class="col-md-2 top-center" style="text-align:center; vertical-align:middle;">Item No as per contract <br> (for payment)</th>
-                                                    <th class="col-md-2 top-center" style="text-align:center; vertical-align:middle;">Inspection Required On</th>
+
+                                                <tr class="text-center">
+                                                    <th>RFI No</th>
+                                                    <th>Structure ID</th>
+                                                    <th>Location</th>
+                                                    <th>Date</th>
+                                                    <th>Request of Inspection</th>
+                                                    <th>Inspection Required On</th>
                                                 </tr>
                                             </thead>
-                                        </table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control"
+                                                            name="rfi_no"
+                                                            value="<?php echo $railway_details['rfi_no'] ?>" readonly>
 
+                                                    </td>
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control"
+                                                            name="structure_id"
+                                                            placeholder="Enter Structure ID" value="<?php echo $railway_details['structure_id'] ?>" readonly>
+                                                    </td>
+
+                                                    <!-- Location -->
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control"
+                                                            name="location"
+                                                            placeholder="Enter Location"
+                                                            value="<?php echo $railway_details['location'] ?>" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="date"
+                                                            class="form-control"
+                                                            name="inspection_required_date"
+                                                            value="<?php echo $railway_details['inspection_required_date'] ?>" readonly>
+                                                    </td>
+
+                                                    <!-- Request of Inspection -->
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control"
+                                                            name="name_of_the_contractor"
+                                                            placeholder="Enter Name"
+                                                            value="<?php echo $railway_details['name_of_the_contractor'] ?>" readonly>
+                                                    </td>
+
+                                                    <!-- Inspection Required On -->
+                                                    <td>
+                                                        <input type="datetime-local"
+                                                            class="form-control"
+                                                            name="inspected_on_date"
+                                                            value="<?= !empty($railway_details['inspected_on_date'])
+                                                                        ? date('Y-m-d\TH:i', strtotime($railway_details['inspected_on_date']))
+                                                                        : '' ?>"
+                                                            readonly>
+                                                    </td>
+
+                                                </tr>
+                                        </table>
                                         <table class="table table-bordered upper">
                                             <tr>
-                                                <th class="col-md-2">
-                                                    <?php
-                                                    $num = 1;
-                                                    ?>
-                                                    <input type="text" class="form-control" name="rfi_no" value="<?php echo $railway_details['rfi_no'] ?>" readonly>
-                                                    <?php $num++; ?>
+                                                <th rowspan="2" colspan="2" style="vertical-align: middle; text-align:center;">
+                                                    Location
                                                 </th>
-                                                <th class="col-md-2">
-                                                    <input type="date" id="date1" class="form-control" name="rfi_date" placeholder="Start" value="<?php echo $railway_details['rfi_date'] ?>" readonly />
-                                                </th>
-                                                <th class="col-md-2">
-                                                    <select id="selectType" class="form-control" name="type_regular" disabled>
-                                                        <option value="">Select Type</option> <!-- Default prompt -->
-                                                        <option value="Regular" <?php echo (isset($railway_details['type_regular']) && $railway_details['type_regular'] == 'Regular') ? 'selected' : ''; ?>>Regular</option>
-                                                        <option value="Spot" <?php echo (isset($railway_details['type_regular']) && $railway_details['type_regular'] == 'Spot') ? 'selected' : ''; ?>>Spot</option>
-                                                    </select>
 
+                                                <th rowspan="2" style="vertical-align: middle;">
+                                                    <input type="text"
+                                                        id="location_from"
+                                                        class="form-control"
+                                                        placeholder="Location"
+                                                        name="location_from" value="<?php echo $railway_details['location_from'] ?>" readonly>
                                                 </th>
-                                                <th class="col-md-2">
-                                                    <input type="text" class="form-control" placeholder="Name of Contractor" name="name_of_the_contractor" value="<?php echo $railway_details['name_of_the_contractor'] ?>" readonly>
-                                                </th>
-                                                <th class="col-md-2">
-                                                    <input type="text" class="form-control" name="item_no_as_per" value="<?php echo $railway_details['item_no_as_per'] ?>" readonly>
 
-                                                    <!-- <select class="form-control" name="item_no_as_per" disabled>
-                                                        <option value="1" <?php //echo (isset($_POST['item_no_as_per']) && $_POST['item_no_as_per'] == '1') ? 'selected' : ''; ?>>1</option>
-                                                        <option value="2" <?php //echo (isset($_POST['item_no_as_per']) && $_POST['item_no_as_per'] == '2') ? 'selected' : ''; ?>>2</option>
-                                                        <option value="3" <?php //echo (isset($_POST['item_no_as_per']) && $_POST['item_no_as_per'] == '3') ? 'selected' : ''; ?>>3</option>
-                                                        <option value="4" <?php //echo (isset($_POST['item_no_as_per']) && $_POST['item_no_as_per'] == '4') ? 'selected' : ''; ?>>4</option>
-                                                        <option value="5" <?php //echo (isset($_POST['item_no_as_per']) && $_POST['item_no_as_per'] == '5') ? 'selected' : ''; ?>>5</option>
-                                                    </select> -->
+                                                <th rowspan="2" colspan="2" style="vertical-align: middle; text-align:center;">
+                                                    Structure Detail
                                                 </th>
-                                                <th class="col-md-2">
-                                                    <input type="date" id="date2" class="form-control" placeholder="End" name="inspection_required_date" value="<?php echo $railway_details['inspection_required_date'] ?>" readonly />
+                                            </tr>
+
+                                            <tr>
+                                                <th rowspan="2" style="vertical-align: middle;">
+                                                    <textarea class="form-control"
+                                                        placeholder="Structure Detail"
+                                                        name="description_of_work"
+                                                        rows="2"
+                                                        readonly><?php echo $railway_details['description_of_work']; ?></textarea>
                                                 </th>
+                                            </tr>
+
+                                        </table>
+
+                                        <div class="row">
+
+                                            <!-- Left Table -->
+                                            <div class="col-md-6">
+                                                <table class="table table-bordered upper">
+
+                                                    <tr>
+                                                        <th colspan="8" style="text-align:center;">Requested by</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="2" style="text-align:right;">Name :</th>
+                                                        <th colspan="3">
+                                                            <input type="text" class="form-control" name="requested_name" id="requested_name" placeholder="Name" value="<?php echo $railway_details['requested_name'] ?>" readonly>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="2" style="text-align:right;">Agency :</th>
+                                                        <th colspan="3">
+                                                            <input type="text" class="form-control" name="requested_agency" id="requested_agency" placeholder="Agency" value="<?php echo $railway_details['requested_agency'] ?>" readonly>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="2" style="text-align:right;">Date :</th>
+                                                        <th colspan="3">
+                                                            <input type="datetime-local"
+                                                                class="form-control"
+                                                                name="requested_date"
+                                                                id="requested_date"
+                                                                value="<?= date('Y-m-d\TH:i', strtotime($railway_details['requested_date'])) ?>"
+                                                                readonly>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+
+                                            <!-- Right Table -->
+                                            <div class="col-md-6">
+                                                <table class="table table-bordered upper">
+                                                    <tr>
+                                                        <th colspan="8" style="text-align:center;">Received by</th>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th colspan="2" style="text-align:right;">Signature :</th>
+                                                        <th colspan="3">
+                                                            <input type="text" class="form-control" name="received_sign" id="received_sign" placeholder="Signature" value="<?php echo $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'] ?>">
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="2" style="text-align:right;">Name :</th>
+                                                        <th colspan="3">
+                                                            <input type="text" class="form-control" name="received_name" id="received_name" placeholder="Name" value="<?php echo $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'] ?>" >
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="2" style="text-align:right;">Designation :</th>
+                                                        <th colspan="3">
+                                                            <input type="text" class="form-control" name="received_designation" id="received_designation" placeholder="Designation" value="<?php echo $_SESSION['designation'] ?>" >
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="2" style="text-align:right;">Date :</th>
+                                                        <th colspan="3">
+                                                            <input type="datetime-local" class="form-control" name="received_date" id="received_date" value="<?= date('Y-m-d\TH:i') ?>">
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="inspection-box mt-3" style="padding:15px; font-family:serif;">
+
+                                            <h5 style="text-decoration:underline;"><b>INSPECTION RESULTS:</b></h5>
+
+                                            <p><b>Mark to Indicate</b></p>
+
+                                            <div style="margin-left:40px;">
+                                                <span>Approval for Commencement of work.</span><br>
+
+                                                <span>Remedial works required as below but no further approval required.</span><br>
+
+                                                <span>Remedial works required as below but re-inspection and approval required.</span><br>
+                                            </div>
+
+                                            <br>
+
+                                            <label>Comments if any :</label>
+                                            <textarea class="form-control"
+                                                rows="3"
+                                                name="inspection_comment"
+                                                readonly><?php echo htmlspecialchars($railway_details['inspection_comment']); ?></textarea>
+
+
+                                        </div>
+
+                                        <table class="table table-bordered mt-3">
+                                            <tr>
+                                                <th rowspan="2">Signature</th>
+                                                <th>Agency</th>
+                                                <th>PMC</th>
+                                                <th>Railway</th>
+                                            </tr>
+
+                                            <tr>
+                                                <td><input type="text" class="form-control" name="agency_sign" readonly></td>
+                                                <td><input type="text" class="form-control" name="pmc_sign" readonly></td>
+                                                <td><input type="text" class="form-control" name="railway_sign" readonly></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Name</th>
+                                                <td><input type="text" class="form-control" name="agency_name" readonly></td>
+                                                <td><input type="text" class="form-control" name="pmc_name" readonly></td>
+                                                <td><input type="text" class="form-control" name="railway_name" readonly></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Designation</th>
+                                                <td><input type="text" class="form-control" name="agency_desig" readonly></td>
+                                                <td><input type="text" class="form-control" name="pmc_desig" readonly></td>
+                                                <td><input type="text" class="form-control" name="railway_desig" readonly></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Date</th>
+                                                <td><input type="date" class="form-control" name="agency_date" readonly></td>
+                                                <td><input type="date" class="form-control" name="pmc_date" readonly></td>
+                                                <td><input type="date" class="form-control" name="railway_date" readonly></td>
                                             </tr>
                                         </table>
 
-                                        <table class="table table-bordered upper">
-                                            <tr>
-                                                <th class="col-md-2" rowspan="2" colspan="2">Location / Chainage</th>
-                                                <th class="col-md-4" rowspan="2">
-                                                    <div class="col-md-12">
-                                                        <input type="text" id="location_from" class="form-control" placeholder="Location / Chainage" name="location_from" value="<?php echo $railway_details['location_from'] ?>" readonly>
-                                                    </div>
-                                                   
-                                                </th>
-                                                <th class="col-md-4" colspan="1" style="text-align:left;" readonly>Name Of the Inspecting Engineer</th>
-                                                <th class="col-md-2" readonly>Inspected On</th>
-                                            </tr>
-                                            <tr>
-                                                <th style="height: 40px;">
-                                                    <input type="text" class="form-control" placeholder="Name of the Inspecting Engineer" name="name_of_the_inspecting_engineer">
-                                                </th>
-                                                <th style="height: 40px;">
-                                                    <input type="date" class="form-control" placeholder="Start" name="inspected_on_date" />
-                                                </th>
-                                            </tr>
-                                        </table>
-
-                                        <table class="table table-bordered upper">
-                                            <!-- <tr>
-                                                <th class="col-md-12" colspan="6">
-                                                    Request for Inspection of the following works, Which are /will be ready for inspection
-                                                </th>
-                                            </tr> -->
-                                            <!-- <tr>
-                                                <th class="col-md-3">1. C&G</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="C&G" name="c_and_g" value="1"
-                                                        <?php //echo (isset($railway_details['c_and_g']) && $railway_details['c_and_g'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-
-                                                <th class="col-md-3">8. Concreting</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="concreting" name="concreting" value="1"
-                                                        <?php //echo (isset($railway_details['concreting']) && $railway_details['concreting'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-3">2. Earthwork</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="earthwork" name="earthwork" value="1"
-                                                        <?php //echo (isset($railway_details['earthwork']) && $railway_details['earthwork'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                                <th class="col-md-3">9. Drain/Retaining Wall</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="drain_retaining_wall" name="drain_retaining_wall" value="1"
-                                                        <?php //echo (isset($railway_details['drain_retaining_wall']) && $railway_details['drain_retaining_wall'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-3">3. Blanketing</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="blanketing" name="blanketing" value="1"
-                                                        <?php //echo (isset($railway_details['blanketing']) && $railway_details['blanketing'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                                <th class="col-md-3">10. Roads</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="roads" name="roads" value="1"
-                                                        <?php //echo (isset($railway_details['roads']) && $railway_details['roads'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-3">4. Survey</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="survey" name="survey" value="1"
-                                                        <?php //echo (isset($railway_details['survey']) && $railway_details['survey'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                                <th class="col-md-3">11. Utilities</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="utilities" name="utilities" value="1"
-                                                        <?php //echo (isset($railway_details['utilities']) && $railway_details['utilities'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-3">5. Safety</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="safety" name="safety" value="1"
-                                                        <?php //echo (isset($railway_details['safety']) && $railway_details['safety'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                                <th class="col-md-3">12. Dismantling of Pway</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="dismantling_of_Pway" name="dismantling_of_Pway" value="1"
-                                                        <?php //echo (isset($railway_details['dismantling_of_Pway']) && $railway_details['dismantling_of_Pway'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-3">6. QC/Material</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="qc_material" name="qc_material" value="1"
-                                                        <?php //echo (isset($railway_details['qc_material']) && $railway_details['qc_material'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                                <th class="col-md-3">13. Bridge Work</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="bridge_work" name="bridge_work" value="1"
-                                                        <?php //echo (isset($railway_details['bridge_work']) && $railway_details['bridge_work'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-3">7. Shuttering/Reinforcement</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="shuttering_reinforcement" name="shuttering_reinforcement" value="1"
-                                                        <?php //echo (isset($railway_details['shuttering_reinforcement']) && $railway_details['shuttering_reinforcement'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                                <th class="col-md-3">14. Other</th>
-                                                <th class="col-md-3">
-                                                    <input type="checkbox" class="form-check-input" id="other" name="other" value="1"
-                                                        <?php //echo (isset($railway_details['other']) && $railway_details['other'] == '1') ? 'checked' : ''; ?>
-                                                        disabled>
-                                                </th>
-                                            </tr> -->
-
-                                            <tr>
-                                                <th colspan="" style="text-align:left; vertical-align:top; height: 200px">Description of Work offered for Inspection</th>
-                                                <th colspan="3" style="text-align:left; vertical-align:top;">
-                                                    <input type="text" style="height: 50px;" class="form-control" placeholder="Description of Work" name="description_of_work" value="<?php echo $railway_details['description_of_work'] ?>" readonly>
-                                                </th>
-                                            </tr>
-
-                                            <tr>
-                                                <th class="col-md-3" colspan="1" style="text-align:left; vertical-align:top; height: 100px">Enclosures attached with RFI</th>
-                                                <th colspan="3" style="text-align:left; vertical-align:top;">
-                                                    <input type="text" style="height: 50px;" class="form-control" placeholder="Enclosures Attached With RFI" name="enclosures_attached">
-                                                </th>
-                                                <th class="col-md-9" colspan="3" style="text-align:center; vertical-align:middle; height: 100px"></th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-6" colspan="2" style="text-align:left; vertical-align:top; height: 100px">Signature of the Contractor's Representative requesting for Inspection</th>
-                                                    <th class="col-md-6" colspan="3">
-
-                                                        <input class="form-control" style="text-align:left; vertical-align:top;" name="signature_of_the_contractor" placeholder="Signature of the Contractor" value="<?php echo $railway_details['signature_of_the_contractor'] ?>" readonly></input>
-                                                    </th>
-
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-6" colspan="2" style="text-align:left; vertical-align:top; height: 100px">Remarks of the Inspection Engineer (Representative of Authority Engineer)</th>
-                                                <th class="col-md-6" colspan="3">
-                                                    <textarea class="form-control" style="text-align:left; vertical-align:top;" name="remarks_of_the_inspection"></textarea>
-                                                </th>
-                                            </tr>
-                                            <!-- <tr>
-                                                <th class="col-md-3" colspan="4" style="text-align:center; vertical-align:top; height: 40px">
-                                                    Approved <input type="checkbox" class="form-check-input" id="check1" name="approved" disabled>
-                                                    / Not Approved <input type="checkbox" class="form-check-input" id="check2" name="not_approved" disabled>
-                                                </th>
-                                            </tr> -->
-                                            <tr>
-                                                <th colspan="2">Signature of the Inspection Engineer Representative of Authority Engineer</th>
-                                                <th colspan="3"><input type="text" style="height: 50px;" class="form-control" name="signature_of_the_inspection"></th>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2" style="text-align:right;">Date :</th>
-                                                <th colspan="3"><span name="date"></span><input type="text" style="height: 50px;" class="form-control" name="date" value="<?php echo date('d/m/y') ?>" readonly></th>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2" style="text-align:right;">Name :</th>
-                                                <th colspan="3"><input type="text" style="height: 50px;" class="form-control" name="name" value="<?php echo $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'] ?>" readonly></th>
-
-                                                <!-- <th colspan="3"><input type="text" style="height: 50px;" class="form-control" name="name" value="<?php echo $_SESSION['admin_user_name']; ?>" readonly></th> -->
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2" style="text-align:right;">Designation :</th>
-                                                <th colspan="3"><input type="text" style="height: 50px;" class="form-control" name="designation" value="<?php echo $user_details['designation']; ?>" readonly></th>
-                                            </tr>
-                                        </table>
 
                                         <div class="col-md-14">
                                             <div class="container">
@@ -416,7 +407,7 @@ if ($rwgetRole['metadata_quick_search'] != '1') {
                                                                 while ($row = mysqli_fetch_assoc($result)) {
                                                                     // Display each remark and file input
                                                             ?><div class="row">
-                                                                
+
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label for="mobile">Remark:</label>
@@ -448,6 +439,7 @@ if ($rwgetRole['metadata_quick_search'] != '1') {
                                         </div>
                                 </div>
                                 <div class="col-md-12 mt-6" style="margin-bottom: 25px;">
+                                    <input type="hidden" name="rfi_date" value="<?php echo $railway_details['rfi_date'] ?>">
                                     <input type="submit" class="btn btn-primary" name="submit" value="Submit">
                                 </div>
                                 </form>

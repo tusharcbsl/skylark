@@ -21,8 +21,13 @@ $updated_by = isset($_SESSION['cdes_user_id']) ? $_SESSION['cdes_user_id'] : nul
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Gather POST data
-    $name_of_the_inspecting_engineer = $_POST['name_of_the_inspecting_engineer'] ?? null;
-    $inspected_on_date = $_POST['inspected_on_date'] ?? null;
+    $received_name = $_POST['received_name'] ?? null;
+    $received_sign = $_POST['received_sign'] ?? null;
+    $received_designation = $_POST['received_designation'] ?? null;
+    $received_date = !empty($_POST['received_date']) 
+    ? date('Y-m-d H:i:s', strtotime($_POST['received_date'])) 
+    : NULL;
+
     $ticket_id = $_POST['ticket_id'] ?? null;
     $form_type = $_POST['form_type'] ?? null;
     $railway_master = "SELECT * FROM tbl_railway_master where ticket_id='$ticket_id'";
@@ -43,23 +48,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $signature_of_the_contractor = $_POST['signature_of_the_contractor'] ?? null;
     $remarks_of_the_inspection = $_POST['remarks_of_the_inspection'] ?? null;
     $signature_of_the_inspection = $_POST['signature_of_the_inspection'] ?? null;
-    $date = $_POST['date'] ?? null;
-    $name = $_POST['name'] ?? null;
-    $designation = $_POST['designation'] ?? null;
+
+
     // $approved = isset($_POST['approved']) ? 1 : 0;
     // $not_approved = isset($_POST['not_approved']) ? 1 : 0;
 
     $query = "UPDATE tbl_railway_master SET 
-    name_of_the_inspecting_engineer = '$name_of_the_inspecting_engineer', 
-    inspected_on_date = '$inspected_on_date', 
+    received_name = '$received_name', 
+    received_date = '$received_date', 
+    received_designation = '$received_designation', 
+    received_sign = '$received_sign', 
     enclosures_attached = '$enclosures_attached', 
     signature_of_the_contractor = '$signature_of_the_contractor', 
     remarks_of_the_inspection = '$remarks_of_the_inspection', 
     signature_of_the_inspection = '$signature_of_the_inspection', 
-    date = '$date', 
-    name = '$name', 
-    designation = '$designation', 
-    updated_at = '$updated_at', 
+
     updated_by = $updated_by, 
     status = 1 
     WHERE ticket_id = '$ticket_id'";
@@ -78,13 +81,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Request for Inspection</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        .table th, .table td { border: 1px solid #000; padding: 8px; text-align: left; }
-        .top-center { text-align: center; vertical-align: middle; }
-        .upper { margin-top: 20px; }
-        .south_railway { width: 100px; }
-    </style>
+                                body { font-family: Arial, sans-serif; }
+                                .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                                .table th, .table td { border: 1px solid #000; padding: 8px; text-align: left; }
+                                .top-center { text-align: center; vertical-align: middle; }
+                                .upper { margin-top: 20px; }
+                                .south_railway { width: 100px; }
+                            
+                                .info-table{
+                                    border-collapse: collapse;
+                                    width:100%;
+                                }
+                                .info-table th,
+                                .info-table td{
+                                    border:1px solid #000;
+                                    padding:6px;
+                                    font-size:12px;
+                                }
+                                .info-table th{
+                                    font-weight:bold;
+                                }
+                                .title{
+                                    text-align:center;
+                                    font-weight:bold;
+                                }
+                                </style>
 </head>
 <body>
     <table class="table table-bordered">
@@ -107,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $htmlContent .= '
                 <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                    <img src="assets/images/raipur.jpg" class="south_railway" alt="Contractor Logo">
+                    <img src="assets/images/ecr.png" class="south_railway" alt="Contractor Logo">
                 </th>';
         }
 
@@ -122,12 +143,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <th class="col-md-8" style="text-align:center; vertical-align:middle;">
                     Project Doubling of Railway Project comprising the section commencing from(--) Road station (End CH 967.055)
                     to Surajpur Road Station (End CH : 1006.44) (KM-39.385 KM) beside existing single 84 line in the state of chhattisgarh in the
-                    south East central Railway Zone Agt No: SECR/SECRC/CMI/2024/0008/ dt 14-Mar-2024.
+                    East Central Railway Zone Agt No: SECR/SECRC/CMI/2024/0008/ dt 14-Mar-2024.
                 </th>';
         } else {
             $htmlContent .= '
                 <th class="col-md-8" style="text-align:center; vertical-align:middle;">
-                    Major Up-Gradation of Raipur Railway Station of SECR on EPC Mode
+                    Major Upgradation / Redevelopment of Darbhanga Junction Railway Station in Samastipur Division, East Central Railway
                 </th>';
         }
 
@@ -144,16 +165,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ) {
             $htmlContent .= '
             <tr>
-                <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : South East Central Railway</th>
-                <th class="col-md-6" colspan="3" style="text-align:center; vertical-align:middle;">Contractor : Barbrik Project Limited</th>
+                <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : East Central Railway</th>
+                <th class="col-md-6" colspan="3" style="text-align:center; vertical-align:middle;">Contractor : SIEPL - ALTIS (JV)</th>
             </tr>';
         } else {
             $htmlContent .= '
             <tr>
-                                                    <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : South East Central Railway</th>
+                                                    <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : East Central Railway</th>
 
                                                     <th class="col-md-6" colspan="3" style="text-align:center; vertical-align:middle;">
-                                                        Contractor : RPP-SATHYAMOORTHY JV
+                                                        Contractor : SIEPL - ALTIS (JV)
                                                     </th>
             </tr>';
         }
@@ -161,82 +182,154 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $htmlContent .= '
             <tr>
                 <th class="col-md-2 top-center">RFI No</th>
-                <th class="col-md-2 top-center">RFI Date</th>
-                <th class="col-md-2 top-center">Type <br> (Regular/Spot)</th>
-                <th class="col-md-2 top-center">Name Of the Contractor\'s Engineer</th>
-                <th class="col-md-2 top-center">Item No as per contract <br> (for payment)</th>
+                <th class="col-md-2 top-center">Structure ID</th>
+                <th class="col-md-2 top-center">Location</th>
+                <th class="col-md-2 top-center">Date</th>
+                <th class="col-md-2 top-center">Request of Inspection</th>
                 <th class="col-md-2 top-center">Inspection Required On</th>
             </tr>
             <tr>
                 <td class="col-md-2">' . htmlspecialchars($railway_details['rfi_no']) . '</td>
-                <td class="col-md-2">' . (!empty($_POST['rfi_date']) ? date("d-m-Y", strtotime($_POST['rfi_date'])) : '') . '</td>
-                <td class="col-md-2">' . htmlspecialchars($railway_details['type_regular']) . '</td>
+                <td class="col-md-2">' . htmlspecialchars($railway_details['structure_id']) . '</td>
+                <td class="col-md-2">' . htmlspecialchars($railway_details['location']) . '</td>
+                <td class="col-md-2">' . (!empty($railway_details['inspection_required_date']) ? date("d-m-Y", strtotime($_POST['inspection_required_date'])) : '') . '</td>
                 <td class="col-md-2">' . htmlspecialchars($railway_details['name_of_the_contractor']) . '</td>
-                <td class="col-md-2">' . htmlspecialchars($railway_details['item_no_as_per']) . '</td>
-                <td class="col-md-2">' . (!empty($_POST['inspection_required_date']) ? date("d-m-Y", strtotime($_POST['inspection_required_date'])) : '') . '</td>
+                <td class="col-md-2">' . (!empty($railway_details['inspected_on_date']) ? htmlspecialchars(date('d-m-Y h:i A', strtotime($_POST['inspected_on_date']))) : '') . '</td>
             </tr>
         </thead>
     </table>
 
     <table class="table table-bordered upper">
         <tr>
-            <th class="col-md-2" rowspan="2" colspan="2">Location / Chainage</th>
+            <th class="col-md-2" rowspan="2" colspan="2">Location</th>
             <th class="col-md-4" rowspan="2">
                 ' . htmlspecialchars($railway_details['location_from']) . '
             </th>
-            <th class="col-md-4">Name Of the Inspecting Engineer</th>
-            <th class="col-md-2">Inspected On</th>
+            <th class="col-md-4">Structure Detail</th>
+            
         </tr>
         <tr>
-            <th>' . htmlspecialchars($name_of_the_inspecting_engineer) . '</th>
-            <th>' . (!empty($_POST['inspected_on_date']) ? date("d-m-Y", strtotime($_POST['inspected_on_date'])) : '') .
-            '</th>
+            <th>' . htmlspecialchars($railway_details['description_of_work']) . '</th>
+        
         </tr>
     </table>
 
+    <table width="100%" cellspacing="10">
+<tr>
 
-    <table class="table table-bordered upper">
+<!-- LEFT -->
+<td width="50%" valign="top">
+<table class="info-table">
+<tr>
+    <th colspan="2" class="title">Requested by</th>
+</tr>
+<tr>
+    <th width="35%" align="right">Name :</th>
+    <td width="65%">' . htmlspecialchars($railway_details['requested_name']) . '</td>
+</tr>
+<tr>
+    <th align="right">Agency :</th>
+    <td>' . htmlspecialchars($railway_details['requested_agency']) . '</td>
+</tr>
+<tr>
+    <th align="right">Date :</th>
+    <td>' . (!empty($railway_details['requested_date']) 
+        ? date('d-m-Y h:i A', strtotime($railway_details['requested_date'])) 
+        : '' ) . '</td>
+</tr>
+</table>
+</td>
+
+<!-- RIGHT -->
+<td width="50%" valign="top">
+<table class="info-table">
+<tr>
+    <th colspan="2" class="title">Received by</th>
+</tr>
+<tr>
+    <th width="35%" align="right">Signature :</th>
+    <td width="65%">' . htmlspecialchars($_POST['received_sign']) . '</td>
+</tr>
+<tr>
+    <th align="right">Name :</th>
+    <td>' . htmlspecialchars($_POST['received_name']) . '</td>
+</tr>
+<tr>
+    <th align="right">Designation :</th>
+    <td>' . htmlspecialchars($_POST['received_designation']) . '</td>
+</tr>
+<tr>
+    <th align="right">Date :</th>
+    <td>' . (!empty($_POST['received_date']) 
+        ? date('d-m-Y h:i A', strtotime($_POST['received_date'])) 
+        : '' ) . '</td>
+</tr>
+</table>
+</td>
+
+</tr>
+</table>';
+
+    $htmlContent .= '<div class="inspection-box mt-3" style="padding:15px; font-family:serif;">
+
+        <h5 style="text-decoration:underline;"><b>INSPECTION RESULTS:</b></h5>
+
+        <p><b>Mark to Indicate</b></p>
+
+        <div style="margin-left:40px;">
+            <span>Approval for Commencement of work.</span><br>
+
+            <span>Remedial works required as below but no further approval required.</span><br>
+
+            <span>Remedial works required as below but re-inspection and approval required.</span><br>
+        </div>
+
+        <br>
+
+        <label>Comments if any :</label>
+        ' . htmlspecialchars($railway_details['inspection_comment']) . '
+
+    </div>
+
+    <table class="table table-bordered mt-3">
         <tr>
-            <th colspan="2" style="text-align:left; vertical-align:top; height: 70px">Description of Work offered for Inspection</th>
-            <th colspan="3" style="text-align:left; vertical-align:top;">
-                ' . htmlspecialchars($railway_details['description_of_work']) . '
-            </th>
+            <th rowspan="2">Signature</th>
+            <th>Agency</th>
+            <th>PMC</th>
+            <th>Railway</th>
         </tr>
+
         <tr>
-            <th colspan="2" style="text-align:left; vertical-align:top; height: 70px">Enclosures attached with RFI</th>
-            <th colspan="3" style="text-align:left; vertical-align:top;">
-                ' . htmlspecialchars($enclosures_attached) . '
-            </th>
+            <td>' . htmlspecialchars($_POST['agency_sign']) . '</td>
+            <td>' . htmlspecialchars($_POST['pmc_sign']) . '</td>
+            <td>' . htmlspecialchars($_POST['railway_sign']) . '</td>
+            
         </tr>
+
         <tr>
-            <th class="col-md-6" colspan="2" style="text-align:left; vertical-align:top; height: 100px">Signature of the Contractor\'s Representative requesting for Inspection</th>
-<th class="col-md-6" colspan="3">
-            ' . htmlspecialchars($railway_details['signature_of_the_contractor']) . '
-        </th>
+            <th>Name</th>
+            <td>' . htmlspecialchars($_POST['agency_name']) . '</td>
+            <td>' . htmlspecialchars($_POST['pmc_name']) . '</td>
+            <td>' . htmlspecialchars($_POST['railway_name']) . '</td>
         </tr>
+
         <tr>
-            <th class="col-md-6" colspan="2" style="text-align:left; vertical-align:top; height: 100px">Remarks of the Inspection Engineer (Representative of Authority Engineer)</th>
-            <th class="col-md-6" colspan="3">' . htmlspecialchars($remarks_of_the_inspection) . '</th>
+            <th>Designation</th>
+            
+                <td>' . htmlspecialchars($_POST['agency_desig']) . '</td>
+            <td>' . htmlspecialchars($_POST['pmc_desig']) . '</td>
+            <td>' . htmlspecialchars($_POST['railway_desig']) . '</td>
         </tr>
+
         <tr>
-            <th colspan="2">Signature of the Inspection Engineer Representative of Authority Engineer</th>
-            <th colspan="3">' . htmlspecialchars($signature_of_the_inspection) . '</th>
+            <th>Date</th>
+    
+            <td>' . (!empty($_POST['agency_date']) ? htmlspecialchars(date('d-m-Y', strtotime($_POST['agency_date']))) : '') . '</td>
+            <td>' . (!empty($_POST['pmc_date']) ? htmlspecialchars(date('d-m-Y', strtotime($_POST['pmc_date']))) : '') . '</td>
+            <td>' . (!empty($_POST['railway_date']) ? htmlspecialchars(date('d-m-Y', strtotime($_POST['railway_date']))) : '') . '</td>
         </tr>
-        <tr>
-            <th colspan="2" style="text-align:right;">Date :</th>
-            <th colspan="3">' . date('d/m/y') . '</th>
-        </tr>
-        <tr>
-            <th colspan="2" style="text-align:right;">Name :</th>
-<th class="col-md-6" colspan="3">
-            ' . $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'] . '
-        </th>        </tr>
-        </tr>
-        <tr>
-            <th colspan="2" style="text-align:right;">Designation :</th>
-            <th colspan="3">' . htmlspecialchars($designation) . '</th>
-        </tr>
-    </table>
+    </table>';
+$htmlContent .= '   
 
     <div class="col-md-14">
         <div class="container">
