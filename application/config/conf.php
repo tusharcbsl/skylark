@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && realpath(__FILE__) == realpath($_SERV
 }
 $host = $_SERVER['REMOTE_ADDR']; //user's ip
 $host1 = $_SERVER['HTTP_HOST']; // url name
-define('BASE_URL', '' . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . '/');
+define('BASE_URL', '' . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . '/skylark/');
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
     //for WINDOWS operating system
     define('LIBRE_OFFICE', 'C:\LibreOffice\program\soffice'); // for open doc/docx psd,rtf,cdr etc file

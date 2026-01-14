@@ -235,6 +235,23 @@ $rwgetStep = mysqli_fetch_assoc($getStep);
             </select>
         </div>
     </div>
+    
+    <div class="col-md-6">
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label for="userName"><?php echo $lang['task_request_on']; ?></label>
+                </div>
+                <div class="col-md-8">
+                    <select class="form-control" id="" name="enable_edit_btn" required>
+                        <option><?php echo "Select Option" ?></option>
+                        <option value="1">
+                            <?php echo $lang['edit_form']; ?>
+                        </option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
 </div>
 
 <script src="assets/plugins/moment/moment.js"></script>

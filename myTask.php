@@ -97,41 +97,41 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                         <option selected value=""><?php echo $lang['Sl_Tsk_Sts']; ?>
                                                         </option>
                                                         <option <?php
-                                                        if ($_GET['taskStats'] == 'Pending') {
-                                                            echo 'selected';
-                                                        }
-                                                        ?>><?php echo $lang['Pending']; ?></option>
+                                                                if ($_GET['taskStats'] == 'Pending') {
+                                                                    echo 'selected';
+                                                                }
+                                                                ?>><?php echo $lang['Pending']; ?></option>
                                                         <option <?php
-                                                        if ($_GET['taskStats'] == 'Processed') {
-                                                            echo 'selected';
-                                                        }
-                                                        ?>><?php echo $lang['Processed']; ?></option>
+                                                                if ($_GET['taskStats'] == 'Processed') {
+                                                                    echo 'selected';
+                                                                }
+                                                                ?>><?php echo $lang['Processed']; ?></option>
                                                         <option <?php
-                                                        if ($_GET['taskStats'] == 'Approved') {
-                                                            echo 'selected';
-                                                        }
-                                                        ?>><?php echo ucwords($lang['approved']); ?>
+                                                                if ($_GET['taskStats'] == 'Approved') {
+                                                                    echo 'selected';
+                                                                }
+                                                                ?>><?php echo ucwords($lang['approved']); ?>
                                                         </option>
                                                         <option <?php
-                                                        if ($_GET['taskStats'] == 'Rejected') {
-                                                            echo 'selected';
-                                                        }
-                                                        ?>><?php echo $lang['Rejected']; ?></option>
+                                                                if ($_GET['taskStats'] == 'Rejected') {
+                                                                    echo 'selected';
+                                                                }
+                                                                ?>><?php echo $lang['Rejected']; ?></option>
                                                         <option <?php
-                                                        if ($_GET['taskStats'] == 'Aborted') {
-                                                            echo 'selected';
-                                                        }
-                                                        ?>><?php echo $lang['Aborted']; ?></option>
+                                                                if ($_GET['taskStats'] == 'Aborted') {
+                                                                    echo 'selected';
+                                                                }
+                                                                ?>><?php echo $lang['Aborted']; ?></option>
                                                         <option <?php
-                                                        if ($_GET['taskStats'] == 'Complete') {
-                                                            echo 'selected';
-                                                        }
-                                                        ?>><?php echo $lang['Complete']; ?></option>
+                                                                if ($_GET['taskStats'] == 'Complete') {
+                                                                    echo 'selected';
+                                                                }
+                                                                ?>><?php echo $lang['Complete']; ?></option>
                                                         <option <?php
-                                                        if ($_GET['taskStats'] == 'Done') {
-                                                            echo 'selected';
-                                                        }
-                                                        ?>><?php echo $lang['Done']; ?></option>
+                                                                if ($_GET['taskStats'] == 'Done') {
+                                                                    echo 'selected';
+                                                                }
+                                                                ?>><?php echo $lang['Done']; ?></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -141,20 +141,20 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                         <option selected value=""><?php echo $lang['Slct_Prty']; ?>
                                                         </option>
                                                         <option value="3" <?php
-                                                        if ($_GET['taskPrioty'] == 3) {
-                                                            echo 'selected';
-                                                        }
-                                                        ?>><?php echo $lang['Normal']; ?></option>
+                                                                            if ($_GET['taskPrioty'] == 3) {
+                                                                                echo 'selected';
+                                                                            }
+                                                                            ?>><?php echo $lang['Normal']; ?></option>
                                                         <option value="2" <?php
-                                                        if ($_GET['taskPrioty'] == 2) {
-                                                            echo 'selected';
-                                                        }
-                                                        ?>><?php echo $lang['Medium']; ?></option>
+                                                                            if ($_GET['taskPrioty'] == 2) {
+                                                                                echo 'selected';
+                                                                            }
+                                                                            ?>><?php echo $lang['Medium']; ?></option>
                                                         <option value="1" <?php
-                                                        if ($_GET['taskPrioty'] == 1) {
-                                                            echo 'selected';
-                                                        }
-                                                        ?>><?php echo $lang['Urgent']; ?></option>
+                                                                            if ($_GET['taskPrioty'] == 1) {
+                                                                                echo 'selected';
+                                                                            }
+                                                                            ?>><?php echo $lang['Urgent']; ?></option>
 
                                                     </select>
 
@@ -200,17 +200,17 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                             $userAsinBy_query = mysqli_query($db_con, $userAsinBy) or die("Error: " . mysqli_error($db_con));
                                                             while ($userAsinBy_row = mysqli_fetch_assoc($userAsinBy_query)) {
                                                                 if ($userAsinBy_row['user_id'] != 1 && $userAsinBy_row['user_id'] != $_SESSION['cdes_user_id']) {
-                                                                    ?>
+                                                        ?>
 
                                                                     <option value="<?php echo $userAsinBy_row['user_id']; ?>" <?php
-                                                                       if ($_GET['asinBy'] == $userAsinBy_row['user_id']) {
-                                                                           echo 'selected';
-                                                                       }
-                                                                       ?>>
+                                                                                                                                if ($_GET['asinBy'] == $userAsinBy_row['user_id']) {
+                                                                                                                                    echo 'selected';
+                                                                                                                                }
+                                                                                                                                ?>>
                                                                         <?php echo $userAsinBy_row['first_name'] . ' ' . $userAsinBy_row['last_name']; ?>
                                                                     </option>
 
-                                                                    <?php
+                                                        <?php
                                                                 }
                                                             }
                                                         }
@@ -242,17 +242,17 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                             if (mysqli_num_rows($fetchWorkflow) > 0) {
                                                                 $rwfetchWorkflow = mysqli_fetch_assoc($fetchWorkflow);
                                                                 if ($workfid == $rwfetchWorkflow['workflow_id']) {
-                                                                    ?>
+                                                    ?>
                                                                     <option
                                                                         value="<?php echo urlencode(base64_encode($rwfetchWorkflow['workflow_id'])); ?>"
                                                                         selected=""><?php echo $rwfetchWorkflow['workflow_name']; ?>
                                                                     </option>
                                                                 <?php } else {
-                                                                    ?>
+                                                                ?>
                                                                     <option
                                                                         value="<?php echo urlencode(base64_encode($rwfetchWorkflow['workflow_id'])); ?>">
                                                                         <?php echo $rwfetchWorkflow['workflow_name']; ?></option>
-                                                                    <?php
+                                                    <?php
                                                                 }
                                                             }
                                                         }
@@ -308,50 +308,49 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                             $allot = "SELECT tdawf.id,tsm.task_name,tsm.task_order,tdawf.doc_id,tdawf.task_status,tdawf.ticket_id,tdawf.task_remarks,tdawf.start_date,tsm.deadline,tsm.workflow_id,tsm.deadline_type,tsm.priority_id,tdawf.assign_by,tdawf.NextTask FROM tbl_task_master tsm inner join tbl_doc_assigned_wf tdawf on tsm.task_id=tdawf.task_id $where order by tdawf.id desc  LIMIT $start, $per_page";
                                         } else {
                                             $allot = "SELECT tdawf.id,tdawf.ticket_id,tsm.task_name,tsm.task_order,tdawf.doc_id,tdawf.task_status,tdawf.ticket_id,tdawf.task_remarks,tdawf.start_date,tsm.deadline,tsm.workflow_id,tsm.deadline_type,tsm.priority_id,tdawf.assign_by,tdawf.NextTask FROM tbl_task_master tsm inner join tbl_doc_assigned_wf tdawf on tsm.task_id=tdawf.task_id $where order by tdawf.id desc LIMIT $start, $per_page";
-                                       
                                         }
 
                                         $allot_query = mysqli_query($db_con, $allot) or die("Error: " . mysqli_error($db_con));
-                                        ?>
+                                    ?>
                                         <div class="row">
                                             <div class="col-md-10">
                                                 <?php echo $lang['Show'] ?>
                                                 <select id="limit1">
                                                     <option value="10" <?php
-                                                    if ($_GET['limit'] == 10) {
-                                                        echo 'selected';
-                                                    }
-                                                    ?>>10</option>
+                                                                        if ($_GET['limit'] == 10) {
+                                                                            echo 'selected';
+                                                                        }
+                                                                        ?>>10</option>
                                                     <option value="25" <?php
-                                                    if ($_GET['limit'] == 25) {
-                                                        echo 'selected';
-                                                    }
-                                                    ?>>25</option>
+                                                                        if ($_GET['limit'] == 25) {
+                                                                            echo 'selected';
+                                                                        }
+                                                                        ?>>25</option>
                                                     <option value="50" <?php
-                                                    if ($_GET['limit'] == 50) {
-                                                        echo 'selected';
-                                                    }
-                                                    ?>>50</option>
+                                                                        if ($_GET['limit'] == 50) {
+                                                                            echo 'selected';
+                                                                        }
+                                                                        ?>>50</option>
                                                     <option value="100" <?php
-                                                    if ($_GET['limit'] == 100) {
-                                                        echo 'selected';
-                                                    }
-                                                    ?>>100</option>
+                                                                        if ($_GET['limit'] == 100) {
+                                                                            echo 'selected';
+                                                                        }
+                                                                        ?>>100</option>
                                                     <option value="200" <?php
-                                                    if ($_GET['limit'] == 200) {
-                                                        echo 'selected';
-                                                    }
-                                                    ?>>200</option>
+                                                                        if ($_GET['limit'] == 200) {
+                                                                            echo 'selected';
+                                                                        }
+                                                                        ?>>200</option>
                                                 </select><?php echo $lang['Tasks'] ?>
                                             </div>
                                             <div class="col-sm-2 record m-b-10">
-                                                <?php echo $start + 1 ?>     <?php echo $lang['To']; ?>     <?php
-                                                                  if ($start + $per_page > $foundnum) {
-                                                                      echo $foundnum;
-                                                                  } else {
-                                                                      echo ($start + $per_page);
-                                                                  }
-                                                                  ?>
+                                                <?php echo $start + 1 ?> <?php echo $lang['To']; ?> <?php
+                                                                                                    if ($start + $per_page > $foundnum) {
+                                                                                                        echo $foundnum;
+                                                                                                    } else {
+                                                                                                        echo ($start + $per_page);
+                                                                                                    }
+                                                                                                    ?>
                                                 <span><?php echo $lang['ttl_recrds']; ?> : <?php echo $foundnum; ?></span>
                                             </div>
                                         </div>
@@ -381,6 +380,21 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                             //workflow name
                                                             $Workflw = mysqli_query($db_con, "select workflow_name from tbl_workflow_master where workflow_id='" . $allot_row['workflow_id'] . "'"); // or die('Error in getWorkflw upload:' . mysqli_error($db_con));
                                                             $rwWorkflw = mysqli_fetch_assoc($Workflw);
+                                                            
+
+                                                            if($_SESSION['cdes_user_id'] !=1){
+                                                                $task_masterflw = mysqli_query(
+                                                                    $db_con,
+                                                                    "SELECT enable_edit_btn 
+                                                                        FROM tbl_task_master 
+                                                                        WHERE workflow_id='" . $allot_row['workflow_id'] . "' 
+                                                                        AND assign_user='" . $_SESSION['cdes_user_id'] . "'"
+                                                                );
+
+                                                            }
+                                                            $rwtask_masterflw = mysqli_fetch_assoc($task_masterflw);
+
+
                                                             $anc_attr = '';
                                                             $railway_master = "SELECT * FROM tbl_railway_master WHERE ticket_id='" . $allot_row['ticket_id'] . "';";
                                                             $railway_query = mysqli_query($db_con, $railway_master);
@@ -389,30 +403,30 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                             }
                                                             // print_r($railway_details);
                                                             // die('qqs');
-                                                            ?>
+                                                        ?>
                                                             <tr class="gradeX" style="vertical-align: middle;">
                                                                 <td style="width:60px"><?php echo $n; ?></td>
                                                                 <!--<td>
                                                                         <a href="<?php
-                                                                        if ($allot_row['NextTask'] == 2 || (($allot_row['task_status'] == 'Approved' || $allot_row['task_status'] == 'Processed' || $allot_row['task_status'] == 'Done') && ($allot_row['NextTask'] == 1)) || $allot_row['task_status'] == 'Rejected' || $allot_row['task_status'] == 'Complete') {
-                                                                            echo 'javascript:void(0)';
-                                                                        } else {
-                                                                            echo 'process_task?id=' . urlencode(base64_encode($allot_row['id'])) . '&filter=' . urlencode(base64_encode($filter));
-                                                                        }
-                                                                        ?>" title="Process Task"> <i class="fa fa-check-circle"></i></a>
+                                                                                    if ($allot_row['NextTask'] == 2 || (($allot_row['task_status'] == 'Approved' || $allot_row['task_status'] == 'Processed' || $allot_row['task_status'] == 'Done') && ($allot_row['NextTask'] == 1)) || $allot_row['task_status'] == 'Rejected' || $allot_row['task_status'] == 'Complete') {
+                                                                                        echo 'javascript:void(0)';
+                                                                                    } else {
+                                                                                        echo 'process_task?id=' . urlencode(base64_encode($allot_row['id'])) . '&filter=' . urlencode(base64_encode($filter));
+                                                                                    }
+                                                                                    ?>" title="Process Task"> <i class="fa fa-check-circle"></i></a>
 
                                                                     </td>-->
                                                                 <td>
 
                                                                     <a href="<?php
-                                                                    if ($allot_row['NextTask'] == 2 || (($allot_row['task_status'] == 'Approved' || $allot_row['task_status'] == 'Processed' || $allot_row['task_status'] == 'Done') && ($allot_row['NextTask'] == 1)) || $allot_row['task_status'] == 'Rejected' || $allot_row['task_status'] == 'Complete' || $allot_row['task_status'] == 'Aborted') {
-                                                                        echo 'javascript:void(0)';
-                                                                        $anc_attr = 'class="disabled-task"';
-                                                                    } else {
-                                                                        echo 'javascript:void(0)';
-                                                                        $anc_attr = 'data-toggle="modal" data-target="#con-close-modal-act" class="taskbtn" data-id="' . $allot_row[id] . '"';
-                                                                    }
-                                                                    ?>"
+                                                                                if ($allot_row['NextTask'] == 2 || (($allot_row['task_status'] == 'Approved' || $allot_row['task_status'] == 'Processed' || $allot_row['task_status'] == 'Done') && ($allot_row['NextTask'] == 1)) || $allot_row['task_status'] == 'Rejected' || $allot_row['task_status'] == 'Complete' || $allot_row['task_status'] == 'Aborted') {
+                                                                                    echo 'javascript:void(0)';
+                                                                                    $anc_attr = 'class="disabled-task"';
+                                                                                } else {
+                                                                                    echo 'javascript:void(0)';
+                                                                                    $anc_attr = 'data-toggle="modal" data-target="#con-close-modal-act" class="taskbtn" data-id="' . $allot_row[id] . '"';
+                                                                                }
+                                                                                ?>"
                                                                         title="<?php echo $lang['Process_Task']; ?>"
                                                                         <?= $anc_attr; ?>> <i
                                                                             class="glyphicon glyphicon-new-window task"></i></a>
@@ -433,9 +447,9 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                         mysqli_set_charset($db_con, "utf8");
                                                                         $doc = mysqli_query($db_con, "select * from tbl_document_master where doc_id='$allot_row[doc_id]' and flag_multidelete='1'") or die('Error' . mysqli_error($db_con));
                                                                         $rwDoc = mysqli_fetch_assoc($doc);
-                                                                        ?>
+                                                                    ?>
                                                                         <?php if (strtolower($rwDoc['doc_extn']) == 'pdf' && $rwgetRole['pdf_file'] == '1') {
-                                                                            ?>
+                                                                        ?>
 
                                                                             <a href="viewer?id=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])) ?>&i=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>&pn=1"
                                                                                 class="pdfview" target="_blank"
@@ -451,95 +465,99 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                             }
                                                                             ?>
 
-                                                                            <?php
+                                                                        <?php
                                                                         } else if ((strtolower($rwDoc['doc_extn']) == 'jpg' || strtolower($rwDoc['doc_extn']) == 'jpeg' || strtolower($rwDoc['doc_extn']) == 'png' || strtolower($rwDoc['doc_extn']) == 'gif' || strtolower($rwDoc['doc_extn']) == 'bmp') && $rwgetRole['image_file'] == '1') {
-                                                                            ?>
-                                                                                <a href="imageviewer?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                    target="_blank"
-                                                                                    title="<?php echo $rwDoc['old_doc_name']; ?>">
+                                                                        ?>
+                                                                            <a href="imageviewer?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank"
+                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>">
                                                                                 <?php echo $rwDoc['old_doc_name']; ?> <i
-                                                                                        class="fa fa-file-image-o"></i></a>
+                                                                                    class="fa fa-file-image-o"></i></a>
 
                                                                             <?php if ($allot_row['NextTask'] == 2 || (($allot_row['task_status'] == 'Approved' || $allot_row['task_status'] == 'Processed' || $allot_row['task_status'] == 'Done') && ($allot_row['NextTask'] == 1)) || $allot_row['task_status'] == 'Rejected' || $allot_row['task_status'] == 'Complete') { ?>
                                                                             <?php } else { ?>
-                                                                                    <!-- <a href="imageAnnotation?uid=<?php //echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>&tid=<?php echo urlencode(base64_encode($allot_row['id'])); ?>"
+                                                                                <!-- <a href="imageAnnotation?uid=<?php //echo urlencode(base64_encode($_SESSION[cdes_user_id])); 
+                                                                                                                    ?>&i=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>&tid=<?php echo urlencode(base64_encode($allot_row['id'])); ?>"
                                                                                         target="_blank"> <i class="ti-marker-alt"//
                                                                                             data-toggle="tooltip"
-                                                                                            title="<?php //echo $lang['image_file']; ?>"></i></a> -->
+                                                                                            title="<?php //echo $lang['image_file']; 
+                                                                                                    ?>"></i></a> -->
 
 
                                                                             <?php }
                                                                         } else if ((strtolower($rwDoc['doc_extn']) == 'tif' || strtolower($rwDoc['doc_extn']) == 'tiff') && $rwgetRole['tif_file'] == '1') { ?>
-                                                                                    <a href="tiff-viewer?id=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                        target="_blank"
-                                                                                        title="<?php echo $rwDoc['old_doc_name']; ?>">
+                                                                            <a href="tiff-viewer?id=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank"
+                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>">
                                                                                 <?php echo $rwDoc['old_doc_name']; ?> <i
-                                                                                            class="fa fa-picture-o"></i> </a>
+                                                                                    class="fa fa-picture-o"></i> </a>
                                                                         <?php } else if (strtolower($rwDoc['doc_extn']) == 'xlsx' && $rwgetRole['excel_file'] == '1') {
-                                                                            ?>
-                                                                                        <a href="xlsx?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&file=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                            target="_blank"
-                                                                                            title="<?php echo $rwDoc['old_doc_name']; ?>">
+                                                                        ?>
+                                                                            <a href="xlsx?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&file=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank"
+                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>">
                                                                                 <?php echo $rwDoc['old_doc_name']; ?> <i
-                                                                                                class="fa fa-file-excel-o"></i></a>
+                                                                                    class="fa fa-file-excel-o"></i></a>
                                                                         <?php } else if (strtolower($rwDoc['doc_extn']) == 'xls' && $rwgetRole['excel_file'] == '1') {
-                                                                            ?>
-                                                                                            <a href="xls?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&file=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                                target="_blank"
-                                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>">
+                                                                        ?>
+                                                                            <a href="xls?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&file=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank"
+                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>">
                                                                                 <?php echo $rwDoc['old_doc_name']; ?> <i
-                                                                                                    class="fa fa-file-excel-o"></i></a>
+                                                                                    class="fa fa-file-excel-o"></i></a>
                                                                         <?php } else if ((strtolower($rwDoc['doc_extn']) == 'doc' || strtolower($rwDoc['doc_extn']) == 'docx') && $rwgetRole['doc_file'] == '1') { ?>
-                                                                                                <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                                    target="_blank"
-                                                                                                    title="<?php echo $rwDoc['old_doc_name']; ?>">
+                                                                            <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank"
+                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>">
                                                                                 <?php echo $rwDoc['old_doc_name']; ?> <i
-                                                                                                        class="fa fa-file-word-o"></i></a>
+                                                                                    class="fa fa-file-word-o"></i></a>
                                                                             <?php if ($rwgetRole['word_edit'] == '1') { ?>
-                                                                                                    <!-- <a href="editword?i=<?php //echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                <!-- <a href="editword?i=<?php //echo urlencode(base64_encode($_SESSION[cdes_user_id])); 
+                                                                                                            ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
                                                                                                         target="_blank"> <i class="ti-marker-alt"
-                                                                                                            title="<?php //echo $lang['edit_File']; ?>"></i></a> -->
+                                                                                                            title="<?php //echo $lang['edit_File']; 
+                                                                                                                    ?>"></i></a> -->
                                                                             <?php } ?>
 
                                                                         <?php } else if (strtolower($rwDoc['doc_extn']) == 'psd' && $rwgetRole['view_psd'] == '1') { ?>
-                                                                                                    <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                                        target="_blank"
-                                                                                                        title="<?php echo $rwDoc['old_doc_name']; ?>"><?php echo $rwDoc['old_doc_name']; ?><img
-                                                                                                            src="<?= BASE_URL ?>assets/images/psd.png"></a>
+                                                                            <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank"
+                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>"><?php echo $rwDoc['old_doc_name']; ?><img
+                                                                                    src="<?= BASE_URL ?>assets/images/psd.png"></a>
 
                                                                         <?php } else if (strtolower($rwDoc['doc_extn']) == 'cdr' && $rwgetRole['view_cdr'] == '1') { ?>
-                                                                                                        <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                                            target="_blank"
-                                                                                                            title="<?php echo $rwDoc['old_doc_name']; ?>"><?php echo $rwDoc['old_doc_name']; ?><img
-                                                                                                                src="<?= BASE_URL ?>assets/images/cdr.png"></a>
+                                                                            <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank"
+                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>"><?php echo $rwDoc['old_doc_name']; ?><img
+                                                                                    src="<?= BASE_URL ?>assets/images/cdr.png"></a>
                                                                         <?php } else if (strtolower($rwDoc['doc_extn']) == 'rtf' && $rwgetRole['view_rtf'] == '1') { ?>
-                                                                                                            <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                                                target="_blank"
-                                                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>"><?php echo $rwDoc['old_doc_name']; ?>
-                                                                                                                <i class="fa fa-file"></i></a>
+                                                                            <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank"
+                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>"><?php echo $rwDoc['old_doc_name']; ?>
+                                                                                <i class="fa fa-file"></i></a>
                                                                         <?php } else if (strtolower($rwDoc['doc_extn']) == 'odt' && $rwgetRole['view_odt'] == '1') { ?>
-                                                                                                                <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                                                    target="_blank"
-                                                                                                                    title="<?php echo $rwDoc['old_doc_name']; ?>"><?php echo $rwDoc['old_doc_name']; ?>
-                                                                                                                    <i class="fa fa-file-word-o"></i></a>
+                                                                            <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank"
+                                                                                title="<?php echo $rwDoc['old_doc_name']; ?>"><?php echo $rwDoc['old_doc_name']; ?>
+                                                                                <i class="fa fa-file-word-o"></i></a>
                                                                         <?php } else if ((strtolower($rwDoc['doc_extn']) == 'mp3' || strtolower($rwDoc['doc_extn']) == 'wav') && $rwgetRole['audio_file'] == '1') { ?>
-                                                                                                                    <a href="audioplayer?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                                                        target="_blank">
-                                                                                                                        <i class="fa fa-music"
-                                                                                                                            title="<?php echo $lang['Audio_file']; ?>"></i></a>
+                                                                            <a href="audioplayer?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank">
+                                                                                <i class="fa fa-music"
+                                                                                    title="<?php echo $lang['Audio_file']; ?>"></i></a>
                                                                         <?php } else if ((strtolower($rwDoc['doc_extn']) == 'mp4' || strtolower($rwDoc['doc_extn']) == '3gp') && $rwgetRole['video_file'] == '1') { ?>
-                                                                                                                        <a href="video-player?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
-                                                                                                                            target="_blank">
-                                                                                                                            <i class="fa fa-video-camera"
-                                                                                                                                title="<?php echo $lang['Video_file']; ?>"></i></a>
+                                                                            <a href="video-player?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>"
+                                                                                target="_blank">
+                                                                                <i class="fa fa-video-camera"
+                                                                                    title="<?php echo $lang['Video_file']; ?>"></i></a>
                                                                         <?php } else if (!empty($rwDoc['doc_id'])) {
-                                                                            ?>
-                                                                                                                            <a href="downloaddoc?file=<?php echo urlencode(base64_encode($rwDoc['doc_id'])) ?>"
-                                                                                                                                id="fancybox-inner" target="_blank">
+                                                                        ?>
+                                                                            <a href="downloaddoc?file=<?php echo urlencode(base64_encode($rwDoc['doc_id'])) ?>"
+                                                                                id="fancybox-inner" target="_blank">
                                                                                 <?php echo $rwDoc['old_doc_name']; ?> <i
-                                                                                                                                    class="fa fa-download"></i>
-                                                                                                                            </a>
-                                                                            <?php
+                                                                                    class="fa fa-download"></i>
+                                                                            </a>
+                                                                        <?php
                                                                         } else {
                                                                             echo '<span class="label label-primary">' . $lang['notask_nodescription'] . '</span>';
                                                                         }
@@ -548,7 +566,7 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                         $updateDocName = $docName[0] . '_' . $rwDoc['doc_id'] . ((!empty($docName[1])) ? '_' . $docName[1] : '');
                                                                         $fileVersion = mysqli_query($db_con, "SELECT * FROM `tbl_document_master` WHERE doc_name='$updateDocName' and flag_multidelete='1'") or die('Error:' . mysqli_error($db_con));
                                                                         while ($rwfileVersion = mysqli_fetch_assoc($fileVersion)) {
-                                                                            ?>
+                                                                        ?>
                                                                             <div>
 
                                                                                 <?php if (file_exists('thumbnail/' . base64_encode($rwfileVersion['doc_id']) . '.jpg')) { ?>
@@ -559,170 +577,178 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                                 <?php
                                                                                 //versioning view start here
                                                                                 if (strtolower($rwfileVersion['doc_extn']) == 'pdf' && $rwgetRole['pdf_file'] == '1') {
-                                                                                    ?>
+                                                                                ?>
                                                                                     <?php
                                                                                     //@sk-11118:stop processed and complete from demo.
                                                                                     if ($allot_row['NextTask'] == 2 || (($allot_row['task_status'] == 'Approved' || $allot_row['task_status'] == 'Processed' || $allot_row['task_status'] == 'Done') && ($allot_row['NextTask'] == 1)) || $allot_row['task_status'] == 'Rejected' || $allot_row['task_status'] == 'Complete') {
-                                                                                        ?>
+                                                                                    ?>
                                                                                         <a href="viewer?id=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])) ?>&i=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>&pn=1"
                                                                                             class="pdfview"
                                                                                             target="_blank"><?php echo $rwfileVersion['old_doc_name']; ?>
                                                                                             <i class="fa fa fa-file-text-o"
                                                                                                 title="<?= $lang['view_copy_print']; ?>"></i></a>
-                                                                                        <?php
+                                                                                    <?php
                                                                                     } else {
-                                                                                        ?>
+                                                                                    ?>
                                                                                         <a href="viewer?id=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])) ?>&i=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>&pn=1"
                                                                                             class="pdfview"
                                                                                             target="_blank"><?php echo $rwfileVersion['old_doc_name']; ?>
                                                                                             <i class="fa fa fa-file-text-o"
                                                                                                 title="<?= $lang['view_copy_print']; ?>"></i></a>
 
-                                                                                        <?php
+                                                                                    <?php
                                                                                         //echo '<a href="anott/index?id=' . urlencode(base64_encode($_SESSION[cdes_user_id])) . '&id1=' . urlencode(base64_encode($rwfileVersion['doc_id'])) . '&pn=1&tid=' . urlencode(base64_encode($allot_row[id])) . '" class="pdfview" target="blank">' . $rwfileVersion['old_doc_name'] . ' <i class="ti-marker-alt" title="' . $lang['edit_File'] . '"></i></a>';
                                                                                     }
                                                                                     ?>
                                                                                 <?php } else if ((strtolower($rwfileVersion['doc_extn']) == 'gif' || strtolower($rwfileVersion['doc_extn']) == 'jpeg' || strtolower($rwfileVersion['doc_extn']) == 'jpg' || strtolower($rwfileVersion['doc_extn']) == 'png' || strtolower($rwfileVersion['doc_extn']) == 'bmp') && $rwgetRole['image_file'] == '1') {
-                                                                                    ?>
-                                                                                        <a href="imageviewer?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                            target="_blank"
-                                                                                            title="<?php echo substr($rwfileVersion['old_doc_name']); ?> ">
+                                                                                ?>
+                                                                                    <a href="imageviewer?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank"
+                                                                                        title="<?php echo substr($rwfileVersion['old_doc_name']); ?> ">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?>
-                                                                                            <i class="fa fa-file-image-o"></i></a>
-                                                                                        <!--viewer for version tiff start-->
+                                                                                        <i class="fa fa-file-image-o"></i></a>
+                                                                                    <!--viewer for version tiff start-->
                                                                                 <?php } else if ((strtolower($rwfileVersion['doc_extn']) == 'tif' || strtolower($rwfileVersion['doc_extn']) == 'tiff') && $rwgetRole['tif_file'] == '1') { ?>
-                                                                                            <a href="tiff-viewer?id=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                                target="_blank"
-                                                                                                title="<?php echo $rwfileVersion['old_doc_name']; ?>">
+                                                                                    <a href="tiff-viewer?id=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&i=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank"
+                                                                                        title="<?php echo $rwfileVersion['old_doc_name']; ?>">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?> <i
-                                                                                                    class="fa fa-picture-o"></i></a>
-                                                                                            <!--viewer for excel versioning-->
+                                                                                            class="fa fa-picture-o"></i></a>
+                                                                                    <!--viewer for excel versioning-->
                                                                                 <?php } else if (strtolower($rwfileVersion['doc_extn']) == 'xlsx' && $rwgetRole['excel_file'] == '1') {
-                                                                                    ?>
-                                                                                                <a href="xlsx?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&file=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                                    target="_blank"
-                                                                                                    title="<?php echo $rwfileVersion['old_doc_name']; ?>">
+                                                                                ?>
+                                                                                    <a href="xlsx?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&file=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank"
+                                                                                        title="<?php echo $rwfileVersion['old_doc_name']; ?>">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?> <i
-                                                                                                        class="fa fa-file-excel-o"></i></a>
+                                                                                            class="fa fa-file-excel-o"></i></a>
                                                                                 <?php } else if (strtolower($rwfileVersion['doc_extn']) == 'xls' && $rwgetRole['excel_file'] == '1') { ?>
-                                                                                                    <a href="xls?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&file=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                                        target="_blank"
-                                                                                                        title="<?php echo $rwfileVersion['old_doc_name']; ?>">
+                                                                                    <a href="xls?uid=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&file=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank"
+                                                                                        title="<?php echo $rwfileVersion['old_doc_name']; ?>">
                                                                                         <?php echo ($rwfileVersion['old_doc_name']); ?> <i
-                                                                                                            class="fa fa-file-excel-o"></i></a>
-                                                                                                    <!--viewer for excel versioning ends -->
-                                                                                                    <!-- doc version viewer-->
+                                                                                            class="fa fa-file-excel-o"></i></a>
+                                                                                    <!--viewer for excel versioning ends -->
+                                                                                    <!-- doc version viewer-->
                                                                                 <?php } else if ((strtolower($rwfileVersion['doc_extn']) == 'doc' || strtolower($rwfileVersion['doc_extn']) == 'docx') && $rwgetRole['doc_file'] == '1') { ?>
-                                                                                                        <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                                            target="_blank"
-                                                                                                            title="<?php echo $rwfileVersion['old_doc_name']; ?>">
+                                                                                    <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank"
+                                                                                        title="<?php echo $rwfileVersion['old_doc_name']; ?>">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?> <i
-                                                                                                                class="fa fa-file-word-o"></i></a>
+                                                                                            class="fa fa-file-word-o"></i></a>
                                                                                     <?php if ($rwgetRole['word_edit'] == '1') { ?>
-                                                                                                            <!-- <a href="editword?i=<?php //echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        <!-- <a href="editword?i=<?php //echo urlencode(base64_encode($_SESSION[cdes_user_id])); 
+                                                                                                                    ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
                                                                                                                 target="_blank"
-                                                                                                                title="<?php //echo $rwfileVersion['old_doc_name']; ?>">
+                                                                                                                title="<?php //echo $rwfileVersion['old_doc_name']; 
+                                                                                                                        ?>">
                                                                                                                 <i class="ti-marker-alt"
-                                                                                                                    title="<?php //echo $lang['edit_File']; ?>"></i></a> -->
+                                                                                                                    title="<?php //echo $lang['edit_File']; 
+                                                                                                                            ?>"></i></a> -->
                                                                                     <?php } ?>
-                                                                                                        <!--for PSD viewer version-->
+                                                                                    <!--for PSD viewer version-->
                                                                                 <?php } else if (strtolower($rwfileVersion['doc_extn']) == 'psd' && $rwgetRole['view_psd'] == '1') { ?>
-                                                                                                            <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                                                target="_blank"
-                                                                                                                title="<?php echo $rwfileVersion['old_doc_name']; ?>">
+                                                                                    <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank"
+                                                                                        title="<?php echo $rwfileVersion['old_doc_name']; ?>">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?><img
-                                                                                                                    src="<?= BASE_URL ?>assets/images/psd.png"></a>
+                                                                                            src="<?= BASE_URL ?>assets/images/psd.png"></a>
 
-                                                                                                            <!--for CDR viewer version-->
+                                                                                    <!--for CDR viewer version-->
                                                                                 <?php } else if (strtolower($rwfileVersion['doc_extn']) == 'cdr' && $rwgetRole['view_cdr'] == '1') { ?>
-                                                                                                                <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                                                    target="_blank"
-                                                                                                                    title="<?php echo $rwfileVersion['old_doc_name']; ?>">
+                                                                                    <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank"
+                                                                                        title="<?php echo $rwfileVersion['old_doc_name']; ?>">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?> <img
-                                                                                                                        src="<?= BASE_URL ?>assets/images/cdr.png"> </a>
-                                                                                                                <!--for audio/video viewer version-->
+                                                                                            src="<?= BASE_URL ?>assets/images/cdr.png"> </a>
+                                                                                    <!--for audio/video viewer version-->
                                                                                 <?php } else if (strtolower($rwfileVersion['doc_extn']) == 'odt' && $rwgetRole['view_odt'] == '1') { ?>
-                                                                                                                    <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                                                        target="_blank"
-                                                                                                                        title="<?php echo $rwfileVersion['old_doc_name']; ?>">
+                                                                                    <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank"
+                                                                                        title="<?php echo $rwfileVersion['old_doc_name']; ?>">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?> <i
-                                                                                                                            class="fa fa-file-word-o"></i></a>
-                                                                                                                    <!--for audio/video viewer version-->
+                                                                                            class="fa fa-file-word-o"></i></a>
+                                                                                    <!--for audio/video viewer version-->
                                                                                 <?php } else if (strtolower($rwfileVersion['doc_extn']) == 'rtf' && $rwgetRole['view_rtf'] == '1') { ?>
-                                                                                                                        <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                                                            target="_blank"
-                                                                                                                            title="<?php echo $rwfileVersion['old_doc_name']; ?>">
+                                                                                    <a href="viewword?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank"
+                                                                                        title="<?php echo $rwfileVersion['old_doc_name']; ?>">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?> <i
-                                                                                                                                class="fa fa-file"></i></a>
-                                                                                                                        <!--for audio/video viewer version-->
+                                                                                            class="fa fa-file"></i></a>
+                                                                                    <!--for audio/video viewer version-->
                                                                                 <?php } else if (strtolower($rwfileVersion['doc_extn']) == 'mp3' && $rwgetRole['audio_file'] == '1') { ?>
-                                                                                                                            <a href="audioplayer?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                                                                target="_blank">
+                                                                                    <a href="audioplayer?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?> <i
-                                                                                                                                    class="fa fa-music"
-                                                                                                                                    title="<?php echo $lang['Audio_file']; ?>"></i></a>
+                                                                                            class="fa fa-music"
+                                                                                            title="<?php echo $lang['Audio_file']; ?>"></i></a>
                                                                                 <?php } else if (strtolower($rwfileVersion['doc_extn']) == 'mp4' && $rwgetRole['video_file'] == '1') { ?>
-                                                                                                                                <a href="video-player?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
-                                                                                                                                    target="_blank">
+                                                                                    <a href="video-player?i=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])); ?>&id=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])); ?>"
+                                                                                        target="_blank">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?> <i
-                                                                                                                                        class="fa fa-video-camera"
-                                                                                                                                        title="<?php echo $lang['Video_file']; ?>"></i></a>
+                                                                                            class="fa fa-video-camera"
+                                                                                            title="<?php echo $lang['Video_file']; ?>"></i></a>
 
                                                                                 <?php } else {
-                                                                                    ?>
-                                                                                                                                <a href="downloaddoc?file=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])) ?>"
-                                                                                                                                    id="fancybox-inner" target="_blank">
+                                                                                ?>
+                                                                                    <a href="downloaddoc?file=<?php echo urlencode(base64_encode($rwfileVersion['doc_id'])) ?>"
+                                                                                        id="fancybox-inner" target="_blank">
                                                                                         <?php echo $rwfileVersion['old_doc_name']; ?> <i
-                                                                                                                                        class="fa fa-download"></i>
-                                                                                                                                </a>
-                                                                                    <?php
+                                                                                            class="fa fa-download"></i>
+                                                                                    </a>
+                                                                            <?php
                                                                                 }
+                                                                            }
+                                                                            ?>
+                                                                            </div>
+                                                                        <?php } ?>
+                                                                        <?php if ($railway_details['status'] == 0) {
+                                                                            if ($_SESSION['cdes_user_id'] == 1 || $rwtask_masterflw['enable_edit_btn'] == '1') {
+                                                                        ?>
+                                                                        
+
+                                                                            <a
+                                                                                href="request_form?id=<?= base64_encode($allot_row['ticket_id']) ?>&form_type=<?= base64_encode($railway_details['railway_type']) ?>"><i
+                                                                                    style="font-size:24px"
+                                                                                    class="fa">&#xf040;</i></a>
+                                                                        <?php } ?>
+                                                                                    
+                                                                                    <?php } ?><?php
+
+                                                                        if (!empty($allot_row['task_remarks'])) {
+                                                                        ?>
+
+                                                                            <a href="#" data-toggle="modal"
+                                                                                data-target="#taskdescription" id="ViewTsk"
+                                                                                data="<?php echo $allot_row['id']; ?>"
+                                                                                title="<?php echo $lang['view_Task_Description']; ?>"><i
+                                                                                    class="fa fa-eye"></i></a>
+                                                                            <div style="display: none"
+                                                                                id="<?php echo $allot_row['id']; ?>">
+                                                                                <?php echo $allot_row['task_remarks']; ?></div>
+                                                                        <?php
+                                                                        } else {
+                                                                            echo '<span class="label label-primary">' . $lang['notask_nodescription'] . '</span>';
                                                                         }
                                                                         ?>
-                                                                        </div>
-                                                                    <?php } ?>
-                                                                    <?php if ($railway_details['status'] == 0) {
-                                                                         ?>
-                                                                        <a
-                                                                            href="request_form?id=<?= base64_encode($allot_row['ticket_id']) ?>&form_type=<?= base64_encode($railway_details['railway_type']) ?>"><i
-                                                                                style="font-size:24px"
-                                                                                class="fa">&#xf040;</i></a><?php
-                                                                    } ?><?php
-
-                                                                     if (!empty($allot_row['task_remarks'])) {
-                                                                         ?>
-
-                                                                        <a href="#" data-toggle="modal"
-                                                                            data-target="#taskdescription" id="ViewTsk"
-                                                                            data="<?php echo $allot_row['id']; ?>"
-                                                                            title="<?php echo $lang['view_Task_Description']; ?>"><i
-                                                                                class="fa fa-eye"></i></a>
-                                                                        <div style="display: none"
-                                                                            id="<?php echo $allot_row['id']; ?>">
-                                                                            <?php echo $allot_row['task_remarks']; ?></div>
                                                                         <?php
-                                                                     } else {
-                                                                         echo '<span class="label label-primary">' . $lang['notask_nodescription'] . '</span>';
-                                                                     }
-                                                                     ?>
-                                                                    <?php
 
 
-                                                                    $queryyy = "SELECT * FROM tbl_railway_attachment_master WHERE ticket_id='" . $allot_row['ticket_id'] . "'";
-                                                                    // print_r($queryyy);
-                                                                    $resultt = mysqli_query($db_con, $queryyy);
-                                                                    while ($myattachment = mysqli_fetch_assoc($resultt)) { ?>
-                                                                        <a href="uploads/<?php echo htmlspecialchars($myattachment['attachment']); ?>"
-                                                                            target="_blank">
-                                                                            <?php echo htmlspecialchars($myattachment['attachment']); ?>
-                                                                        </a>
+                                                                        $queryyy = "SELECT * FROM tbl_railway_attachment_master WHERE ticket_id='" . $allot_row['ticket_id'] . "'";
+                                                                        // print_r($queryyy);
+                                                                        $resultt = mysqli_query($db_con, $queryyy);
+                                                                        while ($myattachment = mysqli_fetch_assoc($resultt)) { ?>
+                                                                            <a href="uploads/<?php echo htmlspecialchars($myattachment['attachment']); ?>"
+                                                                                target="_blank">
+                                                                                <?php echo htmlspecialchars($myattachment['attachment']); ?>
+                                                                            </a>
                                                                         <?php
-                                                                    } ?>
+                                                                        } ?>
                                                                 </td>
                                                                 <td><?php
-                                                                $user = mysqli_query($db_con, "select first_name,last_name from tbl_user_master where user_id='$allot_row[assign_by]'");
-                                                                $rwUser = mysqli_fetch_assoc($user);
-                                                                if (!empty($rwUser['first_name'])) {
+                                                                    $user = mysqli_query($db_con, "select first_name,last_name from tbl_user_master where user_id='$allot_row[assign_by]'");
+                                                                    $rwUser = mysqli_fetch_assoc($user);
+                                                                    if (!empty($rwUser['first_name'])) {
                                                                     ?>
                                                                         <label
                                                                             class="label label-success"><?php echo $rwUser['first_name'] . ' ' . $rwUser['last_name']; ?></label>
@@ -734,71 +760,71 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                 </td>
 
                                                                 <td><?php
-                                                                $tsk_order = $allot_row['task_order'];
-                                                                $taskorderNo = $tsk_order - 1;
-                                                                $user_sent = mysqli_query($db_con, "select u.first_name,u.last_name, wa.action_time from tbl_doc_assigned_wf as wa
+                                                                    $tsk_order = $allot_row['task_order'];
+                                                                    $taskorderNo = $tsk_order - 1;
+                                                                    $user_sent = mysqli_query($db_con, "select u.first_name,u.last_name, wa.action_time from tbl_doc_assigned_wf as wa
                                                                            
                                                                         left join tbl_user_master as u on wa.action_by=u.user_id
                                                                         left join tbl_task_master as tm on wa.task_id=tm.task_id
                                                                         where wa.ticket_id='$allot_row[ticket_id]' and tm.task_order='$taskorderNo'");
-                                                                $rwUserSent = mysqli_fetch_assoc($user_sent);
-                                                                if ($tsk_order == 1 || $rwUserSent['first_name'] == NULL) {
-                                                                    echo '<label class="label label-primary">' . $rwUser['first_name'] . ' ' . $rwUser['last_name'] . '</label>';
-                                                                } else {
-                                                                    if (!empty($rwUserSent['first_name'])) {
-                                                                        echo '<label class="label label-primary">' . $rwUserSent['first_name'] . ' ' . $rwUserSent['last_name'] . '</label>';
+                                                                    $rwUserSent = mysqli_fetch_assoc($user_sent);
+                                                                    if ($tsk_order == 1 || $rwUserSent['first_name'] == NULL) {
+                                                                        echo '<label class="label label-primary">' . $rwUser['first_name'] . ' ' . $rwUser['last_name'] . '</label>';
+                                                                    } else {
+                                                                        if (!empty($rwUserSent['first_name'])) {
+                                                                            echo '<label class="label label-primary">' . $rwUserSent['first_name'] . ' ' . $rwUserSent['last_name'] . '</label>';
+                                                                        }
                                                                     }
-                                                                }
-                                                                ?>
+                                                                    ?>
                                                                 </td>
                                                                 <td><?php if ($tsk_order == '1') { ?>
                                                                         <label
                                                                             class="label label-info"><?php echo date("d-m-Y H:i:s", strtotime($allot_row['start_date'])); ?></label>
-                                                                        <?php
-                                                                } else {
-                                                                    if ($rwUserSent['action_time'] != NULL) {
-                                                                        $actiondate = $rwUserSent['action_time'];
+                                                                    <?php
                                                                     } else {
-                                                                        $actiondate = $allot_row['start_date'];
+                                                                        if ($rwUserSent['action_time'] != NULL) {
+                                                                            $actiondate = $rwUserSent['action_time'];
+                                                                        } else {
+                                                                            $actiondate = $allot_row['start_date'];
+                                                                        }
+                                                                        echo '<label class="label label-info">' . date("d-m-Y H:i:s", strtotime($actiondate)) . '<label>';
                                                                     }
-                                                                    echo '<label class="label label-info">' . date("d-m-Y H:i:s", strtotime($actiondate)) . '<label>';
-                                                                }
-                                                                ?>
+                                                                    ?>
 
                                                                 </td>
 
                                                                 <td><?php
-                                                                if ($allot_row['deadline_type'] == 'Date') {
+                                                                    if ($allot_row['deadline_type'] == 'Date') {
 
-                                                                    $deadDate = strtotime($allot_row['start_date']) + ($allot_row['deadline'] * 60 * 60); // convert in sec
-                                                                    $remainTime = $deadDate - (strtotime($date));
+                                                                        $deadDate = strtotime($allot_row['start_date']) + ($allot_row['deadline'] * 60 * 60); // convert in sec
+                                                                        $remainTime = $deadDate - (strtotime($date));
 
-                                                                    // echo intdiv($remainTime, 60) . ':' . ($remainTime % 60) . ' Hrs';
-                                                                    if ($remainTime > 0) {
-                                                                        echo '<label class="succes label label-success">' . humanTiming($remainTime) . '</label>';
+                                                                        // echo intdiv($remainTime, 60) . ':' . ($remainTime % 60) . ' Hrs';
+                                                                        if ($remainTime > 0) {
+                                                                            echo '<label class="succes label label-success">' . humanTiming($remainTime) . '</label>';
+                                                                        } else {
+                                                                            echo '<label class="label label-danger">0 Seconds</label>';
+                                                                        }
+                                                                    } else if ($allot_row['deadline_type'] == 'Days') {
+                                                                        $deadDate = strtotime($allot_row['start_date']) + ($allot_row['deadline'] * 24 * 60 * 60); // convert in sec
+                                                                        $remainTime = $deadDate - (strtotime($date));
+                                                                        //echo round($remainTime/(24*60*60)) . ' '. $allot_row['deadline_type'];
+                                                                        if ($remainTime > 0) {
+                                                                            echo '<label class="succes label label-success">' . humanTiming($remainTime) . '</label>';
+                                                                        } else {
+                                                                            echo '<label class="label label-danger">0 Seconds</label>';
+                                                                        }
                                                                     } else {
-                                                                        echo '<label class="label label-danger">0 Seconds</label>';
+                                                                        $deadDate = strtotime($allot_row['start_date']) + ($allot_row['deadline'] * 60); //  convert in sec
+                                                                        $remainTime = $deadDate - (strtotime($date));
+                                                                        //echo round($remainTime/(60*60)) . ' '. $allot_row['deadline_type'];
+                                                                        if ($remainTime > 0) {
+                                                                            echo '<label class="succes label label-success">' . humanTiming($remainTime) . '</label>';
+                                                                        } else {
+                                                                            echo '<label class="error label label-danger">0 Seconds</label>';
+                                                                        }
                                                                     }
-                                                                } else if ($allot_row['deadline_type'] == 'Days') {
-                                                                    $deadDate = strtotime($allot_row['start_date']) + ($allot_row['deadline'] * 24 * 60 * 60); // convert in sec
-                                                                    $remainTime = $deadDate - (strtotime($date));
-                                                                    //echo round($remainTime/(24*60*60)) . ' '. $allot_row['deadline_type'];
-                                                                    if ($remainTime > 0) {
-                                                                        echo '<label class="succes label label-success">' . humanTiming($remainTime) . '</label>';
-                                                                    } else {
-                                                                        echo '<label class="label label-danger">0 Seconds</label>';
-                                                                    }
-                                                                } else {
-                                                                    $deadDate = strtotime($allot_row['start_date']) + ($allot_row['deadline'] * 60); //  convert in sec
-                                                                    $remainTime = $deadDate - (strtotime($date));
-                                                                    //echo round($remainTime/(60*60)) . ' '. $allot_row['deadline_type'];
-                                                                    if ($remainTime > 0) {
-                                                                        echo '<label class="succes label label-success">' . humanTiming($remainTime) . '</label>';
-                                                                    } else {
-                                                                        echo '<label class="error label label-danger">0 Seconds</label>';
-                                                                    }
-                                                                }
-                                                                ?>
+                                                                    ?>
                                                                 </td>
                                                                 <td>
                                                                     <?php
@@ -813,22 +839,22 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                     ?>
                                                                 </td>
                                                                 <td><?php
-                                                                if ($allot_row['task_status'] == 'Pending') {
-                                                                    echo '<span class="label label-warning">' . $allot_row['task_status'] . '</span>';
-                                                                } else if ($allot_row['task_status'] == 'Approved' || $allot_row['task_status'] == 'Complete' || $allot_row['task_status'] == 'Processed' || $allot_row['task_status'] == 'Done') {
-                                                                    echo '<span class="label label-success">' . $allot_row['task_status'] . '</span>';
-                                                                    if ($allot_row['NextTask'] == 0) {
-                                                                        echo '<br/><span class="text-danger"> Rejected from Ahead Task <i class="fa fa-question-circle" title="Please view the comments to know the rejection reason"></i></span>';
+                                                                    if ($allot_row['task_status'] == 'Pending') {
+                                                                        echo '<span class="label label-warning">' . $allot_row['task_status'] . '</span>';
+                                                                    } else if ($allot_row['task_status'] == 'Approved' || $allot_row['task_status'] == 'Complete' || $allot_row['task_status'] == 'Processed' || $allot_row['task_status'] == 'Done') {
+                                                                        echo '<span class="label label-success">' . $allot_row['task_status'] . '</span>';
+                                                                        if ($allot_row['NextTask'] == 0) {
+                                                                            echo '<br/><span class="text-danger"> Rejected from Ahead Task <i class="fa fa-question-circle" title="Please view the comments to know the rejection reason"></i></span>';
+                                                                        }
+                                                                    } else if ($allot_row['task_status'] == 'Rejected') {
+                                                                        echo '<span class="label label-danger">' . $allot_row['task_status'] . '</span>';
+                                                                    } else if ($allot_row['task_status'] == 'Aborted') {
+                                                                        echo '<span class="label label-danger">' . $allot_row['task_status'] . '</span>';
                                                                     }
-                                                                } else if ($allot_row['task_status'] == 'Rejected') {
-                                                                    echo '<span class="label label-danger">' . $allot_row['task_status'] . '</span>';
-                                                                } else if ($allot_row['task_status'] == 'Aborted') {
-                                                                    echo '<span class="label label-danger">' . $allot_row['task_status'] . '</span>';
-                                                                }
-                                                                ?>
+                                                                    ?>
                                                                 </td>
                                                             </tr>
-                                                            <?php
+                                                        <?php
                                                             $n++;
                                                         }
                                                         ?>
@@ -843,7 +869,7 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                 $adjacents = 3;
                                                 $last = $max_pages - 1;
                                                 if ($max_pages > 1) {
-                                                    ?>
+                                                ?>
                                                     <ul class='pagination'>
                                                         <?php
                                                         //previous button
@@ -852,7 +878,8 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                 echo " <li><a href='?start=$prev&limit=$per_page&taskStats=$_GET[taskStats]&taskPrioty=$_GET[taskPrioty]&asinBy=$_GET[asinBy]&startDate=$_GET[startDate]&endDate=$_GET[endDate]'>" . $lang['Prev'] . "</a> </li>";
                                                             } else {
                                                                 echo " <li><a href='?start=$prev&limit=$per_page'>" . $lang['Prev'] . "</a> </li>";
-                                                            } else
+                                                            }
+                                                        else
                                                             echo " <li class='disabled'><a href='javascript:void(0)'>" . $lang['Prev'] . "</a> </li>";
                                                         //pages
                                                         if ($max_pages < 7 + ($adjacents * 2)) {   //not enough pages to bother breaking it up
@@ -959,11 +986,12 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                 echo "<li><a href='?start=$next&limit=$per_page&taskStats=$_GET[taskStats]&taskPrioty=$_GET[taskPrioty]&asinBy=$_GET[asinBy]&startDate=$_GET[startDate]&endDate=$_GET[endDate]'>" . $lang['Next'] . "</a></li>";
                                                             } else {
                                                                 echo "<li><a href='?start=$next&limit=$per_page'>" . $lang['Next'] . "</a></li>";
-                                                            } else
+                                                            }
+                                                        else
                                                             echo "<li class='disabled'><a href='javascript:void(0)'>" . $lang['Next'] . "</a></li>";
                                                         ?>
                                                     </ul>
-                                                    <?php
+                                                <?php
                                                 }
                                                 echo "</center>";
                                                 ?>
@@ -996,8 +1024,8 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                 </tr>
                                             </table>
                                         <?php }
-                                    ?>
-                                    </div>
+                                        ?>
+                                        </div>
                                 </div>
                                 <!-- end: page -->
 
@@ -1056,21 +1084,21 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
         </div><!-- /.modal -->
 
         <script type="text/javascript">
-            $(document).ready(function (e) {
-                $(".taskbtn").click(function (e) {
+            $(document).ready(function(e) {
+                $(".taskbtn").click(function(e) {
                     $("#tid").val($(this).data('id'));
                     $("#task-modal-content").html('');
                 });
             })
 
-            $('#con-close-modal-act').on('show.bs.modal', function (e) {
+            $('#con-close-modal-act').on('show.bs.modal', function(e) {
                 var tid = $("#tid").val();
                 //alert(tid);
                 var token = $("input[name='token']").val();
                 $.post("<?= BASE_URL ?>application/ajax/task-process.php", {
                     tid: tid,
                     token: token
-                }, function (result, status) {
+                }, function(result, status) {
                     if (status == 'success') {
                         $("#task-modal-content").html(result);
                         getToken();
@@ -1085,11 +1113,11 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
             $(".select2").select2();
             //firstname last name
 
-            $("a#video").click(function () {
+            $("a#video").click(function() {
                 var id = $(this).attr('data');
                 $.post("application/ajax/videoformat.php", {
                     vid: id
-                }, function (result, status) {
+                }, function(result, status) {
                     if (status == 'success') {
                         $("#videofor").html(result);
                         //alert(result);
@@ -1097,11 +1125,11 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                     }
                 });
             });
-            $("a#audio").click(function () {
+            $("a#audio").click(function() {
                 var id = $(this).attr('data');
                 $.post("application/ajax/audioformat.php", {
                     aid: id
-                }, function (result, status) {
+                }, function(result, status) {
                     if (status == 'success') {
                         $("#foraudio").html(result);
                         //alert(result);
@@ -1111,7 +1139,7 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
             });
 
             //for viewing task Description
-            $("a#ViewTsk").click(function () {
+            $("a#ViewTsk").click(function() {
                 var id = $(this).attr('data');
                 var result = $("#" + id).html();
                 $("#taskRemrk").html(result);
@@ -1142,8 +1170,8 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                 }
                 return rtn;
             }
-            jQuery(document).ready(function ($) {
-                $("#limit1").change(function () {
+            jQuery(document).ready(function($) {
+                $("#limit1").change(function() {
                     lval = $(this).val();
                     url = removeParam("limit", url);
                     url = url + "&limit=" + lval;
@@ -1151,7 +1179,7 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                 });
             });
 
-            $("#reset").click(function () {
+            $("#reset").click(function() {
                 url = removeParam("taskStats", url);
                 url = removeParam("taskPrioty", url);
                 url = removeParam("startDate", url);
@@ -1163,9 +1191,9 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
         </script>
 
         <script>
-            $(document).ready(function (e) {
+            $(document).ready(function(e) {
                 //file button validation
-                $("#con-close-modal-act").delegate("#myImage1", "change", function (e) {
+                $("#con-close-modal-act").delegate("#myImage1", "change", function(e) {
                     var size = document.getElementById("myImage1").files[0].size;
                     // alert(size);
                     var name = document.getElementById("myImage1").files[0].name;
@@ -1173,7 +1201,7 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                     if (name.length < 100) {
                         $.post("application/ajax/valiadate_client_memory.php", {
                             size: size
-                        }, function (result, status) {
+                        }, function(result, status) {
                             if (status == 'success') {
                                 //$("#stp").html(result);
                                 var res = JSON.parse(result);
@@ -1368,7 +1396,7 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
                 $railway_id = $railways['id'];
                 // echo '<pre>'; print_r($railways); die();
 
-            
+
 
                 // Get the current timestamp for 'created_at'
                 $created_at = date('Y-m-d H:i:s');  // You can adjust the format as needed
@@ -1416,41 +1444,41 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
                                         <u>REQUEST FOR INSPECTION (RFI)</u>
                                     </th>';
 
-                            if (
-                                $form_type == 1
-                            ) {
-                                $htmlContent .= '
+                if (
+                    $form_type == 1
+                ) {
+                    $htmlContent .= '
                                     <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
                                         <img src="assets/images/pra1.JPEG" class="south_railway" alt="Contractor Logo">
                                     </th>';
-                            } else {
-                                $htmlContent .= '
+                } else {
+                    $htmlContent .= '
                                     <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
                                         <img src="assets/images/raipur.jpg" class="south_railway" alt="Contractor Logo">
                                     </th>';
-                            }
+                }
 
-                            $htmlContent .= '
+                $htmlContent .= '
                                 </tr>
                                 <tr>';
 
-                            if (
-                                $form_type == 1
-                            ) {
-                                $htmlContent .= '
+                if (
+                    $form_type == 1
+                ) {
+                    $htmlContent .= '
                                     <th class="col-md-8" style="text-align:center; vertical-align:middle;">
                                         Project Doubling of Railway Project comprising the section commencing from(--) Road station (End CH 967.055)
                                         to Surajpur Road Station (End CH : 1006.44) (KM-39.385 KM) beside existing single 84 line in the state of chhattisgarh in the
                                         south East central Railway Zone Agt No: SECR/SECRC/CMI/2024/0008/ dt 14-Mar-2024.
                                     </th>';
-                            } else {
-                                $htmlContent .= '
+                } else {
+                    $htmlContent .= '
                                     <th class="col-md-8" style="text-align:center; vertical-align:middle;">
                                         Major Up-Gradation of Raipur Railway Station of SECR on EPC Mode
                                     </th>';
-                            }
+                }
 
-                            $htmlContent .= '
+                $htmlContent .= '
                                 </tr>
                             </thead>
                         </table>
@@ -1458,16 +1486,16 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
                         <table class="table table-bordered upper">
                             <thead>';
 
-                            if (
-                                $form_type == 1
-                            ) {
-                                $htmlContent .= '
+                if (
+                    $form_type == 1
+                ) {
+                    $htmlContent .= '
                                 <tr>
                                     <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : South East Central Railway</th>
                                     <th class="col-md-6" colspan="3" style="text-align:center; vertical-align:middle;">Contractor : Barbrik Project Limited</th>
                                 </tr>';
-                            } else {
-                                $htmlContent .= '
+                } else {
+                    $htmlContent .= '
                                 <tr>
                                                                         <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : South East Central Railway</th>
 
@@ -1475,9 +1503,9 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
                                                                             Contractor : RPP-SATHYAMOORTHY JV
                                                                         </th>
                                 </tr>';
-                            }
+                }
 
-                            $htmlContent .= '
+                $htmlContent .= '
                                 <tr>
                                     <th class="col-md-2 top-center">RFI No</th>
                                     <th class="col-md-2 top-center">RFI Date</th>
@@ -1509,7 +1537,7 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
                             <tr>
                                 <th>' . htmlspecialchars($railways['name_of_the_inspecting_engineer']) . '</th>
                                 <th>' . (!empty($railways['inspected_on_date']) ? date("d-m-Y", strtotime($railways['inspected_on_date'])) : '') .
-                                '</th>
+                    '</th>
                             </tr>
                         </table>
 
@@ -1563,13 +1591,13 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
                                     <div id="dynamicForm">
                                         <div class="row" id="formRows">';
 
-                            $queryyy = "SELECT * FROM tbl_railway_attachment_master WHERE requested_id='" . $railways['id'] . "'";
-                            $resultt = mysqli_query($db_con, $queryyy);
+                $queryyy = "SELECT * FROM tbl_railway_attachment_master WHERE requested_id='" . $railways['id'] . "'";
+                $resultt = mysqli_query($db_con, $queryyy);
 
-                            // Check if the query was successful
-                            if ($resultt) {
-                                while ($rowwe = mysqli_fetch_assoc($resultt)) {
-                                    $htmlContent .= '
+                // Check if the query was successful
+                if ($resultt) {
+                    while ($rowwe = mysqli_fetch_assoc($resultt)) {
+                        $htmlContent .= '
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
@@ -1586,10 +1614,10 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
                                                 </div>
                                             </div>
                                         </div>';
-                                }
-                            }
+                    }
+                }
 
-                            $htmlContent .= '
+                $htmlContent .= '
                                         </div>
                                     </div>
                                 </div>
@@ -1597,15 +1625,15 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
                         </div>
                     </body>
                     </html>';
-                    $document_master = "SELECT * FROM tbl_document_master where ticket_id='$tktId'";
-                    $document_query = mysqli_query($db_con, $document_master);
-                    while ($document_row = mysqli_fetch_assoc($document_query)) {
-                        $document_details = $document_row;
-                    }
+                $document_master = "SELECT * FROM tbl_document_master where ticket_id='$tktId'";
+                $document_query = mysqli_query($db_con, $document_master);
+                while ($document_row = mysqli_fetch_assoc($document_query)) {
+                    $document_details = $document_row;
+                }
 
-                    include 'exportpdf.php';
-                    $path = 'extract-here/' . $document_details['doc_path'];
-                    exportPDF($htmlContent, $path);
+                include 'exportpdf.php';
+                $path = 'extract-here/' . $document_details['doc_path'];
+                exportPDF($htmlContent, $path);
 
                 //************** end this code**************
 
@@ -1640,8 +1668,6 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
         } else {
             echo '<script>taskFailed("' . basename($_SERVER[REQUEST_URI]) . '", "' . $lang['file_name _too_long'] . '")</script>';
         }
-
-
     }
 
     if (!empty($_POST['app'])) {

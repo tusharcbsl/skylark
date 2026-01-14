@@ -12,7 +12,7 @@ $data = file_get_contents($file);
 $lang = json_decode($data, true);
 require './../config/database.php';
 
-$langDetail = mysqli_query($db_con, "select * from tbl_language where lang_name='".$_SESSION['lang']."'") or die('Error : ' . mysqli_error($db_con));
+$langDetail = mysqli_query($db_con, "select * from tbl_language where lang_name='" . $_SESSION['lang'] . "'") or die('Error : ' . mysqli_error($db_con));
 $langDetail = mysqli_fetch_assoc($langDetail);
 
 //for user role
@@ -32,11 +32,11 @@ if (intval($_POST['ID'])) {
     mysqli_set_charset($db_con, "utf8");
     $getTask = mysqli_query($db_con, "select * from tbl_task_master where task_id='$tid'") or die('Error in stepfetch:' . mysqli_error($db_con));
     $rwgetTask = mysqli_fetch_assoc($getTask);
-    ?>
+?>
     <link href="assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <link href="assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />          
-    <div class="row">  
+    <link href="assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+    <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
                 <div class="col-md-4">
@@ -48,7 +48,7 @@ if (intval($_POST['ID'])) {
                     $rwgetStepId = mysqli_fetch_assoc($getStepId);
                     ?>
                     <label><?php echo $rwgetStepId['step_order']; ?></label>
-                    <input type="hidden" value="<?php echo $rwgetTask['step_id']; ?>" name="stepid"/>
+                    <input type="hidden" value="<?php echo $rwgetTask['step_id']; ?>" name="stepid" />
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@ if (intval($_POST['ID'])) {
                     <label for="userName"><?php echo $lang['Task_Name']; ?><span style="color: red;">*</span></label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" class="form-control translatetext" name="taskName" id="taskName" value="<?php echo $rwgetTask['task_name']; ?>" maxlength="40" required >
+                    <input type="text" class="form-control translatetext" name="taskName" id="taskName" value="<?php echo $rwgetTask['task_name']; ?>" maxlength="40" required>
                     <input type="hidden" class="form-control" name="taskId" value="<?php echo $rwgetTask['task_id']; ?>" required>
                 </div>
             </div>
@@ -82,20 +82,20 @@ if (intval($_POST['ID'])) {
                     <select class="form-control selectpicker" data-live-search="true" id="" name="prity" required>
                         <option selected disabled style="background: #808080; color: #121213;"><?php echo $lang['Slt_Prorty_Lvl']; ?></option>
                         <option value="3" <?php
-                        if ($rwgetTask['priority_id'] == '3') {
-                            echo 'selected';
-                        }
-                        ?>><?php echo $lang['Normal']; ?></option>
+                                            if ($rwgetTask['priority_id'] == '3') {
+                                                echo 'selected';
+                                            }
+                                            ?>><?php echo $lang['Normal']; ?></option>
                         <option value="2" <?php
-                        if ($rwgetTask['priority_id'] == '2') {
-                            echo 'selected';
-                        }
-                        ?>><?php echo $lang['Medium']; ?></option>
+                                            if ($rwgetTask['priority_id'] == '2') {
+                                                echo 'selected';
+                                            }
+                                            ?>><?php echo $lang['Medium']; ?></option>
                         <option value="1" <?php
-                        if ($rwgetTask['priority_id'] == '1') {
-                            echo 'selected';
-                        }
-                        ?>><?php echo $lang['Urgent']; ?></option>
+                                            if ($rwgetTask['priority_id'] == '1') {
+                                                echo 'selected';
+                                            }
+                                            ?>><?php echo $lang['Urgent']; ?></option>
                     </select>
                 </div>
             </div>
@@ -111,12 +111,13 @@ if (intval($_POST['ID'])) {
                             <!--td>
                                 <div class="radio radio-primary">
                                     <input type="radio" name="radio" id="radio" value="Date" <?php
-//                                    if ($rwgetTask['deadline_type'] == 'Date') {
-//                                        echo'checked';
-//                                    }
-                                    ?>>
+                                                                                                //                                    if ($rwgetTask['deadline_type'] == 'Date') {
+                                                                                                //                                        echo'checked';
+                                                                                                //                                    }
+                                                                                                ?>>
                                     <label for="radio">
-                                        <?php //echo $lang['Date']; ?> &nbsp;&nbsp;&nbsp;
+                                        <?php //echo $lang['Date']; 
+                                        ?> &nbsp;&nbsp;&nbsp;
                                     </label>
                                 </div>
                             </td-->
@@ -124,10 +125,10 @@ if (intval($_POST['ID'])) {
                             <td>
                                 <div class="radio radio-primary">
                                     <input type="radio" name="radio" id="radio1" value="Days" <?php
-                                    if ($rwgetTask['deadline_type'] == 'Days') {
-                                        echo'checked';
-                                    }
-                                    ?>>
+                                                                                                if ($rwgetTask['deadline_type'] == 'Days') {
+                                                                                                    echo 'checked';
+                                                                                                }
+                                                                                                ?>>
                                     <label for="radio1">
                                         <?php echo $lang['Days']; ?> &nbsp;&nbsp;&nbsp;
                                     </label>
@@ -136,10 +137,10 @@ if (intval($_POST['ID'])) {
                             <td>
                                 <div class="radio radio-primary">
                                     <input type="radio" name="radio" id="radio2" value="Hrs" <?php
-                                    if ($rwgetTask['deadline_type'] == 'Hrs') {
-                                        echo'checked';
-                                    }
-                                    ?>>
+                                                                                                if ($rwgetTask['deadline_type'] == 'Hrs') {
+                                                                                                    echo 'checked';
+                                                                                                }
+                                                                                                ?>>
                                     <label for="radio2">
                                         <?php echo $lang['Hrs']; ?> &nbsp;&nbsp;&nbsp;
                                     </label>
@@ -167,9 +168,11 @@ if (intval($_POST['ID'])) {
                         $val1 = $rwgetTask['deadline'] / 60;
                     }
                     ?>
-                    <!--input type="text" class="form-control input-daterange-timepicker" name="daterange" value="<?php //echo $daterange ?>" id="dateRange" style="<?php //echo $display; ?>"-->
-                    <input type="text" class="form-control days " name="days" value="<?php echo $val; ?>" id="days" style="<?php echo $display1; ?>" placeholder="Days"/>
-                    <input type="text" class="form-control days" name="hrs" value="<?php echo $val1; ?>" id="hrs" style="<?php echo $display2; ?>" placeholder="Hrs"/>
+                    <!--input type="text" class="form-control input-daterange-timepicker" name="daterange" value="<?php //echo $daterange 
+                                                                                                                    ?>" id="dateRange" style="<?php //echo $display; 
+                                                                                                                                                                    ?>"-->
+                    <input type="text" class="form-control days " name="days" value="<?php echo $val; ?>" id="days" style="<?php echo $display1; ?>" placeholder="Days" />
+                    <input type="text" class="form-control days" name="hrs" value="<?php echo $val1; ?>" id="hrs" style="<?php echo $display2; ?>" placeholder="Hrs" />
                 </div>
             </div>
         </div>
@@ -187,15 +190,18 @@ if (intval($_POST['ID'])) {
                     <div class="input-group m-b-15">
 
                         <div class="bootstrap-timepicker">
-                            <input id="timepicker" type="text" class="form-control" name="frm" value="<?php //echo $wfrm; ?>" readonly >
+                            <input id="timepicker" type="text" class="form-control" name="frm" value="<?php //echo $wfrm; 
+                                                                                                        ?>" readonly >
                         </div>
                         <span class="input-group-addon bg-custom b-0 text-white"><i class="glyphicon glyphicon-time"></i></span>
                     </div>
-                    <?php //echo $lang['to']; ?>
+                    <?php //echo $lang['to']; 
+                    ?>
                     <div class="input-group">
 
                         <div class="bootstrap-timepicker">
-                            <input id="timepicker2" type="text" class="form-control" name="to" value="<?php //echo $wto; ?>" readonly >
+                            <input id="timepicker2" type="text" class="form-control" name="to" value="<?php //echo $wto; 
+                                                                                                        ?>" readonly >
                         </div>
                         <span class="input-group-addon bg-custom b-0 text-white"><i class="glyphicon glyphicon-time"></i></span>
                     </div>
@@ -225,14 +231,14 @@ if (intval($_POST['ID'])) {
                         $user = mysqli_query($db_con, "select * from tbl_user_master where user_id in($sameGroupIDs)");
                         while ($rwUser = mysqli_fetch_assoc($user)) {
                             if ($rwUser['user_id'] != 1 && $_SESSION['cdes_user_id'] != $rwUser['user_id']) {
-                                ?>
+                        ?>
                                 <option <?php
-                                if ($rwgetTask['assign_user'] == $rwUser['user_id']) {
-                                    echo 'selected';
-                                }
-                                ?> value="<?php echo $rwUser['user_id']; ?>"><?php echo $rwUser['first_name'] . ' ' . $rwUser['last_name']; ?></option>
+                                        if ($rwgetTask['assign_user'] == $rwUser['user_id']) {
+                                            echo 'selected';
+                                        }
+                                        ?> value="<?php echo $rwUser['user_id']; ?>"><?php echo $rwUser['first_name'] . ' ' . $rwUser['last_name']; ?></option>
 
-                                <?php
+                        <?php
                             }
                         }
                         ?>
@@ -254,14 +260,14 @@ if (intval($_POST['ID'])) {
                         $user = mysqli_query($db_con, "select * from tbl_user_master where user_id in($sameGroupIDs)");
                         while ($rwUser = mysqli_fetch_assoc($user)) {
                             if ($rwUser['user_id'] != 1 && $_SESSION['cdes_user_id'] != $rwUser['user_id']) {
-                                ?>
+                        ?>
                                 <option <?php
-                                if ($rwgetTask['alternate_user'] == $rwUser['user_id']) {
-                                    echo 'selected';
-                                }
-                                ?> value="<?php echo $rwUser['user_id']; ?>"><?php echo $rwUser['first_name'] . ' ' . $rwUser['last_name']; ?></option>
+                                        if ($rwgetTask['alternate_user'] == $rwUser['user_id']) {
+                                            echo 'selected';
+                                        }
+                                        ?> value="<?php echo $rwUser['user_id']; ?>"><?php echo $rwUser['first_name'] . ' ' . $rwUser['last_name']; ?></option>
 
-                                <?php
+                        <?php
                             }
                         }
                         ?>
@@ -283,14 +289,14 @@ if (intval($_POST['ID'])) {
                         $user = mysqli_query($db_con, "select * from tbl_user_master where user_id in($sameGroupIDs)");
                         while ($rwUser = mysqli_fetch_assoc($user)) {
                             if ($rwUser['user_id'] != 1 && $_SESSION['cdes_user_id'] != $rwUser['user_id']) {
-                                ?>
+                        ?>
                                 <option <?php
-                                if ($rwgetTask['supervisor'] == $rwUser['user_id']) {
-                                    echo 'selected';
-                                }
-                                ?> value="<?php echo $rwUser['user_id']; ?>"><?php echo $rwUser['first_name'] . ' ' . $rwUser['last_name']; ?></option>
+                                        if ($rwgetTask['supervisor'] == $rwUser['user_id']) {
+                                            echo 'selected';
+                                        }
+                                        ?> value="<?php echo $rwUser['user_id']; ?>"><?php echo $rwUser['first_name'] . ' ' . $rwUser['last_name']; ?></option>
 
-                                <?php
+                        <?php
                             }
                         }
                         ?>
@@ -313,27 +319,57 @@ if (intval($_POST['ID'])) {
                 <div class="col-md-6">
                     <label for="action"><?php echo $lang['Slt_Act']; ?><span style="color:red;">*</span></label>
                 </div>
-                <select class="select3 select2-multiple" name="action[]" multiple="multiple" multiple data-placeholder="Select Action"  parsley-trigger="change" id="group" required>
+                <select class="select3 select2-multiple" name="action[]" multiple="multiple" multiple data-placeholder="Select Action" parsley-trigger="change" id="group" required>
                     <?php
                     $dbaction = explode(",", $rwgetTask['actions']);
-//                    $actions = array('Approved', 'Rejected', 'Aborted', 'Processed', 'Complete', 'Done');
-//                    foreach ($actions as $action) {
-//                        if (in_array($action, $dbaction)) {
-//                            echo'<option value="' . $action . '" selected>' . $action . '</option>';
-//                        } else {
-//                            echo'<option value="' . $action . '">' . $action . '</option>';
-//                        }
-//                    }
-                    ?>   
-                    <option value="Approved" <?php if (in_array('Approved', $dbaction)) { echo "selected"; } ?> ><?php echo $lang['Approved'];?></option>
-                    <option value="Rejected" <?php if (in_array('Rejected', $dbaction)) { echo "selected"; } ?> ><?php echo $lang['Rejected'];?></option>
-                    <option value="Aborted" <?php if (in_array('Aborted', $dbaction)) { echo "selected"; } ?> ><?php echo $lang['Aborted'];?></option>
-                     <option value="Processed" <?php if (in_array('Processed', $dbaction)) { echo "selected"; } ?>  ><?php echo $lang['Processed'];?></option>
-                    <option value="Complete" <?php if (in_array('Complete', $dbaction)) { echo "selected"; } ?>  ><?php echo $lang['Complete'];?></option>
-                    <option value="Done" <?php if (in_array('Done', $dbaction)) { echo "selected"; } ?> ><?php echo $lang['Done'];?></option>
+                    //                    $actions = array('Approved', 'Rejected', 'Aborted', 'Processed', 'Complete', 'Done');
+                    //                    foreach ($actions as $action) {
+                    //                        if (in_array($action, $dbaction)) {
+                    //                            echo'<option value="' . $action . '" selected>' . $action . '</option>';
+                    //                        } else {
+                    //                            echo'<option value="' . $action . '">' . $action . '</option>';
+                    //                        }
+                    //                    }
+                    ?>
+                    <option value="Approved" <?php if (in_array('Approved', $dbaction)) {
+                                                    echo "selected";
+                                                } ?>><?php echo $lang['Approved']; ?></option>
+                    <option value="Rejected" <?php if (in_array('Rejected', $dbaction)) {
+                                                    echo "selected";
+                                                } ?>><?php echo $lang['Rejected']; ?></option>
+                    <option value="Aborted" <?php if (in_array('Aborted', $dbaction)) {
+                                                echo "selected";
+                                            } ?>><?php echo $lang['Aborted']; ?></option>
+                    <option value="Processed" <?php if (in_array('Processed', $dbaction)) {
+                                                    echo "selected";
+                                                } ?>><?php echo $lang['Processed']; ?></option>
+                    <option value="Complete" <?php if (in_array('Complete', $dbaction)) {
+                                                    echo "selected";
+                                                } ?>><?php echo $lang['Complete']; ?></option>
+                    <option value="Done" <?php if (in_array('Done', $dbaction)) {
+                                                echo "selected";
+                                            } ?>><?php echo $lang['Done']; ?></option>
 
 
                 </select>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label for="userName"><?php echo $lang['task_request_on']; ?></label>
+                </div>
+                <div class="col-md-8">
+                    <select class="form-control" id="" name="enable_edit_btn" required>
+                        <option><?php echo "Select Option" ?></option>
+                        <option value="1"
+                            <?= ($rwgetTask['enable_edit_btn'] == '1') ? 'selected' : '' ?>>
+                            <?php echo $lang['edit_form']; ?>
+                        </option>
+
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -344,8 +380,7 @@ if (intval($_POST['ID'])) {
     <script src="assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
     <script src="assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        
-        $("input.days").keypress(function (e) {
+        $("input.days").keypress(function(e) {
             //  alert();
             //if the letter is not digit then display error and don't type anything
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 46) {
@@ -361,9 +396,9 @@ if (intval($_POST['ID'])) {
                 }
             }
         });
-        
-        
-        jQuery(document).ready(function () {
+
+
+        jQuery(document).ready(function() {
             $('.selectpicker').selectpicker();
 
         });
@@ -376,7 +411,7 @@ if (intval($_POST['ID'])) {
         jQuery('#timepicker3').timepicker({
             minuteStep: 15
         });
-    //Date range picker
+        //Date range picker
         $('.input-daterange-datepicker').daterangepicker({
             buttonClasses: ['btn', 'btn-sm'],
             applyClass: 'btn-default',
@@ -444,14 +479,14 @@ if (intval($_POST['ID'])) {
                 monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                 firstDay: 1
             }
-        }, function (start, end, label) {
+        }, function(start, end, label) {
             console.log(start.toISOString(), end.toISOString(), label);
             $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         });
     </script>
     <!-- jQuery  -->
     <script>
-        $("input:radio[name='radio']").click(function () {
+        $("input:radio[name='radio']").click(function() {
 
             var val = $(this).val();
 
@@ -473,16 +508,14 @@ if (intval($_POST['ID'])) {
         });
     </script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             //$('form').parsley();
-            
-             $('input, textarea').keyup(function ()
-            {
+
+            $('input, textarea').keyup(function() {
                 var groupName = $(this).val();
                 re = /[`1234567890~!@#$%^&*()|+\=?;:'",.<>\{\}\[\]\\\/]/gi;
                 var isSplChar = re.test(groupName);
-                if (isSplChar)
-                {
+                if (isSplChar) {
                     var no_spl_char = groupName.replace(/[`~!@#$%^&*()|+\=?;:'",.<>\{\}\[\]\\\/]/gi, '');
                     $(this).val(no_spl_char);
                 }
@@ -490,33 +523,32 @@ if (intval($_POST['ID'])) {
 
         });
         $(".select3").select2();
-
     </script>
-    
+
     <script type="text/javascript">
-    google.load("elements", "1", {
-        packages: "transliteration"
-    });
+        google.load("elements", "1", {
+            packages: "transliteration"
+        });
 
-    function onLoad() {
-        var langcode = '<?php echo $langDetail['lang_code']; ?>';
-        var options = {
-            sourceLanguage: 'en',
-            destinationLanguage: [langcode],
-            shortcutKey: 'ctrl+g',
-            transliterationEnabled: true
-        };
+        function onLoad() {
+            var langcode = '<?php echo $langDetail['lang_code']; ?>';
+            var options = {
+                sourceLanguage: 'en',
+                destinationLanguage: [langcode],
+                shortcutKey: 'ctrl+g',
+                transliterationEnabled: true
+            };
 
-        var control =
-        new google.elements.transliteration.TransliterationControl(options);
-        //var ids = ["groupName12"];
-        var elements = document.getElementsByClassName('translatetext');
-        control.makeTransliteratable(elements);
-    }
-    $.getScript('assets/js/test.js', function () {
-        // Call custom function defined in script
-        onLoad();
-    });
-    google.setOnLoadCallback(onLoad);
-</script>
+            var control =
+                new google.elements.transliteration.TransliterationControl(options);
+            //var ids = ["groupName12"];
+            var elements = document.getElementsByClassName('translatetext');
+            control.makeTransliteratable(elements);
+        }
+        $.getScript('assets/js/test.js', function() {
+            // Call custom function defined in script
+            onLoad();
+        });
+        google.setOnLoadCallback(onLoad);
+    </script>
 <?php } ?>

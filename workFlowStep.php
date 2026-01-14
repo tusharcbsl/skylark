@@ -382,6 +382,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
                             <label><h2 class="panel-title"><?php echo $lang['Edt_Tsk']; ?></h2></label>
                         </header>
+                      
 
                         <div class="modal-body">
                             <div class="modal-wrapper" id="modalTModify">
@@ -680,6 +681,7 @@
             $wrkHur = $wfrm . ' To ' . $wto;
 
             $altrusr = $_POST['altrusr'];
+            $enable_edit_btn = $_POST['enable_edit_btn'];
 
 
             $deadlineType = $_POST['radio'];
@@ -721,7 +723,7 @@
                 echo'<script>taskFailed("workFlowStep?idwork=' . urlencode($_GET[idwork]) . '","' . $lang['Tk_Ordr_alrady_Exst'] . '");</script>';
             } else {
                 mysqli_set_charset($db_con, "utf8");
-                $insertTask = mysqli_query($db_con, "insert into tbl_task_master (task_name, assign_user,alternate_user, priority_id, deadline, deadline_type,working_hour, task_instructions, supervisor, task_order, step_id, workflow_id, task_created_date,actions) values('$taskName', '$assiUsers','$altrusr', '$prity', '$deadLine', '$deadlineType','$wrkHur', '$taskIns', '$supvsr', '$taskOrder', '$stepid', '$wfid', '$date','$actions')") or die('Error' . mysqli_error($db_con));
+                $insertTask = mysqli_query($db_con, "insert into tbl_task_master (task_name, assign_user,alternate_user, priority_id, deadline, deadline_type,working_hour, task_instructions, supervisor, task_order, step_id, workflow_id, task_created_date,actions, enable_edit_btn) values('$taskName', '$assiUsers','$altrusr', '$prity', '$deadLine', '$deadlineType','$wrkHur', '$taskIns', '$supvsr', '$taskOrder', '$stepid', '$wfid', '$date','$actions', '$enable_edit_btn')") or die('Error' . mysqli_error($db_con));
                 if ($insertTask) {
                     $log = mysqli_query($db_con, "insert into tbl_ezeefile_logs_wf(`id`, `user_id`, `user_name`, `group_id`, `sl_id`, `action_name`, `start_date`, `end_date`, `system_ip`, `remarks`) values (null, '$_SESSION[cdes_user_id]', '$_SESSION[admin_user_name] $_SESSION[admin_user_last]',null,null,'Task Name $taskName Added in workFlow $wrkflwnameTask','$date',null,'$host',null)") or die('error : ' . mysqli_error($db_con));
                     echo'<script>taskSuccess("workFlowStep?idwork=' . urlencode($_GET[idwork]) . '","' . $lang['Task_Ad_Sucesfully'] . '");</script>';
@@ -751,8 +753,10 @@
             $wrkHur = $wfrm . ' To ' . $wto;
 
             $altrusr = $_POST['altrusr'];
+            $enable_edit_btn = $_POST['enable_edit_btn'];
 
             $deadlineType = $_POST['radio'];
+            
             if ($deadlineType == 'Date') {
                 $daterange = $_POST['daterange'];
                 $daterange = explode("To", $daterange);
@@ -786,7 +790,7 @@
             $GetwrkfNme = mysqli_fetch_assoc($wrkfNme);
             $wrkflwName = $GetwrkfNme['workflow_name'];
 
-            $updTask = mysqli_query($db_con, "update tbl_task_master set task_name='$taskName', assign_user='$assiUsers', alternate_user='$altrusr', priority_id='$prity', deadline='$deadLine',working_hour='$wrkHur', deadline_type='$deadlineType', task_instructions='$taskIns', supervisor='$supvsr', task_order='$taskOrder', step_id='$stepid', workflow_id='$wfid', task_created_date='$date',actions='$actions' where task_id = '$taskId'"); // or die('Error' . mysqli_error($db_con));
+            $updTask = mysqli_query($db_con, "update tbl_task_master set task_name='$taskName', assign_user='$assiUsers', alternate_user='$altrusr', priority_id='$prity', deadline='$deadLine',working_hour='$wrkHur', deadline_type='$deadlineType', task_instructions='$taskIns', supervisor='$supvsr', task_order='$taskOrder', step_id='$stepid', workflow_id='$wfid', task_created_date='$date',actions='$actions', enable_edit_btn='$enable_edit_btn' where task_id = '$taskId'"); // or die('Error' . mysqli_error($db_con));
 
 
             if ($updTask) {

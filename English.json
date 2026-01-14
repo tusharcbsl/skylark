@@ -1982,5 +1982,7 @@
     "department_manager": "Department Manager",
     "raipur_letter": "Raipur Letter",
     "raipur_report": "Raipur Report",
-    "description_work" : "Description of Work"
+    "description_work" : "Description of Work",
+    "edit_form" : "Edit Form",
+    "task_request_on" : "Task Request On"
 }
