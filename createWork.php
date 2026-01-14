@@ -340,8 +340,8 @@ $parentid = $rwFolder['sl_parent_id'];
                                                 <th class="col-md-2">
                                                     <?php
 
-                                                    // $rfi_query = "SELECT id,rfi_no FROM tbl_railway_master where railway_type=" . $rwgetWorkflwIdDs['form_type'] . " ORDER BY id DESC LIMIT 1";
-                                                    // $result = mysqli_query($db_con, $rfi_query);
+                                                    $rfi_query = "SELECT id,rfi_no FROM tbl_railway_master where railway_type=" . $rwgetWorkflwIdDs['form_type'] . " ORDER BY id DESC LIMIT 1";
+                                                    $result = mysqli_query($db_con, $rfi_query);
 
                                                     // Initialize variable to store the RFI ID
                                                     // if ($rwgetWorkflwIdDs['form_type'] == '1') {
@@ -353,19 +353,18 @@ $parentid = $rwFolder['sl_parent_id'];
 
 
                                                     // // Check if the query returned a result
-                                                    // if ($result && $result->num_rows > 0) {
-                                                    //     // Fetch the row and store the ID in the variable
-                                                    //     $row = $result->fetch_assoc();
-                                                    //     $rfi_id = $row['rfi_no'];
-                                                    // }
+                                                    if ($result && $result->num_rows > 0) {
+                                                        // Fetch the row and store the ID in the variable
+                                                        $row = $result->fetch_assoc();
+                                                        $rfi_id = $row['rfi_no'];
+                                                    }
 
-                                                    // $rfi_id = $rfi_id + 1;
-                                                    // $num = 1;
+                                                    $rfi_id = $rfi_id + 1;
+                                                    $num = 1;
                                                     ?>
 
-                                                    <input type="text" class="form-control" name="rfi_no" id="rfi_no" placeholder="RFI No">
-                                                    <!-- <?php //$num++; 
-                                                            ?> -->
+                                                    <input type="text" class="form-control" name="rfi_no" id="rfi_no" placeholder="RFI No" readonly value="<?php echo $rfi_id; ?>">
+                                                    <?php $num++; ?>
                                                 </th>
 
                                                 <th class="col-md-2">
