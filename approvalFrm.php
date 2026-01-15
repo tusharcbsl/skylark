@@ -12,56 +12,92 @@ require_once './application/pages/head.php';
 require_once './application/pages/function.php';
 require_once './classes/fileManager.php';
 require_once __DIR__ . '/vendor/autoload.php';
+$railway_master = "SELECT * FROM tbl_railway_master where ticket_id='$ticket'";
+$railway_query = mysqli_query($db_con, $railway_master);
+while ($allot_row = mysqli_fetch_assoc($railway_query)) {
+    $railway_details = $allot_row;
+}
+ if($ctaskOrder== '1'){
+    $agency_sign = $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'];
+    $agency_name = $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'];
+    $agency_desig =  $_SESSION['designation'];
+    $agency_date = date('Y-m-d\TH:i');
+    
+    $pmc_sign = $railway_details['pmc_sign'];
+    $pmc_name = $railway_details['pmc_name'];
+    $pmc_desig = $railway_details['pmc_desig'];
+    $pmc_date = !empty($railway_details['pmc_date'])
+                                                                        ? date('Y-m-d', strtotime($railway_details['pmc_date']))
+                                                                        : '';
+    $railway_sign = $railway_details['railway_sign'];
+    $railway_name = $railway_details['railway_name'];
+    $railway_desig = $railway_details['railway_desig'];
+    $railway_date = !empty($railway_details['railway_date'])
+                                                                        ? date('Y-m-d', strtotime($railway_details['railway_date']))
+                                                                        : '';
 
-
+ }else if($ctaskOrder== '2'){
+    $agency_sign = $railway_details['agency_sign'];
+    $agency_name = $railway_details['agency_name'];
+    $agency_desig =  $railway_details['agency_desig'];
+    $agency_date = !empty($railway_details['agency_date'])
+                                                                        ? date('Y-m-d', strtotime($railway_details['agency_date']))
+                                                                        : '';
+    $pmc_sign = $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'];
+    $pmc_name = $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'];
+    $pmc_desig =  $_SESSION['designation'];
+    $pmc_date = date('Y-m-d\TH:i');
+        $railway_sign = $railway_details['railway_sign'];
+    $railway_name = $railway_details['railway_name'];
+    $railway_desig = $railway_details['railway_desig'];
+    $railway_date = !empty($railway_details['railway_date'])
+                                                                        ? date('Y-m-d', strtotime($railway_details['railway_date']))
+                                                                        : '';
+ }else if($ctaskOrder== '3'){
+    $agency_sign = $railway_details['agency_sign'];
+    $agency_name = $railway_details['agency_name'];
+    $agency_desig =  $railway_details['agency_desig'];
+    $agency_date = !empty($railway_details['agency_date'])
+                                                                        ? date('Y-m-d', strtotime($railway_details['agency_date']))
+                                                                        : '';
+    $pmc_sign = $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'];
+    $pmc_name = $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'];
+    $pmc_desig =  $_SESSION['designation'];
+    $pmc_date = !empty($railway_details['pmc_date'])
+                                                                        ? date('Y-m-d', strtotime($railway_details['pmc_date']))
+                                                                        : '';
+    $railway_sign = $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'];
+    $railway_name = $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'];
+    $railway_desig =  $_SESSION['designation'];
+    $railway_date = date('Y-m-d\TH:i');
+ }
 // Initialize variables
 $updated_at = date('Y-m-d H:i:s');
 $updated_by = isset($_SESSION['cdes_user_id']) ? $_SESSION['cdes_user_id'] : null;
 
 
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Gather POST data
-    $received_name = $_POST['received_name'] ?? null;
-    $received_sign = $_POST['received_sign'] ?? null;
-    $received_designation = $_POST['received_designation'] ?? null;
-    $received_date = !empty($_POST['received_date']) 
-    ? date('Y-m-d H:i:s', strtotime($_POST['received_date'])) 
-    : NULL;
-
-    $ticket_id = $_POST['ticket_id'] ?? null;
-    $form_type = $_POST['form_type'] ?? null;
-    $railway_master = "SELECT * FROM tbl_railway_master where ticket_id='$ticket_id'";
-    $railway_query = mysqli_query($db_con, $railway_master);
-    $user = "SELECT * FROM tbl_user_master where user_id='$user_id'";
-    $user_query = mysqli_query($db_con, $user);
-    while ($allot_roww = mysqli_fetch_assoc($railway_query)) {
-        $railway_details = $allot_roww;
-    }
-    $document_master = "SELECT * FROM tbl_document_master where ticket_id='$ticket_id'";
-    $document_query = mysqli_query($db_con, $document_master);
-    while ($document_row = mysqli_fetch_assoc($document_query)) {
-        $document_details = $document_row;
-    }
-
-
-    $enclosures_attached = $_POST['enclosures_attached'] ?? null;
-    $signature_of_the_contractor = $_POST['signature_of_the_contractor'] ?? null;
-    $remarks_of_the_inspection = $_POST['remarks_of_the_inspection'] ?? null;
-    $signature_of_the_inspection = $_POST['signature_of_the_inspection'] ?? null;
 
 
     // $approved = isset($_POST['approved']) ? 1 : 0;
     // $not_approved = isset($_POST['not_approved']) ? 1 : 0;
 
     $query = "UPDATE tbl_railway_master SET 
-    received_name = '$received_name', 
-    received_date = '$received_date', 
-    received_designation = '$received_designation', 
-    received_sign = '$received_sign', 
-    enclosures_attached = '$enclosures_attached', 
-    signature_of_the_contractor = '$signature_of_the_contractor', 
-    remarks_of_the_inspection = '$remarks_of_the_inspection', 
-    signature_of_the_inspection = '$signature_of_the_inspection', 
+    agency_sign = '$agency_sign', 
+    agency_name = '$agency_name', 
+    agency_desig = '$agency_desig', 
+    agency_date = '$agency_date', 
+    pmc_sign = '$pmc_sign', 
+    pmc_name = '$pmc_name', 
+    pmc_desig = '$pmc_desig', 
+    pmc_date = '$pmc_date', 
+    railway_sign = '$railway_sign', 
+    railway_name = '$railway_name', 
+    railway_desig = '$railway_desig', 
+    railway_date = '$railway_date', 
 
     updated_by = $updated_by, 
     status = 1 
@@ -248,19 +284,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </tr>
 <tr>
     <th width="35%" align="right">Signature :</th>
-    <td width="65%">' . htmlspecialchars($_POST['received_sign']) . '</td>
+    <td width="65%">' . htmlspecialchars($railway_details['received_sign']) . '</td>
 </tr>
 <tr>
     <th align="right">Name :</th>
-    <td>' . htmlspecialchars($_POST['received_name']) . '</td>
+    <td>' . htmlspecialchars($railway_details['received_name']) . '</td>
 </tr>
 <tr>
     <th align="right">Designation :</th>
-    <td>' . htmlspecialchars($_POST['received_designation']) . '</td>
+    <td>' . htmlspecialchars($railway_details['received_designation']) . '</td>
 </tr>
 <tr>
     <th align="right">Date :</th>
-    <td>' . (!empty($_POST['received_date']) 
+    <td>' . (!empty($railway_details['received_date']) 
         ? date('d-m-Y h:i A', strtotime($_POST['received_date'])) 
         : '' ) . '</td>
 </tr>
