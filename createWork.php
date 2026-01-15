@@ -2906,7 +2906,7 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
                         ) {
                             $htmlContent .= '
                                         <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                            <img src="assets/images/pra1.JPEG" class="south_railway" alt="Contractor Logo">
+                                            <img src="assets/images/ecr.png" class="south_railway" alt="Contractor Logo">
                                         </th>';
                         } else {
                             $htmlContent .= '
