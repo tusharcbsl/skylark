@@ -288,7 +288,7 @@ $lang = json_decode($data, true);
                     $_SESSION['cdes_user_id'] = $data['user_id'];
                     $_SESSION['admin_user_name'] = $data['first_name'];
                     $_SESSION['admin_user_last'] = $data['last_name'];
-                    $_SESSION['designation'] = $data['disignation'];
+                    $_SESSION['designation'] = $data['designation'];
                     $_SESSION['lastLogin'] = $data['last_active_login'];
                     $_SESSION['adminMail'] = $data['user_email_id'];
                     //die();
@@ -296,7 +296,7 @@ $lang = json_decode($data, true);
                     $_SESSION['cdes_user_id'] = $data['user_id'];
                     $_SESSION['admin_user_name'] = $data['first_name'];
                     $_SESSION['admin_user_last'] = $data['last_name'];
-                    $_SESSION['designation'] = $data['disignation'];
+                    $_SESSION['designation'] = $data['designation'];
                     $_SESSION['lastLogin'] = $data['last_active_login'];
                     $_SESSION['adminMail'] = $data['user_email_id'];
 

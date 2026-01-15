@@ -1172,7 +1172,7 @@ function loginWithoutOTP($db_con, $data, $host, $date) {
         $_SESSION['temp_user_id'] = $data['user_id'];
         $_SESSION['admin_user_name'] = $data['first_name'];
         $_SESSION['admin_user_last'] = $data['last_name'];
-        $_SESSION['designation'] = $data['disignation'];
+        $_SESSION['designation'] = $data['designation'];
         $_SESSION['lastLogin'] = $data['last_active_login'];
         $_SESSION['adminMail'] = $data['user_email_id'];
         $_SESSION['lang'] = $data['lang'];
@@ -1180,7 +1180,7 @@ function loginWithoutOTP($db_con, $data, $host, $date) {
         $_SESSION['cdes_user_id'] = $data['user_id'];
         $_SESSION['admin_user_name'] = $data['first_name'];
         $_SESSION['admin_user_last'] = $data['last_name'];
-        $_SESSION['designation'] = $data['disignation'];
+        $_SESSION['designation'] = $data['designation'];
         $_SESSION['lastLogin'] = $data['last_active_login'];
         $_SESSION['adminMail'] = $data['user_email_id'];
         $_SESSION['lang'] = $data['lang'];

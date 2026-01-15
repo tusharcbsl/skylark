@@ -259,7 +259,7 @@ if (isset($_SESSION['cdes_user_id'])) {
                     $_SESSION['admin_user_name'] = $data['first_name'];
                     $_SESSION['admin_user_last'] = $data['last_name'];
                     $_SESSION['designation'] = $data['designation'];
-                    $_SESSION['designation'] = $data['disignation'];
+                    $_SESSION['designation'] = $data['designation'];
                     $_SESSION['lastLogin'] = $data['last_active_login'];
                     $_SESSION['adminMail'] = $data['user_email_id'];
                 } else {
@@ -267,7 +267,7 @@ if (isset($_SESSION['cdes_user_id'])) {
                     $_SESSION['admin_user_name'] = $data['first_name'];
                     $_SESSION['admin_user_last'] = $data['last_name'];
                     $_SESSION['designation'] = $data['designation'];
-                    $_SESSION['designation'] = $data['disignation'];
+                    $_SESSION['designation'] = $data['designation'];
                     $_SESSION['lastLogin'] = $data['last_active_login'];
                     $_SESSION['adminMail'] = $data['user_email_id'];
                     //user profile type
