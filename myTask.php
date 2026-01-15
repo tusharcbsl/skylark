@@ -1700,6 +1700,44 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
 
             $taskRemark = mysqli_real_escape_string($db_con, $rwTask['task_remarks']);
 
+            // Call approvalWorker.php in background with cURL
+            $backgroundData = array(
+                'ticket' => $ticket,
+                'ctaskOrder' => $ctaskOrder,
+                'docID' => $docID,
+                'assignBy' => $assignBy,
+                'ctaskID' => $ctaskID,
+                'stepId' => $stepId,
+                'wfid' => $wfid
+            );
+            
+            // Make background request using cURL
+            if (function_exists('curl_init')) {
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, 'http://localhost/skylark/approvalWorker.php');
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($backgroundData));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($ch, CURLOPT_COOKIE, 'PHPSESSID=' . session_id());
+                
+                $response = curl_exec($ch);
+                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                $curlError = curl_error($ch);
+                
+                if ($curlError) {
+                    error_log('approvalWorker.php cURL Error: ' . $curlError);
+                }
+                if ($httpCode != 200) {
+                    error_log('approvalWorker.php HTTP Error Code: ' . $httpCode . ', Response: ' . $response);
+                }
+                
+                curl_close($ch);
+            }
+
             //$tskAsinTOUsrId = $rwWork['assign_user'];
 
             $getTskName = mysqli_query($db_con, "select * from tbl_task_master where task_id = '$ctaskID' ") or die('Error' . mysqli_error($db_con));
