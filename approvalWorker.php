@@ -163,7 +163,7 @@ if ($result) {
         <thead>
             <tr>
                 <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                    <img src="assets/images/ecr.png" class="img-fluid south_railway" alt="ECR Logo">
+                    <img src="assets/images/ecr.png" class="south_railway" alt="ECR Logo">
                 </th>
                 <th class="col-md-8" style="text-align:center; font-size:large; vertical-align:middle;">
                     <u>REQUEST FOR INSPECTION (RFI)</u>
