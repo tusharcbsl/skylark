@@ -368,6 +368,11 @@ $taskRemark = mysqli_real_escape_string($db_con, $rwTask['task_remarks']); // di
 
     </form>
 </div>
+
+<!-- Loader for form submission -->
+<div style="display: none; background: rgba(0,0,0,0.5); width: 100%; height: 100%; z-index: 2000; position: fixed; top: 0; left: 0;" id="wait">
+    <img src="assets/images/proceed.gif" alt="loading" style="margin-left: 48%; margin-top: 250px; width: 100px; height: 100px; position: fixed;" />
+</div>
 <script src="<?= BASE_URL ?>assets/js/jquery.min.js"></script>    
 <script src="assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js" type="text/javascript"></script>           
 <script src="<?= BASE_URL ?>assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
@@ -412,6 +417,12 @@ $taskRemark = mysqli_real_escape_string($db_con, $rwTask['task_remarks']); // di
             $("#hidden_note").show();
         }
     });
+    
+    // Show loader on form submission
+    $('#forward_form').on('submit', function() {
+        $('#wait').show();
+    });
+    
     //image detail              
     $('#myImage1').bind('change', function () {
         //this.files[0].size gets the size of your file.
