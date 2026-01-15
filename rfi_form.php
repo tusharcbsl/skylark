@@ -141,9 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ) {
             $htmlContent .= '
                 <th class="col-md-8" style="text-align:center; vertical-align:middle;">
-                    Project Doubling of Railway Project comprising the section commencing from(--) Road station (End CH 967.055)
-                    to Surajpur Road Station (End CH : 1006.44) (KM-39.385 KM) beside existing single 84 line in the state of chhattisgarh in the
-                    East Central Railway Zone Agt No: SECR/SECRC/CMI/2024/0008/ dt 14-Mar-2024.
+                    Major Upgradation / Redevelopment of Darbhanga Junction Railway Station in Samastipur Division, East Central Railway
                 </th>';
         } else {
             $htmlContent .= '
