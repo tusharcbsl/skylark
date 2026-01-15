@@ -374,11 +374,30 @@ if ($result) {
 
         <tr>
             <th>Date</th>
-    
-            <td>' . (!empty($agency_date) ? htmlspecialchars(date('d-m-Y', strtotime($agency_date))) : '') . '</td>
-            <td>' . (!empty($pmc_date) ? htmlspecialchars(date('d-m-Y', strtotime($pmc_date))) : '') . '</td>
-            <td>' . (!empty($railway_date) ? htmlspecialchars(date('d-m-Y', strtotime($railway_date))) : '') . '</td>
-           
+
+            <td>' . (
+                (!empty($agency_date) && 
+                $agency_date != '0000-00-00' && 
+                $agency_date != '0000-00-00 00:00:00')
+                ? htmlspecialchars(date('d-m-Y', strtotime($agency_date)))
+                : ''
+            ) . '</td>
+
+            <td>' . (
+                (!empty($pmc_date) && 
+                $pmc_date != '0000-00-00' && 
+                $pmc_date != '0000-00-00 00:00:00')
+                ? htmlspecialchars(date('d-m-Y', strtotime($pmc_date)))
+                : ''
+            ) . '</td>
+
+            <td>' . (
+                (!empty($railway_date) && 
+                $railway_date != '0000-00-00' && 
+                $railway_date != '0000-00-00 00:00:00')
+                ? htmlspecialchars(date('d-m-Y', strtotime($railway_date)))
+                : ''
+            ) . '</td>
         </tr>
     </table>';
     $htmlContent .= '   
