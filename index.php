@@ -64,7 +64,7 @@ require_once './application/pages/function.php';
                             </div>
                             <h4 class="page-title"><?php echo $lang['Das']; ?></h4>
                             <!-- <p class="text-muted page-title-alt"> <?php echo $projectName . ' ' . $lang['Wel_EzeeFile_Dash']; ?></p> -->
-                            <p class="text-muted page-title-alt"><b> MAJOR UPGRADATION OF RAIPUR RAILWAY STATION OF RAIPUR DIVISION OF SECR ON (EPC) MODE</b></p>
+                            <p class="text-muted page-title-alt"><b> Major Upgradation / Redevelopment of Darbhanga Junction Railway Station in Samastipur Division, East Central Railway</b></p>
                         </div>
                     </div>
                     <div class="row">
@@ -556,7 +556,7 @@ require_once './application/pages/function.php';
                                     </div>
                                     <div class="text-center dsh">
                                         <h5 class="text-dark"><strong> Letter Submission Form </strong></h5>
-                                        <p class="text-muted text-uppercase"> RPP Letter Submission </p>
+                                        <p class="text-muted text-uppercase">  Letter Submission Form </p>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -573,8 +573,8 @@ require_once './application/pages/function.php';
                                     <i class="fa fa-bars" aria-hidden="true"></i>
                                     </div>
                                     <div class="text-center dsh">
-                                        <h5 class="text-dark"><strong> RPP SATHYAMOORTHY JV </strong></h5>
-                                        <p class="text-muted text-uppercase"> RPP Report </p>
+                                        <h5 class="text-dark"><strong> Letter Submission Report </strong></h5>
+                                        <p class="text-muted text-uppercase" style="font-size:11px;"> Letter Submission Report </p>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>

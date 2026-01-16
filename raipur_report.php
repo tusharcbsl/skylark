@@ -122,7 +122,7 @@ $result = $db_con->query($baseQuery);
                         <div class="col-sm-12">
                             <ol class="breadcrumb">
                                 <li>
-                                    <a href="raipur_report.php">RPP Report</a>
+                                    <a href="raipur_report.php">Letter Submission Report</a>
                                 </li>
                                 <li> <a href="#" data-toggle="modal" data-target="#help-modal" id="helpview" data="33"
                                         title="<?= $lang['help']; ?>"><i class="fa fa-question-circle"></i> </a></li>

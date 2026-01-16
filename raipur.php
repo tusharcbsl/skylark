@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html>
+<style>
+    .south_railway {
+        max-width: 80px;
+        height: auto;
+    }
+</style>
 
 <?php
 
@@ -26,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descriptions = $_POST['description'] ?? [];
     $dept_id = $_POST['dept_id'];
     $uploadsDir = 'extract-here/';
-    $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt','mpp', 'xer', 'zip', 'rar']; // Allowed file types
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'mpp', 'xer', 'zip', 'rar']; // Allowed file types
 
 
     // Validate form inputs
@@ -54,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         return $pagecount;
     }
-    
+
 
     date_default_timezone_set('Asia/Kolkata');
     require_once './application/PHPMailer/PHPMailerAutoload.php';
@@ -68,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $storageName = $rwSl['sl_name'];
     $storageName = str_replace(" ", "", $storageName);
     $storageName = preg_replace('/[^A-Za-z0-9\-]/', '', $storageName);
- 
+
     $updir = getStoragePath($db_con, $rwSl['sl_parent_id'], $rwSl['sl_depth_level']);
     if (!empty($updir)) {
         $updir = $updir . '/';
@@ -80,9 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = [];
     $success = false;
     // $uploadsDir = './uploads/';
-    $uploadsDir = $updir . $storageName.'/';
+    $uploadsDir = $updir . $storageName . '/';
     $target_path = 'extract-here/' . $uploadsDir;
-    $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt','mpp', 'xer', 'zip', 'rar'];
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'mpp', 'xer', 'zip', 'rar'];
 
     // $projectName = "Document Management System";
 
@@ -98,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dept_id = $_POST['dept_id'] ?? '';
     $details = $_POST['details'] ?? [];
     $descriptions = $_POST['description'] ?? [];
-  
-    if(!empty($dept_id)){
+
+    if (!empty($dept_id)) {
 
         if (empty($errors)) {
             if (!is_dir($target_path)) {
@@ -135,16 +141,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $fileUpload = move_uploaded_file($fileTmpName, $filePath) or die('File Not Uploaded' . print_r(error_get_last()));
                     $file = $filePath;
                     $doc_size = filesize($file);
-                      if ($fileUpload) {
+                    if ($fileUpload) {
                         $sourcePath[] = $filePath;
                         $destinationPath[] = 'DMS/' . ROOT_FTP_FOLDER . '/' . $uploadsDir . basename($file);
-
                     }
                 }
 
                 $noofpages = ($fileExtension === 'pdf') ? count_pages($file) : 1;
                 $name = basename($file);
-                $doc_path = $uploadsDir.basename($file);
+                $doc_path = $uploadsDir . basename($file);
 
                 // Get storage level ID
                 $query = mysqli_query($db_con, "SELECT * FROM tbl_storage_level WHERE sl_parent_id='0'");
@@ -159,13 +164,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 $sl_id = $data['sl_id'];
 
-                $sl_folder_idNew= storage_letter_id;
+                $sl_folder_idNew = storage_letter_id;
 
-                $sl_idNew= $sl_folder_idNew;
-                $flag_folder ='1';
-                
+                $sl_idNew = $sl_folder_idNew;
+                $flag_folder = '1';
+
                 $sent_by = $_SESSION['cdes_user_id'];
-                
+
 
                 // **Check for duplicate entry**
                 $checkQuery = "SELECT COUNT(*) as count FROM tbl_document_master WHERE letter_no = ? AND doc_path = ?";
@@ -211,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $emailList = [];
-            
+
             $result = mysqli_query($db_con, "SELECT user_email_id,user_id FROM tbl_user_master WHERE FIND_IN_SET($dept_id, dept_id) > 0  AND active_inactive_users = '1'");
             while ($row = mysqli_fetch_assoc($result)) {
                 if (filter_var($row['user_email_id'], FILTER_VALIDATE_EMAIL)) {
@@ -267,12 +272,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $uploadedBy = $doc['uploaded_by'];
                     $fileName = $doc['file_path'];
                     $link = '<a href="storageFiles?id=' . urlencode(base64_encode($sl_idNew)) . '" target="_blank">' . $fileName . '</a>';
-                    
+
                     $uploadedBy = mysqli_query($db_con, "Select first_name , last_name from tbl_user_master where user_id=" . $doc['uploaded_by'] . "");
                     $fetchUplodedBy = mysqli_fetch_assoc($uploadedBy);
                     $first_name = $fetchUplodedBy['first_name'];
                     $last_name = $fetchUplodedBy['last_name'];
-                    $full_name = $first_name .' '.$last_name;
+                    $full_name = $first_name . ' ' . $last_name;
 
                     $msgbody .= "<tr>
                         <td>{$letterNo}</td>
@@ -317,8 +322,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-    }else{
-       $errors[] = "Department is required.";
+    } else {
+        $errors[] = "Department is required.";
     }
     if ($fileUpload) {
         if (FTP_ENABLED) {
@@ -336,14 +341,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     //     //decrypt_my_file($sourcePath[$key]);
                     // }
                 }
-
-            }$uploadftp = 1;
+            }
+            $uploadftp = 1;
             $ftp->closeConn();
-
         }
     }
-
-
 }
 
 
@@ -443,18 +445,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <thead>
                                         <tr>
                                             <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                                <img src="assets/images/rail.JPEG" class="south_railway" alt="Italian Trulli">
+                                                <img src="assets/images/ecr.png" class="south_railway" alt="Italian Trulli">
                                             </th>
                                             <th class="col-md-8" style="text-align:center; font-size:large; vertical-align:middle;">
                                                 <u>Letter Submission Form</u>
                                             </th>
                                             <?php if ($rwgetWorkflwIdDs['form_type'] == 1) { ?>
                                                 <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                                    <img src="assets/images/pra1.JPEG" class="south_railway" alt="Italian Trulli">
+                                                    <img src="assets/images/ecr.png" class="south_railway" alt="Italian Trulli">
                                                 </th>
                                             <?php } else { ?>
                                                 <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                                    <img src="assets/images/raipur.jpg" class="south_railway" alt="Italian Trulli">
+                                                    <img src="assets/images/ecr.png" class="south_railway" alt="Italian Trulli">
                                                 </th>
                                             <?php } ?>
                                         </tr>
@@ -465,27 +467,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 </th>
                                             <?php } else { ?>
                                                 <th class="col-md-8" style="vertical-align:middle; text-align:center;">
-                                                     Major Upgradation / Redevelopment of Darbhanga Junction Railway Station in Samastipur Division, East Central Railway
+                                                    Major Upgradation / Redevelopment of Darbhanga Junction Railway Station in Samastipur Division, East Central Railway
                                                 </th>
                                             <?php } ?>
 
                                         </tr>
                                     </thead>
                                 </table>
-                               
+
 
 
                                 <form method="POST" enctype="multipart/form-data">
-                                     <div class="col-md-3">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="reporting"><?php echo $lang["select_department"]; ?></label>
-                                            <select class="form-control select2" name="dept_id"   parsley-trigger="change" id="dept_id" required>
+                                            <select class="form-control select2" name="dept_id" parsley-trigger="change" id="dept_id" required>
                                                 <option value="" disabled selected><?php echo $lang["select_department"]; ?></option>
                                                 <?php
-                                                    $dept_data = mysqli_query($db_con, "SELECT * FROM tbl_department");
-                                                    while ($row = mysqli_fetch_assoc($dept_data)) {
-                                                        echo '<option value="' . $row['id'] . '">' . $row['department_name'] . '</option>';
-                                                    }
+                                                $dept_data = mysqli_query($db_con, "SELECT * FROM tbl_department");
+                                                while ($row = mysqli_fetch_assoc($dept_data)) {
+                                                    echo '<option value="' . $row['id'] . '">' . $row['department_name'] . '</option>';
+                                                }
                                                 ?>
                                             </select>
 
@@ -501,10 +503,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </tr>
                                         <tr>
                                             <td>1</td>
-                                            <td><input  placeholder="Letter No./Document No./Ref" class="form-control" type="text" name="details[]" required></td>
+                                            <td><input placeholder="Letter No./Document No./Ref" class="form-control" type="text" name="details[]" required></td>
                                             <td><input placeholder="Description of Document" class="form-control" type="text" name="description[]" required></td>
                                             <td><input class="form-control" type="file" name="attachments[]" required>
-                                            
+
 
                                             </td>
 
@@ -547,7 +549,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }, 10000); // 10 seconds
         </script>
-        
+
         <script>
             function updateDeptInRows() {
                 const deptId = document.getElementById('dept_id').value;
