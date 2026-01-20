@@ -380,6 +380,7 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                             //workflow name
                                                             $Workflw = mysqli_query($db_con, "select workflow_name from tbl_workflow_master where workflow_id='" . $allot_row['workflow_id'] . "'"); // or die('Error in getWorkflw upload:' . mysqli_error($db_con));
                                                             $rwWorkflw = mysqli_fetch_assoc($Workflw);
+
                                                             
 
                                                             if($_SESSION['cdes_user_id'] !=1){
@@ -451,7 +452,7 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                         <?php if (strtolower($rwDoc['doc_extn']) == 'pdf' && $rwgetRole['pdf_file'] == '1') {
                                                                         ?>
 
-                                                                            <a href="viewer?id=<?php echo urlencode(base64_encode($_SESSION[cdes_user_id])) ?>&i=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>&pn=1"
+                                                                            <a href="viewer?id=<?php echo urlencode(base64_encode($_SESSION['cdes_user_id'])) ?>&i=<?php echo urlencode(base64_encode($rwDoc['doc_id'])); ?>&pn=1"
                                                                                 class="pdfview" target="_blank"
                                                                                 title="<?php echo $rwDoc['old_doc_name']; ?>">
                                                                                 <?php echo $rwDoc['old_doc_name']; ?>
@@ -461,7 +462,7 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                             <?php
                                                                             if ($allot_row['NextTask'] == 2 || (($allot_row['task_status'] == 'Approved' || $allot_row['task_status'] == 'Processed' || $allot_row['task_status'] == 'Done') && ($allot_row['NextTask'] == 1)) || $allot_row['task_status'] == 'Rejected' || $allot_row['task_status'] == 'Complete') {
                                                                             } else {
-                                                                                // echo '<a href="anott/index?id=' . urlencode(base64_encode($_SESSION[cdes_user_id])) . '&id1=' . urlencode(base64_encode($rwDoc['doc_id'])) . '&pn=1&tid=' . urlencode(base64_encode($allot_row[id])) . '" class="pdfview" target="blank" ><i class="ti-marker-alt" title="' . $lang['edit_File'] . '"></i></a>';
+                                                                                echo '<a href="anott/index?id=' . urlencode(base64_encode($_SESSION['cdes_user_id'])) . '&id1=' . urlencode(base64_encode($rwDoc['doc_id'])) . '&pn=1&tid=' . urlencode(base64_encode($allot_row['id'])) . '" class="pdfview" target="blank" ><i class="ti-marker-alt" title="' . $lang['edit_File'] . '"></i></a>';
                                                                             }
                                                                             ?>
 

@@ -1984,5 +1984,6 @@
     "raipur_report": "Raipur Report",
     "description_work" : "Description of Work",
     "edit_form" : "Edit Form",
-    "task_request_on" : "Task Request On"
+    "task_request_on" : "Task Request On",
+    "letter_type" : "Letter Type"
 }
