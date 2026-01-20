@@ -115,20 +115,20 @@ if ($rwgetRole['metadata_quick_search'] != '1') {
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                                        <img src="assets/images/rail.JPEG" class="south_railway" alt="Italian Trulli">
+                                                        <img src="assets/images/ecr.png" class="south_railway" alt="Italian Trulli">
                                                     </th>
                                                     <th class="col-md-8" style="text-align:center; font-size:large; vertical-align:middle;">
                                                         <u>REQUEST FOR INSPECTION (RFI)</u>
                                                     </th>
                                                     <?php if ($form_type == 1) { ?>
                                                         <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                                            <img src="assets/images/pra1.JPEG" class="south_railway" alt="Italian Trulli">
+                                                            <img src="assets/images/skylark_logo.jpeg" class="south_railway" alt="Italian Trulli">
                                                         </th>
                                                     <?php } else {
                                                     ?>
 
                                                         <th class="col-md-2 text-center align-middle" rowspan="2">
-                                                            <img src="assets/images/ecr.png"
+                                                            <img src="assets/images/skylark_logo.jpeg"
                                                                 class="img-fluid south_railway"
                                                                 alt="ECR Logo">
                                                         </th>
@@ -229,26 +229,14 @@ if ($rwgetRole['metadata_quick_search'] != '1') {
                                         <table class="table table-bordered upper">
                                             <tr>
                                                 <th rowspan="2" colspan="2" style="vertical-align: middle; text-align:center;">
-                                                    Location
-                                                </th>
-
-                                                <th rowspan="2" style="vertical-align: middle;">
-                                                    <input type="text"
-                                                        id="location_from"
-                                                        class="form-control"
-                                                        placeholder="Location"
-                                                        name="location_from" value="<?php echo $railway_details['location_from'] ?>" readonly>
-                                                </th>
-
-                                                <th rowspan="2" colspan="2" style="vertical-align: middle; text-align:center;">
-                                                    Structure Detail
+                                                    Activity
                                                 </th>
                                             </tr>
 
                                             <tr>
                                                 <th rowspan="2" style="vertical-align: middle;">
                                                     <textarea class="form-control"
-                                                        placeholder="Structure Detail"
+                                                        placeholder="Activity"
                                                         name="description_of_work"
                                                         rows="2"
                                                         readonly><?php echo $railway_details['description_of_work']; ?></textarea>
@@ -292,41 +280,6 @@ if ($rwgetRole['metadata_quick_search'] != '1') {
 
                                                 </table>
                                             </div>
-
-                                            <!-- Right Table -->
-                                            <div class="col-md-6">
-                                                <table class="table table-bordered upper">
-                                                    <tr>
-                                                        <th colspan="8" style="text-align:center;">Received by</th>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <th colspan="2" style="text-align:right;">Signature :</th>
-                                                        <th colspan="3">
-                                                            <input type="text" class="form-control" name="received_sign" id="received_sign" placeholder="Signature" value="<?php echo $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'] ?>">
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th colspan="2" style="text-align:right;">Name :</th>
-                                                        <th colspan="3">
-                                                            <input type="text" class="form-control" name="received_name" id="received_name" placeholder="Name" value="<?php echo $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'] ?>" >
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th colspan="2" style="text-align:right;">Designation :</th>
-                                                        <th colspan="3">
-                                                            <input type="text" class="form-control" name="received_designation" id="received_designation" placeholder="Designation" value="<?php echo $_SESSION['designation'] ?>" >
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th colspan="2" style="text-align:right;">Date :</th>
-                                                        <th colspan="3">
-                                                            <input type="datetime-local" class="form-control" name="received_date" id="received_date" value="<?= date('Y-m-d\TH:i') ?>">
-                                                        </th>
-                                                    </tr>
-                                                </table>
-                                            </div>
-
                                         </div>
 
                                         <div class="inspection-box mt-3" style="padding:15px; font-family:serif;">

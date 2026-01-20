@@ -174,12 +174,12 @@ if ($result) {
     ) {
         $htmlContent .= '
                 <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                    <img src="assets/images/ecr.png" class="south_railway" alt="Contractor Logo">
+                    <img src="assets/images/skylark_logo.jpeg" class="south_railway" alt="Contractor Logo">
                 </th>';
     } else {
         $htmlContent .= '
                 <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                    <img src="assets/images/ecr.png" class="south_railway" alt="Contractor Logo">
+                    <img src="assets/images/skylark_logo.jpeg" class="south_railway" alt="Contractor Logo">
                 </th>';
     }
 
@@ -250,11 +250,8 @@ if ($result) {
 
     <table class="table table-bordered upper">
         <tr>
-            <th class="col-md-2" rowspan="2" colspan="2">Location</th>
-            <th class="col-md-4" rowspan="2">
-                ' . htmlspecialchars($railway_details['location_from']) . '
-            </th>
-            <th class="col-md-4">Structure Detail</th>
+            
+            <th class="col-md-4">Activity</th>
             
         </tr>
         <tr>
@@ -289,32 +286,6 @@ if ($result) {
 </table>
 </td>
 
-<!-- RIGHT -->
-<td width="50%" valign="top">
-<table class="info-table">
-<tr>
-    <th colspan="2" class="title">Received by</th>
-</tr>
-<tr>
-    <th width="35%" align="right">Signature :</th>
-    <td width="65%">' . htmlspecialchars($railway_details['received_sign']) . '</td>
-</tr>
-<tr>
-    <th align="right">Name :</th>
-    <td>' . htmlspecialchars($railway_details['received_name']) . '</td>
-</tr>
-<tr>
-    <th align="right">Designation :</th>
-    <td>' . htmlspecialchars($railway_details['received_designation']) . '</td>
-</tr>
-<tr>
-    <th align="right">Date :</th>
-    <td>' . (!empty($railway_details['received_date'])
-        ? date('d-m-Y h:i A', strtotime($railway_details['received_date']))
-        : '') . '</td>
-</tr>
-</table>
-</td>
 
 </tr>
 </table>';

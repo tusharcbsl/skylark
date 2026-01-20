@@ -21,13 +21,7 @@ $updated_by = isset($_SESSION['cdes_user_id']) ? $_SESSION['cdes_user_id'] : nul
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Gather POST data
-    $received_name = $_POST['received_name'] ?? null;
-    $received_sign = $_POST['received_sign'] ?? null;
-    $received_designation = $_POST['received_designation'] ?? null;
-    $received_date = !empty($_POST['received_date']) 
-    ? date('Y-m-d H:i:s', strtotime($_POST['received_date'])) 
-    : NULL;
-
+   
     $ticket_id = $_POST['ticket_id'] ?? null;
     $form_type = $_POST['form_type'] ?? null;
     $railway_master = "SELECT * FROM tbl_railway_master where ticket_id='$ticket_id'";
@@ -54,10 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $not_approved = isset($_POST['not_approved']) ? 1 : 0;
 
     $query = "UPDATE tbl_railway_master SET 
-    received_name = '$received_name', 
-    received_date = '$received_date', 
-    received_designation = '$received_designation', 
-    received_sign = '$received_sign', 
     enclosures_attached = '$enclosures_attached', 
     signature_of_the_contractor = '$signature_of_the_contractor', 
     remarks_of_the_inspection = '$remarks_of_the_inspection', 
@@ -123,12 +113,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ) {
             $htmlContent .= '
                 <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                    <img src="assets/images/ecr.png" class="south_railway" alt="Contractor Logo">
+                    <img src="assets/images/skylark_logo.jpeg" class="south_railway" alt="Contractor Logo">
                 </th>';
         } else {
             $htmlContent .= '
                 <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                    <img src="assets/images/ecr.png" class="south_railway" alt="Contractor Logo">
+                    <img src="assets/images/skylark_logo.jpeg" class="south_railway" alt="Contractor Logo">
                 </th>';
         }
 
@@ -199,11 +189,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <table class="table table-bordered upper">
         <tr>
-            <th class="col-md-2" rowspan="2" colspan="2">Location</th>
-            <th class="col-md-4" rowspan="2">
-                ' . htmlspecialchars($railway_details['location_from']) . '
-            </th>
-            <th class="col-md-4">Structure Detail</th>
+            
+            <th class="col-md-4">Activity</th>
             
         </tr>
         <tr>
@@ -233,33 +220,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <th align="right">Date :</th>
     <td>' . (!empty($railway_details['requested_date']) 
         ? date('d-m-Y h:i A', strtotime($railway_details['requested_date'])) 
-        : '' ) . '</td>
-</tr>
-</table>
-</td>
-
-<!-- RIGHT -->
-<td width="50%" valign="top">
-<table class="info-table">
-<tr>
-    <th colspan="2" class="title">Received by</th>
-</tr>
-<tr>
-    <th width="35%" align="right">Signature :</th>
-    <td width="65%">' . htmlspecialchars($_POST['received_sign']) . '</td>
-</tr>
-<tr>
-    <th align="right">Name :</th>
-    <td>' . htmlspecialchars($_POST['received_name']) . '</td>
-</tr>
-<tr>
-    <th align="right">Designation :</th>
-    <td>' . htmlspecialchars($_POST['received_designation']) . '</td>
-</tr>
-<tr>
-    <th align="right">Date :</th>
-    <td>' . (!empty($_POST['received_date']) 
-        ? date('d-m-Y h:i A', strtotime($_POST['received_date'])) 
         : '' ) . '</td>
 </tr>
 </table>

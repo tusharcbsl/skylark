@@ -1714,7 +1714,7 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
             // Make background request using cURL
             if (function_exists('curl_init')) {
                 $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, 'http://localhost/skylark/approvalWorker.php');
+                curl_setopt($ch, CURLOPT_URL, BASE_URL . 'approvalWorker.php');
                 curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($backgroundData));
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

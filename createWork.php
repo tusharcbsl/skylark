@@ -281,11 +281,11 @@ $parentid = $rwFolder['sl_parent_id'];
                                                     </th>
                                                     <?php if ($rwgetWorkflwIdDs['form_type'] == 1) { ?>
                                                         <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                                            <img src="assets/images/pra1.JPEG" class="south_railway" alt="Italian Trulli">
+                                                            <img src="assets/images/skylark_logo.jpeg" class="south_railway" alt="Italian Trulli">
                                                         </th>
                                                     <?php } else { ?>
                                                         <th class="col-md-2 text-center align-middle" rowspan="2">
-                                                            <img src="assets/images/ecr.png"
+                                                            <img src="assets/images/skylark_logo.jpeg"
                                                                 class="img-fluid south_railway"
                                                                 alt="ECR Logo">
                                                         </th>
@@ -400,27 +400,17 @@ $parentid = $rwFolder['sl_parent_id'];
 
                                         <table class="table table-bordered upper">
                                             <tr>
-                                                <th rowspan="2" colspan="2" style="vertical-align: middle; text-align:center;">
-                                                    Location
-                                                </th>
-
-                                                <th rowspan="2" style="vertical-align: middle;">
-                                                    <input type="text"
-                                                        id="location_from"
-                                                        class="form-control"
-                                                        placeholder="Location"
-                                                        name="location_from">
-                                                </th>
+                                              
 
                                                 <th rowspan="2" colspan="2" style="vertical-align: middle; text-align:center;">
-                                                    Structure Detail
+                                                   Activity
                                                 </th>
                                             </tr>
 
                                             <tr>
                                                 <th rowspan="2" style="vertical-align: middle;">
                                                     <textarea class="form-control"
-                                                        placeholder="Structure Detail"
+                                                        placeholder="Activity"
                                                         name="description_of_work"
                                                         rows="2"></textarea>
                                                 </th>
@@ -445,7 +435,7 @@ $parentid = $rwFolder['sl_parent_id'];
                                                     <tr>
                                                         <th colspan="2" style="text-align:right;">Agency :</th>
                                                         <th colspan="3">
-                                                            <input type="text" class="form-control" name="requested_agency" id="requested_agency" placeholder="Agency">
+                                                            <input type="text" class="form-control" name="requested_agency" id="requested_agency" value="SIEPL - ALTIS (JV)" placeholder="Agency" readonly>
                                                         </th>
                                                     </tr>
                                                     <tr>
@@ -458,40 +448,6 @@ $parentid = $rwFolder['sl_parent_id'];
                                                                 value="<?= date('Y-m-d\TH:i') ?>"
                                                                 readonly>
 
-                                                        </th>
-                                                    </tr>
-                                                </table>
-                                            </div>
-
-                                            <!-- Right Table -->
-                                            <div class="col-md-6">
-                                                <table class="table table-bordered upper">
-                                                    <tr>
-                                                        <th colspan="8" style="text-align:center;">Received by</th>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <th colspan="2" style="text-align:right;">Signature :</th>
-                                                        <th colspan="3">
-                                                            <input type="text" class="form-control" name="received_sign" id="received_sign" placeholder="Signature" readonly>
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th colspan="2" style="text-align:right;">Name :</th>
-                                                        <th colspan="3">
-                                                            <input type="text" class="form-control" name="received_name" id="received_name" placeholder="Name" readonly>
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th colspan="2" style="text-align:right;">Designation :</th>
-                                                        <th colspan="3">
-                                                            <input type="text" class="form-control" name="received_designation" id="received_designation" placeholder="Designation" readonly>
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th colspan="2" style="text-align:right;">Date :</th>
-                                                        <th colspan="3">
-                                                            <input type="datetime-local" class="form-control" name="received_date" id="received_date" readonly>
                                                         </th>
                                                     </tr>
                                                 </table>
@@ -1255,7 +1211,7 @@ $parentid = $rwFolder['sl_parent_id'];
 <?php
 if (isset($_POST['uploaddWfd'], $_POST['token'])) {
     // echo '<pre>'; print_r($_POST);die();
-    if (empty($_POST['rfi_date']) || empty($_POST['name_of_the_contractor']) || empty($_POST['inspection_required_date']) || empty($_POST['location']) || empty($_POST['description_of_work']) || empty($_POST['inspection_required_date']) || empty($_POST['structure_id']) || empty($_POST['location_from'])) {
+    if (empty($_POST['rfi_date']) || empty($_POST['name_of_the_contractor']) || empty($_POST['inspection_required_date']) || empty($_POST['location']) || empty($_POST['description_of_work']) || empty($_POST['inspection_required_date']) || empty($_POST['structure_id'])) {
     
     echo '<script>alert("Check All Required Fields")</script>';
         exit;
@@ -2673,16 +2629,11 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
     `location`,
     inspection_required_date,
     name_of_the_contractor, 
-    inspected_on_date, 
-    location_from, 
+    inspected_on_date,
     description_of_work,
     requested_name,
     requested_agency,
     requested_date,
-    received_sign,
-    received_name,
-    received_designation,
-    received_date,
     inspection_comment,
     agency_sign,
     pmc_sign,
@@ -2714,16 +2665,11 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
     '{$_POST['inspection_required_date']}', 
     '{$_POST['name_of_the_contractor']}', 
     " . (!empty($_POST['inspected_on_date']) ? "'" . date('Y-m-d H:i:s', strtotime($_POST['inspected_on_date'])) . "'": "NULL") . ",
-    '{$_POST['location_from']}', 
     '{$_POST['description_of_work']}', 
     '{$_POST['requested_name']}', 
     '{$_POST['requested_agency']}',
     
     " . (!empty($_POST['requested_date']) ? "'" . date('Y-m-d H:i:s', strtotime($_POST['requested_date'])) . "'": "NULL") . ",
-    '{$_POST['received_sign']}', 
-    '{$_POST['received_name']}', 
-    '{$_POST['received_designation']}',
-    " . (!empty($_POST['received_date']) ? "'" . date('Y-m-d H:i:s', strtotime($_POST['received_date'])) . "'": "NULL") . ",
     '{$_POST['inspection_comment']}', 
     '{$_POST['agency_sign']}', 
     '{$_POST['pmc_sign']}', 
@@ -2904,12 +2850,12 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
                         ) {
                             $htmlContent .= '
                                         <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                            <img src="assets/images/ecr.png" class="south_railway" alt="Contractor Logo">
+                                            <img src="assets/images/skylark_logo.jpeg" class="south_railway" alt="Contractor Logo">
                                         </th>';
                         } else {
                             $htmlContent .= '
                                         <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                            <img src="assets/images/ecr.png" class="south_railway" alt="Contractor Logo">
+                                            <img src="assets/images/skylark_logo.jpeg" class="south_railway" alt="Contractor Logo">
                                         </th>';
                         }
 
@@ -2980,11 +2926,8 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
 
                             <table class="table table-bordered upper">
                                 <tr>
-                                    <th class="col-md-2" rowspan="2" colspan="2">Location</th>
-                                    <th class="col-md-4" rowspan="2">
-                                        ' . htmlspecialchars($_POST['location_from']) . '
-                                    </th>
-                                    <th class="col-md-4">Structure Detail</th>
+                                    
+                                    <th class="col-md-4">Activity</th>
                                     
                                 </tr>
                                 <tr>
@@ -3016,33 +2959,6 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
     <th align="right">Date :</th>
     <td>' . (!empty($_POST['requested_date']) 
         ? date('d-m-Y h:i A', strtotime($_POST['requested_date'])) 
-        : '' ) . '</td>
-</tr>
-</table>
-</td>
-
-<!-- RIGHT -->
-<td width="50%" valign="top">
-<table class="info-table">
-<tr>
-    <th colspan="2" class="title">Received by</th>
-</tr>
-<tr>
-    <th width="35%" align="right">Signature :</th>
-    <td width="65%">' . htmlspecialchars($_POST['received_sign']) . '</td>
-</tr>
-<tr>
-    <th align="right">Name :</th>
-    <td>' . htmlspecialchars($_POST['received_name']) . '</td>
-</tr>
-<tr>
-    <th align="right">Designation :</th>
-    <td>' . htmlspecialchars($_POST['received_designation']) . '</td>
-</tr>
-<tr>
-    <th align="right">Date :</th>
-    <td>' . (!empty($_POST['received_date']) 
-        ? date('d-m-Y h:i A', strtotime($_POST['received_date'])) 
         : '' ) . '</td>
 </tr>
 </table>
@@ -3329,16 +3245,11 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
     `location`,
     inspection_required_date,
     name_of_the_contractor, 
-    inspected_on_date, 
-    location_from, 
+    inspected_on_date,
     description_of_work,
     requested_name,
     requested_agency,
     requested_date,
-    received_sign,
-    received_name,
-    received_designation,
-    received_date,
     inspection_comment,
     agency_sign,
     pmc_sign,
@@ -3370,15 +3281,10 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
     '{$_POST['inspection_required_date']}', 
     '{$_POST['name_of_the_contractor']}', 
     " . (!empty($_POST['inspected_on_date']) ? "'" . date('Y-m-d H:i:s', strtotime($_POST['inspected_on_date'])) . "'": "NULL") . ",
-    '{$_POST['location_from']}', 
     '{$_POST['description_of_work']}', 
     '{$_POST['requested_name']}', 
     '{$_POST['requested_agency']}',
     " . (!empty($_POST['requested_date']) ? "'" . date('Y-m-d H:i:s', strtotime($_POST['requested_date'])) . "'": "NULL") . ",
-    '{$_POST['received_sign']}', 
-    '{$_POST['received_name']}', 
-    '{$_POST['received_designation']}', 
-    " . (!empty($_POST['received_date']) ? "'" . date('Y-m-d H:i:s', strtotime($_POST['received_date'])). "'" : "NULL") . ",
     '{$_POST['inspection_comment']}', 
     '{$_POST['agency_sign']}', 
     '{$_POST['pmc_sign']}', 
