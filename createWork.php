@@ -1885,7 +1885,7 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
                     $TskAsinToId = $rwgetTask['assign_user'];
                     $nextTaskOrd = $TskOrd + 1;
 
-                    nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket);
+                    nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket, $letter_type);
                     if ($insertInTask) {
                         //echo '<script> alert("ok")</script>';
                         $log = mysqli_query($db_con, "insert into tbl_ezeefile_logs_wf(`id`, `user_id`, `user_name`, `group_id`, `sl_id`, `doc_id`, `action_name`, `start_date`, `end_date`, `system_ip`, `remarks`) values (null, '$_SESSION[cdes_user_id]', '$_SESSION[admin_user_name] $_SESSION[admin_user_last]',null,null,null,'Task Created','$date',null,'$host',null)"); // or die('error : ' . mysqli_error($db_con));
@@ -2478,7 +2478,7 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
                     $nextTaskOrd = $TskOrd + 1;
                     //for export pdf
 
-                    nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket);
+                    nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket, $letter_type);
 
                     if ($insertInTask) {
                         //echo '<script>taskSuccess("'. basename($_SERVER['REQUEST_URI']).'", "Submitted Successfully!!");</script>';
@@ -2791,7 +2791,7 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
                     $TskAsinToId = $rwgetTask['assign_user'];
                     $nextTaskOrd = $TskOrd + 1;
 
-                    nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket);
+                    nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket, $letter_type);
                     if ($insertInTask) {
                         //echo '<script> alert("ok")</script>';
                         $log = mysqli_query($db_con, "insert into tbl_ezeefile_logs_wf(`id`, `user_id`, `user_name`, `group_id`, `sl_id`, `doc_id`, `action_name`, `start_date`, `end_date`, `system_ip`, `remarks`) values (null, '$_SESSION[cdes_user_id]', '$_SESSION[admin_user_name] $_SESSION[admin_user_last]',null,null,null,'Task Created','$date',null,'$host',null)"); // or die('error : ' . mysqli_error($db_con));
@@ -3435,7 +3435,7 @@ if (isset($_POST['uploaddWfd'], $_POST['token'])) {
                     $nextTaskOrd = $TskOrd + 1;
                     //for export pdf
 
-                    nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket);
+                    nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket, $letter_type);
 
                     if ($insertInTask) {
 

@@ -457,7 +457,7 @@ function copyStorage($toCopyFolderId, $lastCopyToId, $toCopyFolderName, $date, $
 
 
 //find next task to asssin doc
-function nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket) {
+function nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket, $letter_type) {
     //echo "select * from tbl_task_master where task_order='$nextTaskOrd' and step_id='$TskStpId'";
     $getNextTask = mysqli_query($db_con, "select * from tbl_task_master where task_order='$nextTaskOrd' and step_id='$TskStpId'") or die('Error:' . mysqli_error($db_con));
     $rwgetNextTask = mysqli_fetch_assoc($getNextTask);
@@ -478,9 +478,9 @@ function nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id
             $endDateNexTsk = date('Y-m-d H:i:s', (strtotime($date) + $rwgetNextTaskDl['deadline'] * 24 * 60 * 60));
         }
         if (!empty($docId) && $docId != 0) {
-            $insertInNextTask = mysqli_query($db_con, "INSERT INTO tbl_doc_assigned_wf(task_id, doc_id, start_date, end_date, task_status, assign_by, NextTask, task_remarks,ticket_id) VALUES ('$NextTaskId', '$docId', '$date', '$endDateNexTsk', 'Pending', '$user_id', 2, '$taskRemark','$ticket')") or die('Erorr: ff' . mysqli_error($db_con));
+            $insertInNextTask = mysqli_query($db_con, "INSERT INTO tbl_doc_assigned_wf(task_id, doc_id, start_date, end_date, task_status, assign_by, NextTask, task_remarks,ticket_id, letter_type) VALUES ('$NextTaskId', '$docId', '$date', '$endDateNexTsk', 'Pending', '$user_id', 2, '$taskRemark','$ticket', '$letter_type')") or die('Erorr: ff' . mysqli_error($db_con));
         } else {
-            $insertInNextTask = mysqli_query($db_con, "INSERT INTO tbl_doc_assigned_wf(task_id, start_date, end_date, task_status, assign_by, NextTask, task_remarks,ticket_id) VALUES ('$NextTaskId', '$date', '$endDateNexTsk', 'Pending', '$user_id', 2, '$taskRemark','$ticket')") or die('Erorr: ff' . mysqli_error($db_con));
+            $insertInNextTask = mysqli_query($db_con, "INSERT INTO tbl_doc_assigned_wf(task_id, start_date, end_date, task_status, assign_by, NextTask, task_remarks,ticket_id, letter_type) VALUES ('$NextTaskId', '$date', '$endDateNexTsk', 'Pending', '$user_id', 2, '$taskRemark','$ticket', '$letter_type')") or die('Erorr: ff' . mysqli_error($db_con));
         }
     } else {
         $getStpOr = mysqli_query($db_con, "select * from tbl_step_master where workflow_id='$TskWfId' and step_id='$TskStpId'") or die('Error:' . mysqli_error($db_con));
@@ -499,7 +499,7 @@ function nextTaskAsin($nextTaskOrd, $TskWfId, $TskStpId, $docId, $date, $user_id
             $getNexTskId = $rwgetNextTask1['task_id'];
             $getNexTskOrd = $rwgetNextTask1['task_order'];
 
-            nextTaskAsin($getNexTskOrd, $TskWfId, $nextStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket);
+            nextTaskAsin($getNexTskOrd, $TskWfId, $nextStpId, $docId, $date, $user_id, $db_con, $taskRemark, $ticket, $letter_type);
             // echo 'gg'; die;
             return;
         }

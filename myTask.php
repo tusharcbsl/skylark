@@ -402,8 +402,15 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                             while ($allot_roww = mysqli_fetch_assoc($railway_query)) {
                                                                 $railway_details = $allot_roww;
                                                             }
-                                                            // print_r($railway_details);
-                                                            // die('qqs');
+
+                                                          $docAssignSql = "SELECT * FROM tbl_doc_assigned_wf 
+                                                                WHERE ticket_id='" . $allot_row['ticket_id'] . "'";
+
+                                                            $docAssignQuery = mysqli_query($db_con, $docAssignSql);
+
+                                                            while ($docAssignRow = mysqli_fetch_assoc($docAssignQuery)) {
+                                                                $docAssignDetails = $docAssignRow;
+                                                            }
                                                         ?>
                                                             <tr class="gradeX" style="vertical-align: middle;">
                                                                 <td style="width:60px"><?php echo $n; ?></td>
@@ -417,21 +424,46 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                                     ?>" title="Process Task"> <i class="fa fa-check-circle"></i></a>
 
                                                                     </td>-->
-                                                                <td>
 
-                                                                    <a href="<?php
-                                                                                if ($allot_row['NextTask'] == 2 || (($allot_row['task_status'] == 'Approved' || $allot_row['task_status'] == 'Processed' || $allot_row['task_status'] == 'Done') && ($allot_row['NextTask'] == 1)) || $allot_row['task_status'] == 'Rejected' || $allot_row['task_status'] == 'Complete' || $allot_row['task_status'] == 'Aborted') {
-                                                                                    echo 'javascript:void(0)';
-                                                                                    $anc_attr = 'class="disabled-task"';
-                                                                                } else {
-                                                                                    echo 'javascript:void(0)';
-                                                                                    $anc_attr = 'data-toggle="modal" data-target="#con-close-modal-act" class="taskbtn" data-id="' . $allot_row[id] . '"';
-                                                                                }
-                                                                                ?>"
-                                                                        title="<?php echo $lang['Process_Task']; ?>"
-                                                                        <?= $anc_attr; ?>> <i
-                                                                            class="glyphicon glyphicon-new-window task"></i></a>
-                                                                </td>
+                                                                    <td>
+<?php 
+$letterType = $docAssignDetails['letter_type'] ?? '';
+
+if (
+    $allot_row['NextTask'] == 2 || 
+    (
+        ($allot_row['task_status'] == 'Approved' || 
+         $allot_row['task_status'] == 'Processed' || 
+         $allot_row['task_status'] == 'Done') 
+        && ($allot_row['NextTask'] == 1)
+    ) || 
+    $allot_row['task_status'] == 'Rejected' || 
+    $allot_row['task_status'] == 'Complete' || 
+    $allot_row['task_status'] == 'Aborted'
+    || 
+    /* NEW CONDITION */
+    ($letterType != '' && $letterType != 'Approval')
+) { 
+?>
+    <a href="javascript:void(0)" class="disabled-task" title="<?= $lang['Process_Task']; ?>">
+        <i class="glyphicon glyphicon-new-window task"></i>
+    </a>
+<?php 
+} else { 
+?>
+    <a href="javascript:void(0)" 
+       data-toggle="modal" 
+       data-target="#con-close-modal-act" 
+       class="taskbtn" 
+       data-id="<?= $allot_row['id']; ?>" 
+       title="<?= $lang['Process_Task']; ?>">
+        <i class="glyphicon glyphicon-new-window task"></i>
+    </a>
+<?php } ?>
+</td>
+
+
+                                                                
                                                                 <td><label
                                                                         class="label label-primary"><?php echo $rwWorkflw['workflow_name']; ?></label>
                                                                 </td>
@@ -708,10 +740,10 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                         ?>
                                                                         
 
-                                                                            <a
+                                                                            <!-- <a
                                                                                 href="request_form?id=<?= base64_encode($allot_row['ticket_id']) ?>&form_type=<?= base64_encode($railway_details['railway_type']) ?>"><i
                                                                                     style="font-size:24px"
-                                                                                    class="fa">&#xf040;</i></a>
+                                                                                    class="fa">&#xf040;</i></a> -->
                                                                         <?php } ?>
                                                                                     
                                                                                     <?php } ?><?php
