@@ -1274,6 +1274,7 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
     $id = intval($_POST['tid']);
     // use fo task id
     $rwTask = mysqli_fetch_assoc(mysqli_query($db_con, "select * from tbl_doc_assigned_wf where id='$id' and (task_status='Pending' or task_status='Approved') "));
+
     if ($_SESSION['cdes_user_id'] != '1') {
         $work = mysqli_query($db_con, "select * from tbl_task_master where task_id='$rwTask[task_id]' and (assign_user = '$_SESSION[cdes_user_id]' or alternate_user='$_SESSION[cdes_user_id]' or supervisor='$_SESSION[cdes_user_id]')");
         if (mysqli_num_rows($work) > 0) {
@@ -1449,214 +1450,275 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
                 $insertDocID = mysqli_insert_id($db_con);
 
                 //***********/ create new pdf **************
+                
+
                 $htmlContent = '
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Request for Inspection</title>
-                        <style>
-                            body { font-family: Arial, sans-serif; }
-                            .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-                            .table th, .table td { border: 1px solid #000; padding: 8px; text-align: left; }
-                            .top-center { text-align: center; vertical-align: middle; }
-                            .upper { margin-top: 20px; }
-                            .south_railway { width: 100px; }
-                        </style>
-                    </head>
-                    <body>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                        <img src="assets/images/rail.JPEG" class="south_railway" alt="Railway Logo">
-                                    </th>
-                                    <th class="col-md-8" style="text-align:center; font-size:large; vertical-align:middle;">
-                                        <u>REQUEST FOR INSPECTION (RFI)</u>
-                                    </th>';
-
-                if (
-                    $form_type == 1
-                ) {
-                    $htmlContent .= '
-                                    <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                        <img src="assets/images/pra1.JPEG" class="south_railway" alt="Contractor Logo">
-                                    </th>';
-                } else {
-                    $htmlContent .= '
-                                    <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
-                                        <img src="assets/images/raipur.jpg" class="south_railway" alt="Contractor Logo">
-                                    </th>';
-                }
-
-                $htmlContent .= '
-                                </tr>
-                                <tr>';
-
-                if (
-                    $form_type == 1
-                ) {
-                    $htmlContent .= '
-                                    <th class="col-md-8" style="text-align:center; vertical-align:middle;">
-                                        Project Doubling of Railway Project comprising the section commencing from(--) Road station (End CH 967.055)
-                                        to Surajpur Road Station (End CH : 1006.44) (KM-39.385 KM) beside existing single 84 line in the state of chhattisgarh in the
-                                        south East central Railway Zone Agt No: SECR/SECRC/CMI/2024/0008/ dt 14-Mar-2024.
-                                    </th>';
-                } else {
-                    $htmlContent .= '
-                                    <th class="col-md-8" style="text-align:center; vertical-align:middle;">
-                                        Major Up-Gradation of Raipur Railway Station of SECR on EPC Mode
-                                    </th>';
-                }
-
-                $htmlContent .= '
-                                </tr>
-                            </thead>
-                        </table>
-
-                        <table class="table table-bordered upper">
-                            <thead>';
-
-                if (
-                    $form_type == 1
-                ) {
-                    $htmlContent .= '
-                                <tr>
-                                    <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : South East Central Railway</th>
-                                    <th class="col-md-6" colspan="3" style="text-align:center; vertical-align:middle;">Contractor : Barbrik Project Limited</th>
-                                </tr>';
-                } else {
-                    $htmlContent .= '
-                                <tr>
-                                                                        <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : South East Central Railway</th>
-
-                                                                        <th class="col-md-6" colspan="3" style="text-align:center; vertical-align:middle;">
-                                                                            Contractor : RPP-SATHYAMOORTHY JV
-                                                                        </th>
-                                </tr>';
-                }
-
-                $htmlContent .= '
-                                <tr>
-                                    <th class="col-md-2 top-center">RFI No</th>
-                                    <th class="col-md-2 top-center">RFI Date</th>
-                                    <th class="col-md-2 top-center">Type <br> (Regular/Spot)</th>
-                                    <th class="col-md-2 top-center">Name Of the Contractor\'s Engineer</th>
-                                    <th class="col-md-2 top-center">Item No as per contract <br> (for payment)</th>
-                                    <th class="col-md-2 top-center">Inspection Required On</th>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-2">' . htmlspecialchars($railways['rfi_no']) . '</td>
-                                    <td class="col-md-2">' . (!empty($railways['rfi_date']) ? date("d-m-Y", strtotime($railways['rfi_date'])) : '') . '</td>
-                                    <td class="col-md-2">' . htmlspecialchars($railways['type_regular']) . '</td>
-                                    <td class="col-md-2">' . htmlspecialchars($railways['name_of_the_contractor']) . '</td>
-                                    <td class="col-md-2">' . htmlspecialchars($railways['item_no_as_per']) . '</td>
-                                    <td class="col-md-2">' . (!empty($railways['inspection_required_date']) ? date("d-m-Y", strtotime($railways['inspection_required_date'])) : '') . '</td>
-                                </tr>
-                            </thead>
-                        </table>
-
-                        <table class="table table-bordered upper">
-                            <tr>
-                                <th class="col-md-2" rowspan="2" colspan="2">Location / Chainage</th>
-                                <th class="col-md-4" rowspan="2">
-                                    ' . htmlspecialchars($railways['location_from']) . '
-                                </th>
-                                <th class="col-md-4">Name Of the Inspecting Engineer</th>
-                                <th class="col-md-2">Inspected On</th>
-                            </tr>
-                            <tr>
-                                <th>' . htmlspecialchars($railways['name_of_the_inspecting_engineer']) . '</th>
-                                <th>' . (!empty($railways['inspected_on_date']) ? date("d-m-Y", strtotime($railways['inspected_on_date'])) : '') .
-                    '</th>
-                            </tr>
-                        </table>
-
-
-                        <table class="table table-bordered upper">
-                            <tr>
-                                <th colspan="2" style="text-align:left; vertical-align:top; height: 70px">Description of Work offered for Inspection</th>
-                                <th colspan="3" style="text-align:left; vertical-align:top;">
-                                    ' . htmlspecialchars($railways['description_of_work']) . '
-                                </th>
-                            </tr>
-                            <tr>
-                                <th colspan="2" style="text-align:left; vertical-align:top; height: 70px">Enclosures attached with RFI</th>
-                                <th colspan="3" style="text-align:left; vertical-align:top;">
-                                    ' . htmlspecialchars($railways['enclosures_attached']) . '
-                                </th>
-                            </tr>
-                            <tr>
-                                <th class="col-md-6" colspan="2" style="text-align:left; vertical-align:top; height: 100px">Signature of the Contractor\'s Representative requesting for Inspection</th>
-                    <th class="col-md-6" colspan="3">
-                                ' . htmlspecialchars($railways['signature_of_the_contractor']) . '
-                            </th>
-                            </tr>
-                            <tr>
-                                <th class="col-md-6" colspan="2" style="text-align:left; vertical-align:top; height: 100px">Remarks of the Inspection Engineer (Representative of Authority Engineer)</th>
-                                <th class="col-md-6" colspan="3">' . htmlspecialchars($railways['remarks_of_the_inspection']) . '</th>
-                            </tr>
-                            <tr>
-                                <th colspan="2">Signature of the Inspection Engineer Representative of Authority Engineer</th>
-                                <th colspan="3">' . htmlspecialchars($railways['signature_of_the_inspection']) . '</th>
-                            </tr>
-                            <tr>
-                                <th colspan="2" style="text-align:right;">Date :</th>
-                                <th colspan="3">' . date('d/m/y') . '</th>
-                            </tr>
-                            <tr>
-                                <th colspan="2" style="text-align:right;">Name :</th>
-                    <th class="col-md-6" colspan="3">
-                                ' . $_SESSION['admin_user_name'] . ' ' . $_SESSION['admin_user_last'] . '
-                            </th>        </tr>
-                            </tr>
-                            <tr>
-                                <th colspan="2" style="text-align:right;">Designation :</th>
-                                <th colspan="3">' . htmlspecialchars($railways['designation']) . '</th>
-                            </tr>
-                        </table>
-
-                        <div class="col-md-14">
-                            <div class="container">
-                                <div class="card-box">
-                                    <div id="dynamicForm">
-                                        <div class="row" id="formRows">';
-
-                $queryyy = "SELECT * FROM tbl_railway_attachment_master WHERE requested_id='" . $railways['id'] . "'";
-                $resultt = mysqli_query($db_con, $queryyy);
-
-                // Check if the query was successful
-                if ($resultt) {
-                    while ($rowwe = mysqli_fetch_assoc($resultt)) {
-                        $htmlContent .= '
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="mobile">Remark:</label>
-                                                    ' . htmlspecialchars($rowwe['remark']) . '
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Upload Attachment</label>
-                                                    <a href="uploads/' . htmlspecialchars($rowwe['attachment']) . '" download>
-                                                        ' . htmlspecialchars($rowwe['attachment']) . '
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>';
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Request for Inspection</title>
+                    <style>
+                    body { font-family: Arial, sans-serif; }
+                    .table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                    .table th, .table td { border: 1px solid #000; padding: 8px; text-align: left; }
+                    .top-center { text-align: center; vertical-align: middle; }
+                    .upper { margin-top: 20px; }
+                    .south_railway { width: 100px; }
+                
+                    .info-table{
+                        border-collapse: collapse;
+                        width:100%;
                     }
-                }
+                    .info-table th,
+                    .info-table td{
+                        border:1px solid #000;
+                        padding:6px;
+                        font-size:12px;
+                    }
+                    .info-table th{
+                        font-weight:bold;
+                    }
+                    .title{
+                        text-align:center;
+                        font-weight:bold;
+                    }
+                    </style>
+                </head>
+                <body>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
+                                    <img src="assets/images/ecr.png" class="south_railway" alt="ECR Logo">
+                                </th>
+                                <th class="col-md-8" style="text-align:center; font-size:large; vertical-align:middle;">
+                                    <u>REQUEST FOR INSPECTION (RFI)</u>
+                                </th>';
 
-                $htmlContent .= '
+                        if (
+                            $form_type == 1
+                        ) {
+                            $htmlContent .= '
+                                <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
+                                    <img src="assets/images/skylark_logo.jpeg" class="south_railway" alt="Contractor Logo">
+                                </th>';
+                        } else {
+                            $htmlContent .= '
+                                <th class="col-md-2" rowspan="2" style="vertical-align:middle; text-align:center;">
+                                    <img src="assets/images/skylark_logo.jpeg" class="south_railway" alt="Contractor Logo">
+                                </th>';
+                        }
+
+                        $htmlContent .= '
+                            </tr>
+                            <tr>';
+
+                        if (
+                            $form_type == 1
+                        ) {
+                            $htmlContent .= '
+                                <th class="col-md-8" style="text-align:center; vertical-align:middle;">
+                                    Major Upgradation / Redevelopment of Darbhanga Junction Railway Station in Samastipur Division, East Central Railway
+                                </th>';
+                        } else {
+                            $htmlContent .= '
+                                <th class="col-md-8" style="text-align:center; vertical-align:middle;">
+                                    Major Upgradation / Redevelopment of Darbhanga Junction Railway Station in Samastipur Division, East Central Railway
+                                </th>';
+                        }
+
+                        $htmlContent .= '
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <table class="table table-bordered upper">
+                        <thead>';
+
+                        if (
+                            $form_type == 1
+                        ) {
+                            $htmlContent .= '
+                            <tr>
+                                <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : East Central Railway</th>
+                                <th class="col-md-6" colspan="3" style="text-align:center; vertical-align:middle;">Contractor : SIEPL - ALTIS (JV)</th>
+                            </tr>';
+                        } else {
+                            $htmlContent .= '
+                            <tr>
+                                                                    <th class="col-md-6" colspan="3" style="text-align:left; vertical-align:middle;">Client : East Central Railway</th>
+
+                                                                    <th class="col-md-6" colspan="3" style="text-align:center; vertical-align:middle;">
+                                                                        Contractor : SIEPL - ALTIS (JV)
+                                                                    </th>
+                            </tr>';
+                        }
+
+                        $htmlContent .= '
+                            <tr>
+                                <th class="col-md-2 top-center">RFI No</th>
+                                <th class="col-md-2 top-center">Structure ID</th>
+                                <th class="col-md-2 top-center">Location</th>
+                                <th class="col-md-2 top-center">Date</th>
+                                <th class="col-md-2 top-center">Request of Inspection</th>
+                                <th class="col-md-2 top-center">Inspection Required On</th>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2">' . htmlspecialchars($railways['rfi_no']) . '</td>
+                                <td class="col-md-2">' . htmlspecialchars($railways['structure_id']) . '</td>
+                                <td class="col-md-2">' . htmlspecialchars($railways['location']) . '</td>
+                                <td class="col-md-2">' . (!empty($railways['inspection_required_date']) ? date("d-m-Y", strtotime($railways['inspection_required_date'])) : '') . '</td>
+                                <td class="col-md-2">' . htmlspecialchars($railways['name_of_the_contractor']) . '</td>
+                                <td class="col-md-2">' . (!empty($railways['inspected_on_date']) ? htmlspecialchars(date('d-m-Y h:i A', strtotime($railways['inspected_on_date']))) : '') . '</td>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <table class="table table-bordered upper">
+                        <tr>
+                            
+                            <th class="col-md-4">Activity</th>
+                            
+                        </tr>
+                        <tr>
+                            <th>' . htmlspecialchars($railways['description_of_work']) . '</th>
+                        
+                        </tr>
+                    </table>
+
+                    <table width="100%" cellspacing="10">
+                <tr>
+
+                <!-- LEFT -->
+                <td width="50%" valign="top">
+                <table class="info-table">
+                <tr>
+                    <th colspan="2" class="title">Requested by</th>
+                </tr>
+                <tr>
+                    <th width="35%" align="right">Name :</th>
+                    <td width="65%">' . htmlspecialchars($railways['requested_name']) . '</td>
+                </tr>
+                <tr>
+                    <th align="right">Agency :</th>
+                    <td>' . htmlspecialchars($railways['requested_agency']) . '</td>
+                </tr>
+                <tr>
+                    <th align="right">Date :</th>
+                    <td>' . (!empty($railways['requested_date']) 
+                        ? date('d-m-Y h:i A', strtotime($railways['requested_date'])) 
+                        : '' ) . '</td>
+                </tr>
+                </table>
+                </td>
+
+                </tr>
+                </table>';
+
+                    $htmlContent .= '<div class="inspection-box mt-3" style="padding:15px; font-family:serif;">
+
+                        <h5 style="text-decoration:underline;"><b>INSPECTION RESULTS:</b></h5>
+
+                        <p><b>Mark to Indicate</b></p>
+
+                        <div style="margin-left:40px;">
+                            <span>Approval for Commencement of work.</span><br>
+
+                            <span>Remedial works required as below but no further approval required.</span><br>
+
+                            <span>Remedial works required as below but re-inspection and approval required.</span><br>
+                        </div>
+
+                        <br>
+
+                        <label>Comments if any :</label>
+                        ' . htmlspecialchars($railways['inspection_comment']) . '
+
+                    </div>
+
+                    <table class="table table-bordered mt-3">
+                        <tr>
+                            <th rowspan="2">Signature</th>
+                            <th>Agency</th>
+                            <th>PMC</th>
+                            <th>Railway</th>
+                        </tr>
+
+                        <tr>
+                            <td>' . htmlspecialchars($railways['agency_sign']) . '</td>
+                            <td>' . htmlspecialchars($railways['pmc_sign']) . '</td>
+                            <td>' . htmlspecialchars($railways['railway_sign']) . '</td>
+                            
+                        </tr>
+
+                        <tr>
+                            <th>Name</th>
+                            <td>' . htmlspecialchars($railways['agency_name']) . '</td>
+                            <td>' . htmlspecialchars($railways['pmc_name']) . '</td>
+                            <td>' . htmlspecialchars($railways['railway_name']) . '</td>
+                        </tr>
+
+                        <tr>
+                            <th>Designation</th>
+                            
+                                <td>' . htmlspecialchars($railways['agency_desig']) . '</td>
+                            <td>' . htmlspecialchars($railways['pmc_desig']) . '</td>
+                            <td>' . htmlspecialchars($railways['railway_desig']) . '</td>
+                        </tr>
+
+                        <tr>
+                            <th>Date</th>
+                    
+                            <td>' . (!empty($railways['agency_date']) ? htmlspecialchars(date('d-m-Y', strtotime($railways['agency_date']))) : '') . '</td>
+                            <td>' . (!empty($railways['pmc_date']) ? htmlspecialchars(date('d-m-Y', strtotime($railways['pmc_date']))) : '') . '</td>
+                            <td>' . (!empty($railways['railway_date']) ? htmlspecialchars(date('d-m-Y', strtotime($railways['railway_date']))) : '') . '</td>
+                        </tr>
+                    </table>';
+                $htmlContent .= '   
+
+                    <div class="col-md-14">
+                        <div class="container">
+                            <div class="card-box">
+                                <div id="dynamicForm">
+                                    <div class="row" id="formRows">';
+
+                        $queryyy = "SELECT * FROM tbl_railway_attachment_master WHERE requested_id='" . $railways['id'] . "'";
+                        $resultt = mysqli_query($db_con, $queryyy);
+
+                        // Check if the query was successful
+                        if ($resultt) {
+                            while ($rowwe = mysqli_fetch_assoc($resultt)) {
+                                $htmlContent .= '
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="mobile">Remark:</label>
+                                                ' . htmlspecialchars($rowwe['remark']) . '
+                                            </div>
                                         </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="">Upload Attachment</label>
+                                                <a href="uploads/' . htmlspecialchars($rowwe['attachment']) . '" download>
+                                                    ' . htmlspecialchars($rowwe['attachment']) . '
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>';
+                            }
+                        }
+
+                        $htmlContent .= '
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </body>
-                    </html>';
+                    </div>
+                </body>
+                </html>';
+
                 $document_master = "SELECT * FROM tbl_document_master where ticket_id='$tktId'";
                 $document_query = mysqli_query($db_con, $document_master);
                 while ($document_row = mysqli_fetch_assoc($document_query)) {
@@ -1733,41 +1795,44 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
             $taskRemark = mysqli_real_escape_string($db_con, $rwTask['task_remarks']);
 
             // Call approvalWorker.php in background with cURL
-            $backgroundData = array(
-                'ticket' => $ticket,
-                'ctaskOrder' => $ctaskOrder,
-                'docID' => $docID,
-                'assignBy' => $assignBy,
-                'ctaskID' => $ctaskID,
-                'stepId' => $stepId,
-                'wfid' => $wfid
-            );
-            
-            // Make background request using cURL
-            if (function_exists('curl_init')) {
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, BASE_URL . 'approvalWorker.php');
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($backgroundData));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                curl_setopt($ch, CURLOPT_COOKIE, 'PHPSESSID=' . session_id());
+
+            if (!isset($rwTask['letter_type']) || $rwTask['letter_type'] === '') {
+                $backgroundData = array(
+                    'ticket' => $ticket,
+                    'ctaskOrder' => $ctaskOrder,
+                    'docID' => $docID,
+                    'assignBy' => $assignBy,
+                    'ctaskID' => $ctaskID,
+                    'stepId' => $stepId,
+                    'wfid' => $wfid
+                );
                 
-                $response = curl_exec($ch);
-                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                $curlError = curl_error($ch);
-                
-                if ($curlError) {
-                    error_log('approvalWorker.php cURL Error: ' . $curlError);
+                // Make background request using cURL
+                if (function_exists('curl_init')) {
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, BASE_URL . 'approvalWorker.php');
+                    curl_setopt($ch, CURLOPT_POST, true);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($backgroundData));
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+                    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    curl_setopt($ch, CURLOPT_COOKIE, 'PHPSESSID=' . session_id());
+                    
+                    $response = curl_exec($ch);
+                    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                    $curlError = curl_error($ch);
+                    
+                    if ($curlError) {
+                        error_log('approvalWorker.php cURL Error: ' . $curlError);
+                    }
+                    if ($httpCode != 200) {
+                        error_log('approvalWorker.php HTTP Error Code: ' . $httpCode . ', Response: ' . $response);
+                    }
+                    
+                    curl_close($ch);
                 }
-                if ($httpCode != 200) {
-                    error_log('approvalWorker.php HTTP Error Code: ' . $httpCode . ', Response: ' . $response);
-                }
-                
-                curl_close($ch);
             }
 
             //$tskAsinTOUsrId = $rwWork['assign_user'];
