@@ -426,41 +426,40 @@ $workfid = preg_replace("/[^0-9 ]/", "", $wfid);
                                                                     </td>-->
 
                                                                     <td>
-<?php 
-$letterType = $docAssignDetails['letter_type'] ?? '';
+                                                                        <?php 
+                                                                        $letterType = $docAssignDetails['letter_type'] ?? '';
 
-if (
-    $allot_row['NextTask'] == 2 || 
-    (
-        ($allot_row['task_status'] == 'Approved' || 
-         $allot_row['task_status'] == 'Processed' || 
-         $allot_row['task_status'] == 'Done') 
-        && ($allot_row['NextTask'] == 1)
-    ) || 
-    $allot_row['task_status'] == 'Rejected' || 
-    $allot_row['task_status'] == 'Complete' || 
-    $allot_row['task_status'] == 'Aborted'
-    || 
-    /* NEW CONDITION */
-    ($letterType != '' && $letterType != 'Approval')
-) { 
-?>
-    <a href="javascript:void(0)" class="disabled-task" title="<?= $lang['Process_Task']; ?>">
-        <i class="glyphicon glyphicon-new-window task"></i>
-    </a>
-<?php 
-} else { 
-?>
-    <a href="javascript:void(0)" 
-       data-toggle="modal" 
-       data-target="#con-close-modal-act" 
-       class="taskbtn" 
-       data-id="<?= $allot_row['id']; ?>" 
-       title="<?= $lang['Process_Task']; ?>">
-        <i class="glyphicon glyphicon-new-window task"></i>
-    </a>
-<?php } ?>
-</td>
+                                                                        if (
+                                                                            $allot_row['NextTask'] == 2 || 
+                                                                            (
+                                                                                ($allot_row['task_status'] == 'Approved' || 
+                                                                                $allot_row['task_status'] == 'Processed' || 
+                                                                                $allot_row['task_status'] == 'Done') 
+                                                                                && ($allot_row['NextTask'] == 1)
+                                                                            ) || 
+                                                                            $allot_row['task_status'] == 'Rejected' || 
+                                                                            $allot_row['task_status'] == 'Complete' || 
+                                                                            $allot_row['task_status'] == 'Aborted'
+                                                                            || 
+                                                                            ($letterType != '' && $letterType != 'Approval')
+                                                                        ) { 
+                                                                        ?>
+                                                                            <a href="javascript:void(0)" class="disabled-task" title="<?= $lang['Process_Task']; ?>">
+                                                                                <i class="glyphicon glyphicon-new-window task"></i>
+                                                                            </a>
+                                                                        <?php 
+                                                                        } else { 
+                                                                        ?>
+                                                                            <a href="javascript:void(0)" 
+                                                                            data-toggle="modal" 
+                                                                            data-target="#con-close-modal-act" 
+                                                                            class="taskbtn" 
+                                                                            data-id="<?= $allot_row['id']; ?>" 
+                                                                            title="<?= $lang['Process_Task']; ?>">
+                                                                                <i class="glyphicon glyphicon-new-window task"></i>
+                                                                            </a>
+                                                                        <?php } ?>
+                                                                        </td>
 
 
                                                                 
