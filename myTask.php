@@ -1796,7 +1796,7 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
 
             // Call approvalWorker.php in background with cURL
 
-            if (!isset($rwTask['letter_type']) || $rwTask['letter_type'] === '') {
+            // if (!isset($rwTask['letter_type']) || $rwTask['letter_type'] === '') {
                 $backgroundData = array(
                     'ticket' => $ticket,
                     'ctaskOrder' => $ctaskOrder,
@@ -1833,7 +1833,7 @@ if (isset($_POST['approveTask'], $_POST['token'])) {
                     
                     curl_close($ch);
                 }
-            }
+            // }
 
             //$tskAsinTOUsrId = $rwWork['assign_user'];
 
