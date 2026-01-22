@@ -11,7 +11,7 @@ require_once '../application/pages/function.php';
 
 require_once '../classes/fileManager.php';
 
-error_reporting(0);
+// error_reporting(0);
 
 $pgn = intval($_GET['pn']);
 if (!isset($_SESSION['cdes_user_id'])) {
@@ -2216,6 +2216,42 @@ if (mysqli_num_rows($getCordnate) > 0) {
                     $ticket = $rwTask['ticket_id'];
 
                     $taskRemark = mysqli_real_escape_string($db_con, $rwTask['task_remarks']);
+
+                    $backgroundData = array(
+                        'ticket' => $ticket,
+                        'ctaskOrder' => $ctaskOrder,
+                        'docID' => $docID,
+                        'assignBy' => $assignBy,
+                        'ctaskID' => $ctaskID,
+                        'stepId' => $stepId,
+                        'wfid' => $wfid
+                    );
+
+                    if (function_exists('curl_init')) {
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, BASE_URL . 'approvalWorker.php');
+                        curl_setopt($ch, CURLOPT_POST, true);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($backgroundData));
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+                        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                        curl_setopt($ch, CURLOPT_COOKIE, 'PHPSESSID=' . session_id());
+                        
+                        $response = curl_exec($ch);
+                        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                        $curlError = curl_error($ch);
+                        
+                        if ($curlError) {
+                            error_log('approvalWorker.php cURL Error: ' . $curlError);
+                        }
+                        if ($httpCode != 200) {
+                            error_log('approvalWorker.php HTTP Error Code: ' . $httpCode . ', Response: ' . $response);
+                        }
+                        
+                        curl_close($ch);
+                    }
 
                     //$tskAsinTOUsrId = $rwWork['assign_user'];
 
