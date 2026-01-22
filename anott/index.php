@@ -335,7 +335,12 @@ $lang = json_decode($jsFile, true);
                         </form>
                     </div>
                     <?php if ($chk != 'rw'): ?>
-                        <button class="btn btn-primary btn-bloc btn-sm m-l-5 m-t-5" data-toggle="modal" data-target="#con-close-modal-act"><?php echo $lang['Aprv_Rjct_Tsk']; ?></button>
+                        <?php if (isset($rwTask['letter_type']) && $rwTask['letter_type'] !== '' && $rwTask['letter_type'] !== 'Approval') { ?>
+                            <button class="btn btn-primary btn-bloc btn-sm m-l-5 m-t-5" disabled> <?php echo $lang['Aprv_Rjct_Tsk']; ?></button>
+
+                        <?php } else{?>  
+                            <button class="btn btn-primary btn-bloc btn-sm m-l-5 m-t-5" data-toggle="modal" data-target="#con-close-modal-act"><?php echo $lang['Aprv_Rjct_Tsk']; ?></button>
+                        <?php } ?>
                         <button style="" class="btn btn-primary btn-bloc btn-sm m-l-5 m-t-5" id="comment_button"><?php echo $lang['Comment']; ?></button>
                     <?php endif; ?>
                 </div>
@@ -2048,6 +2053,10 @@ if (mysqli_num_rows($getCordnate) > 0) {
 
                     $("#hidden_note").show();
                 }
+            });
+
+            $('#forward_form').on('submit', function() {
+                $('#wait').show();
             });
             //image detail              
             $('#myImage1').bind('change', function () {
